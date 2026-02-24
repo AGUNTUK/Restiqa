@@ -3,14 +3,18 @@ import { Database } from '@/types/database'
 
 let client: ReturnType<typeof createBrowserClient<Database>> | null = null
 
+export function useSupabaseClient() {
+  return createClient()
+}
+
 export function createClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   // Return a mock client if environment variables are not set
-  if (!supabaseUrl || !supabaseAnonKey || 
-      supabaseUrl === 'your_supabase_project_url' || 
-      supabaseAnonKey === 'your_supabase_anon_key') {
+  if (!supabaseUrl || !supabaseAnonKey ||
+    supabaseUrl === 'your_supabase_project_url' ||
+    supabaseAnonKey === 'your_supabase_anon_key') {
     console.warn('Supabase environment variables not configured. Using mock client.')
     return {
       auth: {
@@ -20,7 +24,7 @@ export function createClient() {
         signOut: () => Promise.resolve({ error: null }),
         signInWithOAuth: () => Promise.resolve({ data: { provider: null, url: null }, error: { message: 'Supabase not configured' } }),
         getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
       },
       from: () => ({
         select: () => Promise.resolve({ data: null, error: null }),

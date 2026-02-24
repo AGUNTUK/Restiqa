@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Star, ThumbsUp, Flag, MoreHorizontal, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import { format } from 'date-fns'
+import Button from '@/components/ui/Button'
 
 interface RatingBreakdown {
     cleanliness: number
@@ -110,8 +111,8 @@ export default function ReviewList({
                     <Star
                         key={star}
                         className={`${sizeClass} ${star <= Math.round(value)
-                                ? 'fill-amber-400 text-amber-400'
-                                : 'text-gray-300'
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-gray-300'
                             }`}
                     />
                 ))}
@@ -283,8 +284,8 @@ export default function ReviewList({
                                 <button
                                     onClick={() => onMarkHelpful?.(review.id)}
                                     className={`flex items-center gap-1 text-sm transition-colors ${review.is_helpful
-                                            ? 'text-brand-primary'
-                                            : 'text-[#64748B] hover:text-brand-primary'
+                                        ? 'text-brand-primary'
+                                        : 'text-[#64748B] hover:text-brand-primary'
                                         }`}
                                 >
                                     <ThumbsUp

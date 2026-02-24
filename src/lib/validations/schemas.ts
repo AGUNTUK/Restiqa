@@ -99,16 +99,10 @@ export const propertyUpdateSchema = propertySchema.partial()
 export const bookingSchema = z.object({
     property_id: z.string().uuid('Invalid property ID'),
     check_in: z
-        .date({
-            required_error: 'Check-in date is required',
-            invalid_type_error: 'Invalid date format',
-        })
+        .date({ message: 'Invalid date format' })
         .min(new Date(), 'Check-in date must be in the future'),
     check_out: z
-        .date({
-            required_error: 'Check-out date is required',
-            invalid_type_error: 'Invalid date format',
-        }),
+        .date({ message: 'Invalid date format' }),
     guests: z
         .number()
         .int('Number of guests must be a whole number')

@@ -60,7 +60,7 @@ export default function BookingCalendar({
 
         // Check blocked dates list
         return blockedDates.some(
-            (blocked) => isSameDay(blocked.date, date) && blocked.reason !== 'available'
+            (blocked) => isSameDay(blocked.date, date)
         )
     }, [blockedDates])
 

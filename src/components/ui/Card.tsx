@@ -10,9 +10,10 @@ interface CardProps {
   property: Property
   onWishlistToggle?: (propertyId: string) => void
   isWishlisted?: boolean
+  variant?: 'default' | 'compact' | 'horizontal'
 }
 
-export default function Card({ property, onWishlistToggle, isWishlisted = false }: CardProps) {
+export default function Card({ property, onWishlistToggle, isWishlisted = false, variant = 'default' }: CardProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-BD', {
       style: 'currency',
@@ -23,6 +24,137 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
 
   const primaryImage = property.images?.[0] || '/placeholder-property.jpg'
 
+  // Horizontal variant for mobile lists
+  if (variant === 'horizontal') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+        className="neu-card group"
+      >
+        <Link href={`/property/${property.id}`} className="flex gap-3 p-3">
+          {/* Image - Fixed size */}
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex-shrink-0 overflow-hidden rounded-2xl">
+            <Image
+              src={primaryImage}
+              alt={property.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            {/* Rating overlay */}
+            <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-sm rounded-lg px-1.5 py-0.5 flex items-center gap-1">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span className="text-xs font-semibold">{property.rating.toFixed(1)}</span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="flex flex-col flex-grow min-w-0 py-1">
+            <div className="flex items-start justify-between gap-2 mb-1">
+              <h3 className="text-sm sm:text-base font-semibold text-[#1E293B] line-clamp-1 group-hover:text-brand-primary transition-colors">
+                {property.title}
+              </h3>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  onWishlistToggle?.(property.id)
+                }}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                className="p-1.5 -m-1.5 rounded-full touch-feedback"
+              >
+                <Heart
+                  className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-[#64748B]'}`}
+                />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 text-[#64748B] mb-1">
+              <MapPin className="w-3 h-3 flex-shrink-0" />
+              <span className="text-xs truncate">{property.city}, {property.country}</span>
+            </div>
+
+            <p className="text-xs text-[#64748B] line-clamp-2 mb-2 hidden sm:block">
+              {property.description}
+            </p>
+
+            <div className="flex items-center justify-between mt-auto">
+              <div>
+                <span className="text-sm sm:text-base font-bold text-[#1E293B]">
+                  {formatPrice(property.price_per_night)}
+                </span>
+                <span className="text-xs text-[#64748B]">
+                  {property.property_type === 'tour' ? '/person' : '/night'}
+                </span>
+              </div>
+              <span className="text-xs px-2 py-1 neu-badge-primary uppercase">
+                {property.property_type}
+              </span>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    )
+  }
+
+  // Compact variant for smaller cards
+  if (variant === 'compact') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="neu-card group h-full"
+      >
+        <Link href={`/property/${property.id}`} className="flex flex-col h-full">
+          <div className="relative h-40 sm:h-48 overflow-hidden flex-shrink-0 rounded-t-2xl sm:rounded-t-3xl">
+            <Image
+              src={primaryImage}
+              alt={property.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                onWishlistToggle?.(property.id)
+              }}
+              aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+              className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 backdrop-blur-sm transition-all duration-200 hover:scale-110"
+            >
+              <Heart
+                className={`w-4 h-4 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-[#64748B]'}`}
+              />
+            </button>
+            <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span className="text-xs font-semibold">{property.rating.toFixed(1)}</span>
+            </div>
+          </div>
+
+          <div className="p-3 sm:p-4 flex flex-col flex-grow">
+            <div className="flex items-center gap-1 text-[#64748B] mb-1">
+              <MapPin className="w-3 h-3 flex-shrink-0" />
+              <span className="text-xs truncate">{property.city}</span>
+            </div>
+            <h3 className="text-sm font-semibold text-[#1E293B] line-clamp-1 group-hover:text-brand-primary transition-colors mb-2">
+              {property.title}
+            </h3>
+            <div className="flex items-center justify-between mt-auto">
+              <div>
+                <span className="text-sm font-bold text-[#1E293B]">
+                  {formatPrice(property.price_per_night)}
+                </span>
+                <span className="text-xs text-[#64748B]">/night</span>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    )
+  }
+
+  // Default variant - Full card
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -32,8 +164,8 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
       className="neu-card group h-full"
     >
       <Link href={`/property/${property.id}`} className="flex flex-col h-full">
-        {/* Image Container - Fixed Height */}
-        <div className="relative h-56 overflow-hidden flex-shrink-0 rounded-t-3xl">
+        {/* Image Container - Responsive Height */}
+        <div className="relative h-44 sm:h-52 md:h-56 overflow-hidden flex-shrink-0 rounded-t-2xl sm:rounded-t-3xl">
           <Image
             src={primaryImage}
             alt={property.title}
@@ -42,8 +174,8 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
           />
 
           {/* Property Type Badge */}
-          <div className="absolute top-4 left-4">
-            <span className="neu-badge-primary px-3 py-1.5 text-xs font-semibold uppercase tracking-wide">
+          <div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+            <span className="neu-badge-primary px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wide">
               {property.property_type}
             </span>
           </div>
@@ -55,23 +187,22 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
               onWishlistToggle?.(property.id)
             }}
             aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-            className="absolute top-4 right-4 p-2.5 rounded-full transition-all duration-200 neu-icon hover:scale-110 focus-visible:ring-2 focus-visible:ring-brand-primary"
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 p-2 sm:p-2.5 rounded-full transition-all duration-200 neu-icon hover:scale-110 focus-visible:ring-2 focus-visible:ring-brand-primary"
           >
             <Heart
-              className={`w-5 h-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-[#64748B]'
-                }`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-[#64748B]'}`}
               aria-hidden="true"
             />
           </button>
 
           {/* Rating Badge */}
-          <div className="absolute bottom-4 left-4">
-            <div className="neu-badge flex items-center gap-1.5 px-3 py-1.5">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              <span className="text-sm font-semibold text-[#1E293B]">
+          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4">
+            <div className="neu-badge flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5">
+              <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
+              <span className="text-xs sm:text-sm font-semibold text-[#1E293B]">
                 {property.rating.toFixed(1)}
               </span>
-              <span className="text-xs text-[#64748B]">
+              <span className="text-[10px] sm:text-xs text-[#64748B]">
                 ({property.review_count})
               </span>
             </div>
@@ -79,36 +210,36 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
         </div>
 
         {/* Content - Flex column with auto margin for footer */}
-        <div className="p-5 flex flex-col flex-grow">
+        <div className="p-3 sm:p-4 md:p-5 flex flex-col flex-grow">
           {/* Location */}
-          <div className="flex items-center gap-1.5 text-[#64748B] mb-2">
-            <MapPin className="w-4 h-4 flex-shrink-0" />
-            <span className="text-sm truncate">{property.city}, {property.country}</span>
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[#64748B] mb-1 sm:mb-2">
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span className="text-xs sm:text-sm truncate">{property.city}, {property.country}</span>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-[#1E293B] mb-2 line-clamp-1 group-hover:text-brand-primary transition-colors">
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#1E293B] mb-1 sm:mb-2 line-clamp-1 group-hover:text-brand-primary transition-colors">
             {property.title}
           </h3>
 
           {/* Description - Limited to 2 lines */}
-          <p className="text-sm text-[#64748B] mb-4 line-clamp-2 min-h-[2.5rem]">
+          <p className="text-xs sm:text-sm text-[#64748B] mb-2 sm:mb-4 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
             {property.description}
           </p>
 
           {/* Amenities - Fixed height container */}
-          <div className="flex flex-wrap gap-2 mb-4 min-h-[28px]">
-            {property.amenities?.slice(0, 3).map((amenity, index) => (
+          <div className="flex flex-wrap gap-1 sm:gap-2 mb-2 sm:mb-4 min-h-[24px] sm:min-h-[28px]">
+            {property.amenities?.slice(0, 2).map((amenity, index) => (
               <span
                 key={index}
-                className="text-xs px-2.5 py-1 neu-badge text-[#64748B] whitespace-nowrap"
+                className="text-[10px] sm:text-xs px-1.5 sm:px-2.5 py-0.5 sm:py-1 neu-badge text-[#64748B] whitespace-nowrap"
               >
                 {amenity}
               </span>
             ))}
-            {property.amenities?.length > 3 && (
-              <span className="text-xs px-2.5 py-1 neu-badge text-[#64748B] whitespace-nowrap">
-                +{property.amenities.length - 3} more
+            {property.amenities && property.amenities.length > 2 && (
+              <span className="text-[10px] sm:text-xs px-1.5 sm:px-2.5 py-0.5 sm:py-1 neu-badge text-[#64748B] whitespace-nowrap">
+                +{property.amenities.length - 2}
               </span>
             )}
           </div>
@@ -117,16 +248,16 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
           <div className="flex-grow"></div>
 
           {/* Price and CTA - Anchored to bottom */}
-          <div className="flex items-center justify-between pt-4 mt-auto">
+          <div className="flex items-center justify-between pt-2 sm:pt-4 mt-auto">
             <div>
-              <span className="text-xl font-bold text-[#1E293B]">
+              <span className="text-base sm:text-lg md:text-xl font-bold text-[#1E293B]">
                 {formatPrice(property.price_per_night)}
               </span>
-              <span className="text-sm text-[#64748B]">
+              <span className="text-xs sm:text-sm text-[#64748B]">
                 {property.property_type === 'tour' ? '/person' : '/night'}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-[#64748B]">
+            <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm text-[#64748B]">
               {property.property_type !== 'tour' && (
                 <>
                   <span>{property.bedrooms} beds</span>
@@ -135,7 +266,7 @@ export default function Card({ property, onWishlistToggle, isWishlisted = false 
                 </>
               )}
               {property.property_type === 'tour' && (
-                <span>{property.max_guests} max guests</span>
+                <span>{property.max_guests} max</span>
               )}
             </div>
           </div>

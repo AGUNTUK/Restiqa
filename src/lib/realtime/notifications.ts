@@ -197,7 +197,7 @@ class NotificationService {
             return null
         }
 
-        const { data, error } = await this.supabase
+        const { data, error } = await (this.supabase as any)
             .from('notifications')
             .insert({
                 ...notification,
@@ -222,7 +222,7 @@ class NotificationService {
             return false
         }
 
-        const { error } = await this.supabase
+        const { error } = await (this.supabase as any)
             .from('notifications')
             .update({ read: true })
             .eq('id', notificationId)
@@ -238,7 +238,7 @@ class NotificationService {
             return false
         }
 
-        const { error } = await this.supabase
+        const { error } = await (this.supabase as any)
             .from('notifications')
             .update({ read: true })
             .eq('user_id', userId)

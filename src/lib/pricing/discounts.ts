@@ -60,7 +60,7 @@ export function calculateLongStayDiscount(
         discountPercent: applicableTier.discountPercent,
         discountAmount,
         finalPrice,
-        appliedTier,
+        appliedTier: applicableTier,
     }
 }
 

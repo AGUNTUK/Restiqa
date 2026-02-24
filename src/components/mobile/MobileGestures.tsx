@@ -309,17 +309,12 @@ export function SwipeableGallery({
     const x = useMotionValue(0)
     const startX = useRef(0)
 
-    const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-        if ('touches' in e) {
-            startX.current = e.touches[0].clientX
-        } else {
-            startX.current = e.clientX
-        }
+    const handleDragStart = () => {
+        startX.current = x.get()
     }
 
-    const handleDragEnd = (e: React.MouseEvent | React.TouchEvent) => {
-        const endX = 'touches' in e ? e.changedTouches[0].clientX : e.clientX
-        const diff = endX - startX.current
+    const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
+        const diff = info.offset.x
 
         if (Math.abs(diff) > 50) {
             if (diff > 0 && currentIndex > 0) {
@@ -362,8 +357,8 @@ export function SwipeableGallery({
                             key={index}
                             onClick={() => setCurrentIndex(index)}
                             className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
-                                    ? 'bg-white w-4'
-                                    : 'bg-white/50'
+                                ? 'bg-white w-4'
+                                : 'bg-white/50'
                                 }`}
                         />
                     ))}
