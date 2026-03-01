@@ -22,6 +22,7 @@ interface AuthContextType extends AuthState {
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
   signInWithGoogle: () => Promise<{ error: string | null }>
+  signInWithFacebook: () => Promise<{ error: string | null }>
   updateProfile: (updates: Partial<User>) => Promise<{ error: string | null }>
   refreshProfile: () => Promise<void>
   becomeHost: () => Promise<{ error: string | null }>
@@ -263,6 +264,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [supabase.auth])
 
+  // Sign in with Facebook
+  const signInWithFacebook = useCallback(async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'facebook',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+
+      if (error) {
+        return { error: error.message }
+      }
+
+      return { error: null }
+    } catch (error) {
+      return { error: 'An unexpected error occurred' }
+    }
+  }, [supabase.auth])
+
   // Update profile
   const updateProfile = useCallback(async (updates: Partial<User>) => {
     if (!state.user) {
@@ -348,6 +369,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signUp,
     signOut,
     signInWithGoogle,
+    signInWithFacebook,
     updateProfile,
     refreshProfile,
     becomeHost,
