@@ -19,6 +19,7 @@ const PUBLIC_PATHS = [
   '/privacy-policy',
   '/terms-of-service',
   '/cookie-policy',
+  '/data-deletion',
   '/sitemap',
 ]
 const GUEST_PATHS = ['/dashboard', '/bookings', '/wishlist', '/profile']
