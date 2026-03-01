@@ -27,15 +27,17 @@ export default function Footer() {
       { label: 'Blog', href: '/blog' },
     ],
     support: [
-      { label: 'Help Center', href: '/help' },
+      { label: 'Help Center', href: '/help-center' },
       { label: 'Safety', href: '/safety' },
       { label: 'Cancellation', href: '/cancellation' },
-      { label: 'COVID-19 Response', href: '/covid' },
+      { label: 'COVID-19 Response', href: '/covid-19-response' },
+      { label: 'Support', href: '/support' },
     ],
     legal: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms of Service', href: '/terms-of-service' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
+      { label: 'Legal', href: '/legal' },
       { label: 'Sitemap', href: '/sitemap' },
     ],
   }
