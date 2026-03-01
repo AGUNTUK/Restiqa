@@ -409,15 +409,15 @@ export default function PropertyDetailsPage() {
                   <span className="text-sm sm:text-base text-[#64748B]">{property.address}, {property.city}</span>
                 </div>
                 <GoogleMap
-                  center={{ lat: property.latitude, lng: property.longitude }}
+                  center={{ lat: property.latitude ?? 23.8103, lng: property.longitude ?? 90.4125 }}
                   zoom={14}
-                  markers={[
+                  markers={property.latitude && property.longitude ? [
                     {
                       position: { lat: property.latitude, lng: property.longitude },
                       title: property.title,
                       info: property.address,
                     },
-                  ]}
+                  ] : []}
                   height="300px"
                 />
               </div>
