@@ -17,6 +17,8 @@
     "@types/react-window": "^2.0.0",
     "@vercel/analytics": "^1.6.1",
     "date-fns": "^4.1.0",
+    "firebase": "^12.10.0",
+    "firebase-tools": "^14.27.0",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.564.0",
     "mapbox-gl": "^3.18.1",

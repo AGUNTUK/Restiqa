@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Navbar, Footer, MobileHeader, MobileBottomNav } from '@/components/layout'
 import { Toaster } from 'react-hot-toast'
-import { AuthProvider } from '@/lib/auth'
+import { FirebaseAuthProvider } from '@/lib/firebase'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/seo'
@@ -94,6 +94,13 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#EEF2F6" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Restiqa" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="Restiqa" />
         <OrganizationJsonLd />
         <WebSiteJsonLd />
       </head>
@@ -101,7 +108,7 @@ export default async function RootLayout({
         <Analytics />
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <AuthProvider>
+            <FirebaseAuthProvider>
               <ErrorBoundary>
                 {/* Desktop Navbar - Hidden on mobile */}
                 <div className="hidden md:block">
@@ -147,7 +154,7 @@ export default async function RootLayout({
                   }}
                 />
               </ErrorBoundary>
-            </AuthProvider>
+            </FirebaseAuthProvider>
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

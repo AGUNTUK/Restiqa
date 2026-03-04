@@ -1,53 +1,27 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   Loader2,
-  Home,
   Building,
   Calendar,
   DollarSign,
-  Star,
-  TrendingUp,
-  Plus,
-  Eye,
-  Edit,
-  Trash2,
   Check,
   X,
-  Clock,
+  Plus,
+  Edit,
 } from 'lucide-react'
-import { useAuth } from '@/lib/auth'
-import { createClient } from '@/lib/supabase/client'
-import { Property, Booking, HostEarning } from '@/types/database'
+import { useAuth } from '@/lib/firebase/auth'
+import { useHostData, getHostService } from '@/lib/firebase/host'
 import toast from 'react-hot-toast'
-
-interface DashboardStats {
-  totalProperties: number
-  activeListings: number
-  totalBookings: number
-  pendingBookings: number
-  totalEarnings: number
-  averageRating: number
-}
 
 export default function HostDashboardPage() {
   const router = useRouter()
-  const { user, profile, isLoading: authLoading, isAuthenticated, isHost } = useAuth()
-  const [stats, setStats] = useState<DashboardStats>({
-    totalProperties: 0,
-    activeListings: 0,
-    totalBookings: 0,
-    pendingBookings: 0,
-    totalEarnings: 0,
-    averageRating: 0,
-  })
-  const [properties, setProperties] = useState<Property[]>([])
-  const [recentBookings, setRecentBookings] = useState<(Booking & { property: Property })[]>([])
-  const [loading, setLoading] = useState(true)
+  const { user, isLoading: authLoading, isAuthenticated, isHost } = useAuth()
+  const { properties, bookings, stats, isLoading } = useHostData()
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -57,89 +31,18 @@ export default function HostDashboardPage() {
     }
   }, [authLoading, isAuthenticated, isHost, router])
 
-  useEffect(() => {
-    if (user && isHost) {
-      loadDashboardData()
-    }
-  }, [user, isHost])
-
-  const loadDashboardData = async () => {
-    if (!user) return
-
-    const supabase = createClient()
-
-    try {
-      // Load properties
-      const { data: propertiesData, error: propertiesError } = await supabase
-        .from('properties')
-        .select('*')
-        .eq('host_id', user.id)
-        .order('created_at', { ascending: false })
-
-      if (propertiesError) throw propertiesError
-      setProperties(propertiesData || [])
-
-      // Load bookings
-      const { data: bookingsData, error: bookingsError } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          property:properties (*)
-        `)
-        .in('property_id', (propertiesData || []).map((p: Property) => p.id))
-        .order('created_at', { ascending: false })
-        .limit(5)
-
-      if (bookingsError) throw bookingsError
-      setRecentBookings(bookingsData || [])
-
-      // Load earnings
-      const { data: earningsData, error: earningsError } = await supabase
-        .from('host_earnings')
-        .select('net_amount')
-        .eq('host_id', user.id)
-
-      if (earningsError) throw earningsError
-
-      // Calculate stats
-      const totalEarnings = (earningsData || []).reduce((sum: number, e: HostEarning) => sum + Number(e.net_amount), 0)
-      const activeListings = (propertiesData || []).filter((p: Property) => p.is_available && p.is_approved).length
-      const pendingBookings = (bookingsData || []).filter((b: Booking) => b.status === 'pending').length
-      const avgRating = (propertiesData || []).reduce((sum: number, p: Property) => sum + p.rating, 0) / ((propertiesData || []).length || 1)
-
-      setStats({
-        totalProperties: propertiesData?.length || 0,
-        activeListings,
-        totalBookings: bookingsData?.length || 0,
-        pendingBookings,
-        totalEarnings,
-        averageRating: avgRating,
-      })
-    } catch (error) {
-      console.error('Error loading dashboard data:', error)
-      toast.error('Failed to load dashboard data')
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const togglePropertyAvailability = async (propertyId: string, currentStatus: boolean) => {
-    const supabase = createClient()
+    const hostService = getHostService()
     
-    const { error } = await supabase
-      .from('properties')
-      .update({ is_available: !currentStatus })
-      .eq('id', propertyId)
-
-    if (error) {
-      toast.error('Failed to update property')
-    } else {
+    try {
+      await hostService.updatePropertyStatus(propertyId, currentStatus ? 'inactive' : 'approved')
       toast.success('Property updated successfully')
-      loadDashboardData()
+    } catch (error) {
+      toast.error('Failed to update property')
     }
   }
 
-  if (authLoading || loading || !isHost) {
+  if (authLoading || isLoading || !isHost) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-brand-primary" />
@@ -183,7 +86,7 @@ export default function HostDashboardPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Total Properties</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalProperties}</p>
+                <p className="text-2xl font-bold text-gray-900">{stats?.totalProperties || 0}</p>
               </div>
             </div>
           </motion.div>
@@ -200,7 +103,7 @@ export default function HostDashboardPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Active Listings</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activeListings}</p>
+                <p className="text-2xl font-bold text-gray-900">{stats?.activeListings || 0}</p>
               </div>
             </div>
           </motion.div>
@@ -217,7 +120,7 @@ export default function HostDashboardPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Pending Bookings</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.pendingBookings}</p>
+                <p className="text-2xl font-bold text-gray-900">{stats?.pendingBookings || 0}</p>
               </div>
             </div>
           </motion.div>
@@ -234,7 +137,7 @@ export default function HostDashboardPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Total Earnings</p>
-                <p className="text-2xl font-bold text-gray-900">৳{stats.totalEarnings.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">${(stats?.totalEarnings || 0).toLocaleString()}</p>
               </div>
             </div>
           </motion.div>
@@ -292,18 +195,18 @@ export default function HostDashboardPage() {
                           <h3 className="font-medium text-gray-900">{property.title}</h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`text-xs px-2 py-1 rounded-full ${
-                              property.is_approved
+                              property.status === 'approved'
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-yellow-100 text-yellow-700'
                             }`}>
-                              {property.is_approved ? 'Approved' : 'Pending Approval'}
+                              {property.status === 'approved' ? 'Approved' : 'Pending Approval'}
                             </span>
                             <span className={`text-xs px-2 py-1 rounded-full ${
-                              property.is_available
+                              property.isAvailable
                                 ? 'bg-blue-100 text-blue-700'
                                 : 'bg-gray-100 text-gray-700'
                             }`}>
-                              {property.is_available ? 'Active' : 'Inactive'}
+                              {property.isAvailable ? 'Active' : 'Inactive'}
                             </span>
                           </div>
                         </div>
@@ -316,14 +219,14 @@ export default function HostDashboardPage() {
                           <Edit className="w-5 h-5" />
                         </Link>
                         <button
-                          onClick={() => togglePropertyAvailability(property.id, property.is_available)}
+                          onClick={() => togglePropertyAvailability(property.id, property.isAvailable)}
                           className={`p-2 rounded-lg transition-colors ${
-                            property.is_available
+                            property.isAvailable
                               ? 'text-green-600 hover:bg-green-50'
                               : 'text-gray-400 hover:bg-gray-100'
                           }`}
                         >
-                          {property.is_available ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                          {property.isAvailable ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
                         </button>
                       </div>
                     </div>
@@ -346,77 +249,38 @@ export default function HostDashboardPage() {
                 </Link>
               </div>
 
-              {recentBookings.length === 0 ? (
+              {bookings.length === 0 ? (
                 <div className="text-center py-8">
                   <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-600">No bookings yet</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {recentBookings.map((booking) => (
-                    <div
-                      key={booking.id}
-                      className="p-4 bg-gray-50 rounded-xl"
-                    >
+                  {bookings.slice(0, 5).map((booking) => (
+                    <div key={booking.id} className="p-3 bg-gray-50 rounded-xl">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-medium text-gray-900 text-sm">
-                          {booking.property.title}
+                          {booking.propertyTitle || 'Property Booking'}
                         </h4>
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           booking.status === 'confirmed' ? 'bg-green-100 text-green-700' :
                           booking.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                          booking.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-                          'bg-blue-100 text-blue-700'
+                          booking.status === 'completed' ? 'bg-blue-100 text-blue-700' :
+                          'bg-red-100 text-red-700'
                         }`}>
                           {booking.status}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-600">
-                        <Clock className="w-4 h-4" />
-                        {new Date(booking.check_in).toLocaleDateString()} - {new Date(booking.check_out).toLocaleDateString()}
-                      </div>
-                      <p className="text-sm font-medium text-brand-primary mt-2">
-                        ৳{booking.total_price.toLocaleString()}
+                      <p className="text-xs text-gray-500">
+                        {new Date(booking.checkIn).toLocaleDateString()} - {new Date(booking.checkOut).toLocaleDateString()}
+                      </p>
+                      <p className="text-sm font-medium text-brand-primary mt-1">
+                        ${booking.pricing.total.toLocaleString()}
                       </p>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
-
-            {/* Quick Links */}
-            <div className="clay p-6 mt-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h2>
-              <div className="space-y-2">
-                <Link
-                  href="/host/listings"
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-                >
-                  <Building className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">Manage Listings</span>
-                </Link>
-                <Link
-                  href="/host/bookings"
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-                >
-                  <Calendar className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">Booking Management</span>
-                </Link>
-                <Link
-                  href="/host/earnings"
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-                >
-                  <DollarSign className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">Earnings Overview</span>
-                </Link>
-                <Link
-                  href="/host/calendar"
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-                >
-                  <Calendar className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">Availability Calendar</span>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -424,4 +288,3 @@ export default function HostDashboardPage() {
     </div>
   )
 }
-

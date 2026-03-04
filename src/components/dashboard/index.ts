@@ -3,4 +3,5 @@ export { default as WishlistTab } from './WishlistTab'
 export { default as SettingsTab } from './SettingsTab'
 export { default as InboxTab } from './InboxTab'
 export { default as NotificationsTab } from './NotificationsTab'
-
+export { default as ChatWindow } from '../ui/ChatWindow'
+export { default as ChatList } from '../ui/ChatList'
