@@ -33,57 +33,18 @@ export async function POST(request: Request) {
 
     console.info(`[Payment Event] Admin refund initiated for transaction_id: ${transaction_id}`);
 
-    const pipraBaseUrl = process.env.PIPRAPAY_BASE_URL;
-    const pipraApiKey = process.env.PIPRAPAY_API_KEY;
-
-    if (!pipraBaseUrl || !pipraApiKey) {
-      console.error("Refund API: Payment configuration missing");
-      return NextResponse.json({ error: "Payment service unavailable" }, { status: 500 });
-    }
-
     // 1. First, verify the transaction_id to cleanly lookup the associated order_id (booking ID)
-    const verifyResponse = await fetch(`${pipraBaseUrl}/verify`, {
-      method: "POST",
-      headers: {
-        "x-api-key": pipraApiKey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ transaction_id }),
-    });
+    const { data: originalTx, error: txFetchError } = await supabase
+      .from("transactions")
+      .select("booking_id, user_id")
+      .eq("id", transaction_id)
+      .single();
 
-    if (!verifyResponse.ok) {
-      console.error("Refund Pre-Verify API Error:", await verifyResponse.text());
-      return NextResponse.json({ error: "Could not verify original transaction" }, { status: 400 });
+    if (txFetchError || !originalTx) {
+      return NextResponse.json({ error: "Original transaction not found" }, { status: 404 });
     }
 
-    const verificationData = await verifyResponse.json();
-    const order_id = verificationData.order_id;
-
-    if (!order_id) {
-      return NextResponse.json({ error: "Invalid transaction mapping, no order_id found" }, { status: 400 });
-    }
-
-    // 2. Issue the actual external refund command
-    const refundResponse = await fetch(`${pipraBaseUrl}/refund`, {
-      method: "POST",
-      headers: {
-        "x-api-key": pipraApiKey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ transaction_id, amount }),
-    });
-
-    if (!refundResponse.ok) {
-      console.error("Refund API Error:", await refundResponse.text());
-      return NextResponse.json({ error: "Refund request rejected by payment gateway" }, { status: 502 });
-    }
-
-    const refundData = await refundResponse.json();
-
-    // Typically, the gateway returns a success boolean or status inside refundData
-    if (refundData.status === "failed" || refundData.success === false) {
-      return NextResponse.json({ error: "Gateway failed to process refund", details: refundData }, { status: 400 });
-    }
+    const order_id = originalTx.booking_id;
 
     // 3. Database Updates
     

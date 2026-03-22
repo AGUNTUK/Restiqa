@@ -24,6 +24,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     { name: "Bookings", href: "/admin/bookings", icon: "📆" },
     { name: "Revenue", href: "/admin/revenue", icon: "📈" },
     { name: "Payouts", href: "/admin/payouts", icon: "💸" },
+    { name: "Payments", href: "/admin/payments", icon: "💳" },
     { name: "Transactions", href: "/admin/transactions", icon: "🧾" },
   ];
 

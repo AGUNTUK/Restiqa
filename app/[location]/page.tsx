@@ -157,7 +157,7 @@ export default async function LocationPage({ params }: Props) {
             <h4 className="font-bold text-[#1a202c]">Why book with Restiqa?</h4>
             <ul className="space-y-2 text-sm font-medium">
               <li className="flex items-center gap-2">✅ Verified properties and hosts</li>
-              <li className="flex items-center gap-2">✅ Secure mobile payments (PipraPay)</li>
+              <li className="flex items-center gap-2">✅ Secure manual payments (bKash, Nagad)</li>
               <li className="flex items-center gap-2">✅ Real guest reviews and ratings</li>
               <li className="flex items-center gap-2">✅ 24/7 customer support for bookings</li>
             </ul>

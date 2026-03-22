@@ -12,9 +12,10 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
   const [selected, setSelected] = useState("bkash");
 
   const methods = [
-    { id: "bkash", name: dict.payment.bkash, icon: "💳", color: "#e2136e" },
-    { id: "nagad", name: dict.payment.nagad, icon: "💸", color: "#f7941d" },
-    { id: "card", name: dict.payment.card, icon: "🏦", color: "#6c63ff" }
+    { id: "bkash", name: dict.payment.bkash || "bKash", icon: "💳", color: "#e2136e" },
+    { id: "nagad", name: dict.payment.nagad || "Nagad", icon: "💸", color: "#f7941d" },
+    { id: "upay", name: "Upay", icon: "📱", color: "#004B87" },
+    { id: "bank", name: "Bank Account", icon: "🏦", color: "#6c63ff" }
   ];
 
   const handleSelect = (id: string) => {

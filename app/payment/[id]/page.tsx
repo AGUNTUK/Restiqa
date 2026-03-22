@@ -66,6 +66,10 @@ export default async function PaymentPage({ params }: PageProps) {
   const checkinDate = new Date(booking.checkin).toLocaleDateString(localeCode, { month: "short", day: "numeric", year: "numeric" });
   const checkoutDate = new Date(booking.checkout).toLocaleDateString(localeCode, { month: "short", day: "numeric", year: "numeric" });
 
+  const baseAmount = booking.total_price || booking.total_amount || 0;
+  const uniqueOffset = (parseInt(booking.id.slice(-1), 16) % 9) + 1;
+  const uniqueExpectedAmount = Number(baseAmount) + uniqueOffset;
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 lg:py-20">
       <div className="mb-10 text-center">
@@ -104,7 +108,7 @@ export default async function PaymentPage({ params }: PageProps) {
             </div>
             <div className="flex justify-between items-center py-4 border-t" style={{ borderColor: "#e2e8f0" }}>
               <span className="font-bold text-[#4a5568]">{dict.payment.totalPay}</span>
-              <span className="text-xl font-extrabold text-[#1a202c]">{dict.common.currency}{booking.total_price}</span>
+              <span className="text-xl font-extrabold text-[#1a202c]">{dict.common.currency}{uniqueExpectedAmount}</span>
             </div>
           </div>
         </div>
@@ -113,7 +117,7 @@ export default async function PaymentPage({ params }: PageProps) {
         <div className="flex flex-col justify-center">
           <ClientCheckoutForm 
             bookingId={booking.id} 
-            amount={booking.total_price} 
+            amount={uniqueExpectedAmount} 
             dict={dict} 
           />
 
