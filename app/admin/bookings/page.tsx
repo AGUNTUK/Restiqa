@@ -57,7 +57,7 @@ export default async function AdminBookingsPage() {
                       </Link>
                     </td>
                     <td className="p-5">
-                      <p className="text-sm font-extrabold text-[#6c63ff] mb-1">৳{Math.round(booking.total_amount || booking.total_price)}</p>
+                      <p className="text-sm font-extrabold text-[#d32f2f] mb-1">৳{Math.round(booking.total_amount || booking.total_price)}</p>
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${booking.payment_status === 'paid' ? 'bg-[#43e97b]/20 text-[#28a745]' : booking.payment_status === 'refunded' ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600'}`}>
                         {booking.payment_status || "pending"} Pay
                       </span>

@@ -74,7 +74,7 @@ export default function BookingWidget({ listingId, price, maxGuests, dict }: Boo
               <label className="text-[10px] font-extrabold text-[#1a202c] uppercase tracking-wider mb-1 block">Check-in</label>
               <input 
                 type="date" 
-                className="bg-transparent border-none p-0 text-sm font-medium text-[#2d3748] focus:ring-0 w-full cursor-pointer"
+                className="bg-transparent border-none p-0 text-sm font-medium text-[#2a6b78] focus:ring-0 w-full cursor-pointer"
                 value={checkin}
                 onChange={(e) => setCheckin(e.target.value)}
                 min={new Date().toISOString().split("T")[0]}
@@ -85,7 +85,7 @@ export default function BookingWidget({ listingId, price, maxGuests, dict }: Boo
               <label className="text-[10px] font-extrabold text-[#1a202c] uppercase tracking-wider mb-1 block">Check-out</label>
               <input 
                 type="date" 
-                className="bg-transparent border-none p-0 text-sm font-medium text-[#2d3748] focus:ring-0 w-full cursor-pointer"
+                className="bg-transparent border-none p-0 text-sm font-medium text-[#2a6b78] focus:ring-0 w-full cursor-pointer"
                 value={checkout}
                 onChange={(e) => setCheckout(e.target.value)}
                 min={checkin || new Date().toISOString().split("T")[0]}
@@ -96,7 +96,7 @@ export default function BookingWidget({ listingId, price, maxGuests, dict }: Boo
           <div className="p-3 border border-[#cbd5e0] rounded-[16px] neo-shadow-inset">
             <label className="text-[10px] font-extrabold text-[#1a202c] uppercase tracking-wider mb-1 block">Guests</label>
             <select 
-              className="bg-transparent border-none p-0 text-sm font-medium text-[#2d3748] focus:ring-0 w-full cursor-pointer"
+              className="bg-transparent border-none p-0 text-sm font-medium text-[#2a6b78] focus:ring-0 w-full cursor-pointer"
               value={guests}
               onChange={(e) => setGuests(parseInt(e.target.value))}
             >

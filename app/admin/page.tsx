@@ -32,7 +32,7 @@ export default async function AdminOverviewPage() {
   const readyPayoutCount = readyPayouts?.length || 0;
 
   const stats = [
-    { label: "Total Users", value: usersCount || 0, icon: "👥", color: "from-[#6c63ff] to-[#8a84ff]" },
+    { label: "Total Users", value: usersCount || 0, icon: "👥", color: "from-[#d32f2f] to-[#8a84ff]" },
     { label: "Total Listings", value: listingsCount || 0, icon: "🏡", color: "from-[#43e97b] to-[#38f9d7]" },
     { label: "Total Bookings", value: bookingsCount || 0, icon: "📆", color: "from-[#fa709a] to-[#fee140]" },
     { label: "Platform Revenue", value: `৳${totalRevenue.toLocaleString()}`, icon: "💰", color: "from-[#f6d365] to-[#fda085]" }

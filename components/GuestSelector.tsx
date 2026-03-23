@@ -78,7 +78,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({ guests, onGuestsChange, d
         className="neo-inset w-full flex items-center gap-2 px-3 py-4 rounded-xl text-left transition-all active:scale-[0.98]"
       >
         <span className="text-base">👥</span>
-        <span className="text-sm flex-1 font-bold" style={{ color: totalGuests > 0 ? "#2d3748" : "#a0aec0" }}>
+        <span className="text-sm flex-1 font-bold" style={{ color: totalGuests > 0 ? "#2a6b78" : "#a0aec0" }}>
           {totalGuests > 0 ? `${totalGuests} ${dict.search.guests.toLowerCase()}` : dict.search.addGuests}
         </span>
         <span className={`text-xs transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} style={{ color: "#a0aec0" }}>▾</span>
@@ -102,7 +102,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({ guests, onGuestsChange, d
                   className="flex items-center justify-between py-4 border-b border-[#d1d9e0] last:border-0"
                 >
                   <div className="pr-4">
-                    <p className="font-extrabold text-sm text-[#2d3748]">{label}</p>
+                    <p className="font-extrabold text-sm text-[#2a6b78]">{label}</p>
                     <p className="text-[10px] text-[#a0aec0] font-medium leading-none mt-1">{sub}</p>
                   </div>
                   <div className="flex items-center gap-4">
@@ -113,11 +113,11 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({ guests, onGuestsChange, d
                         e.stopPropagation();
                         onGuestsChange(key as keyof Guests, -1);
                       }}
-                      className="neo-btn w-9 h-9 flex items-center justify-center rounded-xl text-lg font-black bg-white/50 text-[#6c63ff] disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-90"
+                      className="neo-btn w-9 h-9 flex items-center justify-center rounded-xl text-lg font-black bg-white/50 text-[#d32f2f] disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-90"
                     >
                       −
                     </button>
-                    <span className="w-6 text-center font-black text-base text-[#2d3748] tabular-nums">
+                    <span className="w-6 text-center font-black text-base text-[#2a6b78] tabular-nums">
                       {guests[key as keyof Guests]}
                     </span>
                     <button
@@ -126,7 +126,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({ guests, onGuestsChange, d
                         e.stopPropagation();
                         onGuestsChange(key as keyof Guests, 1);
                       }}
-                      className="neo-btn w-9 h-9 flex items-center justify-center rounded-xl text-lg font-black bg-white/50 text-[#6c63ff] transition-all active:scale-90"
+                      className="neo-btn w-9 h-9 flex items-center justify-center rounded-xl text-lg font-black bg-white/50 text-[#d32f2f] transition-all active:scale-90"
                     >
                       +
                     </button>
@@ -138,7 +138,7 @@ const GuestSelector: React.FC<GuestSelectorProps> = ({ guests, onGuestsChange, d
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="w-full neo-btn py-2.5 rounded-xl text-xs font-extrabold text-[#6c63ff] uppercase tracking-widest hover:bg-white/40 transition-all"
+                  className="w-full neo-btn py-2.5 rounded-xl text-xs font-extrabold text-[#d32f2f] uppercase tracking-widest hover:bg-white/40 transition-all"
                 >
                   Done
                 </button>

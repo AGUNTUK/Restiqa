@@ -160,7 +160,7 @@ export default function AddListingForm() {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4 text-sm font-bold text-[#a0aec0] uppercase tracking-widest">
           <span>Step {step} of {totalSteps}</span>
-          <span className="text-[#6c63ff]">
+          <span className="text-[#d32f2f]">
             {step === 1 && "Property Type"}
             {step === 2 && "Location"}
             {step === 3 && "Property Details"}
@@ -173,7 +173,7 @@ export default function AddListingForm() {
           {[...Array(totalSteps)].map((_, i) => (
             <div key={i} className="flex-1 h-full px-[1px]">
               <div 
-                className={`w-full h-full transition-all duration-500 rounded-full ${i + 1 <= step ? "bg-gradient-to-r from-[#6c63ff] to-[#ff6584]" : "bg-transparent"}`}
+                className={`w-full h-full transition-all duration-500 rounded-full ${i + 1 <= step ? "bg-gradient-to-r from-[#d32f2f] to-[#8bc1c1]" : "bg-transparent"}`}
               />
             </div>
           ))}
@@ -206,12 +206,12 @@ export default function AddListingForm() {
                     onClick={() => updateData("type", pt.id)}
                     className={`cursor-pointer neo-card p-6 rounded-3xl transition-all duration-300 transform active:scale-95 ${
                       isSelected 
-                        ? "shadow-[inset_4px_4px_10px_rgba(163,177,198,0.5),inset_-4px_-4px_10px_rgba(255,255,255,0.8)] border-2 border-[#6c63ff]" 
+                        ? "shadow-[inset_4px_4px_10px_rgba(163,177,198,0.5),inset_-4px_-4px_10px_rgba(255,255,255,0.8)] border-2 border-[#d32f2f]" 
                         : "hover:-translate-y-1 hover:border-[#cbd5e0] border-2 border-transparent"
                     }`}
                   >
                     <div className="text-4xl mb-4">{pt.icon}</div>
-                    <h3 className={`text-xl font-bold mb-1 ${isSelected ? "text-[#6c63ff]" : "text-[#1a202c]"}`}>{pt.label}</h3>
+                    <h3 className={`text-xl font-bold mb-1 ${isSelected ? "text-[#d32f2f]" : "text-[#1a202c]"}`}>{pt.label}</h3>
                     <p className="text-sm text-[#718096] font-medium">{pt.desc}</p>
                   </div>
                 );
@@ -234,7 +234,7 @@ export default function AddListingForm() {
                   value={data.country}
                   onChange={(e) => updateData("country", e.target.value)}
                   placeholder="e.g. Bangladesh"
-                  className="neo-inset w-full p-5 rounded-2xl text-lg font-bold text-[#2d3748] placeholder-[#cbd5e0] focus:outline-none focus:ring-2 focus:ring-[#6c63ff]/20 transition-all"
+                  className="neo-inset w-full p-5 rounded-2xl text-lg font-bold text-[#2a6b78] placeholder-[#cbd5e0] focus:outline-none focus:ring-2 focus:ring-[#d32f2f]/20 transition-all"
                 />
               </div>
               <div>
@@ -244,7 +244,7 @@ export default function AddListingForm() {
                   value={data.city}
                   onChange={(e) => updateData("city", e.target.value)}
                   placeholder="e.g. Gulshan, Dhaka"
-                  className="neo-inset w-full p-5 rounded-2xl text-lg font-bold text-[#2d3748] placeholder-[#cbd5e0] focus:outline-none focus:ring-2 focus:ring-[#6c63ff]/20 transition-all"
+                  className="neo-inset w-full p-5 rounded-2xl text-lg font-bold text-[#2a6b78] placeholder-[#cbd5e0] focus:outline-none focus:ring-2 focus:ring-[#d32f2f]/20 transition-all"
                 />
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function AddListingForm() {
                   value={data.title}
                   onChange={(e) => updateData("title", e.target.value)}
                   placeholder="e.g. Cozy City View Apartment"
-                  className="neo-inset w-full p-4 rounded-2xl text-md font-bold text-[#2d3748] placeholder-[#cbd5e0] focus:outline-none"
+                  className="neo-inset w-full p-4 rounded-2xl text-md font-bold text-[#2a6b78] placeholder-[#cbd5e0] focus:outline-none"
                 />
               </div>
               <div className="md:col-span-2">
@@ -277,7 +277,7 @@ export default function AddListingForm() {
                   onChange={(e) => updateData("description", e.target.value)}
                   placeholder="Describe your property..."
                   rows={3}
-                  className="neo-inset w-full p-4 rounded-2xl text-md font-medium text-[#2d3748] placeholder-[#cbd5e0] focus:outline-none resize-none"
+                  className="neo-inset w-full p-4 rounded-2xl text-md font-medium text-[#2a6b78] placeholder-[#cbd5e0] focus:outline-none resize-none"
                 />
               </div>
             </div>
@@ -290,7 +290,7 @@ export default function AddListingForm() {
                   min="1"
                   value={data.maxGuests}
                   onChange={(e) => updateData("maxGuests", e.target.value)}
-                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#6c63ff] text-center focus:outline-none"
+                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
                 />
               </div>
               <div className="neo-card p-4 rounded-2xl text-center">
@@ -300,7 +300,7 @@ export default function AddListingForm() {
                   min="1"
                   value={data.beds}
                   onChange={(e) => updateData("beds", e.target.value)}
-                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#6c63ff] text-center focus:outline-none"
+                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
                 />
               </div>
               <div className="neo-card p-4 rounded-2xl text-center">
@@ -311,7 +311,7 @@ export default function AddListingForm() {
                   min="0.5"
                   value={data.baths}
                   onChange={(e) => updateData("baths", e.target.value)}
-                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#6c63ff] text-center focus:outline-none"
+                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
                 />
               </div>
             </div>
@@ -334,11 +334,11 @@ export default function AddListingForm() {
                       />
                       <div className={`p-4 rounded-2xl text-center transition-all ${
                         isChecked 
-                          ? "neo-inset bg-[#e8edf2] border border-[#6c63ff]/20" 
+                          ? "neo-inset bg-[#e8edf2] border border-[#d32f2f]/20" 
                           : "neo-card hover:shadow-inner bg-transparent"
                       }`}>
                         <div className={`text-2xl mb-1 transition-transform ${isChecked ? "scale-110" : "opacity-70 group-hover:scale-105"}`}>{item.icon}</div>
-                        <div className={`text-xs font-bold ${isChecked ? "text-[#6c63ff]" : "text-[#718096]"}`}>{item.label}</div>
+                        <div className={`text-xs font-bold ${isChecked ? "text-[#d32f2f]" : "text-[#718096]"}`}>{item.label}</div>
                       </div>
                     </label>
                   );
@@ -354,9 +354,9 @@ export default function AddListingForm() {
             <h2 className="text-3xl font-extrabold text-[#1a202c] mb-2 tracking-tight">Add some photos of your space</h2>
             <p className="text-[#718096] font-medium mb-6">You'll need at least one photo to get started. Note: Images are not saved in drafts.</p>
             
-            <div className="neo-inset rounded-[32px] p-8 md:p-12 text-center border-2 border-dashed border-[#cbd5e0] hover:border-[#6c63ff] transition-colors relative">
+            <div className="neo-inset rounded-[32px] p-8 md:p-12 text-center border-2 border-dashed border-[#cbd5e0] hover:border-[#d32f2f] transition-colors relative">
               <span className="text-6xl mb-4 block">📸</span>
-              <h3 className="text-xl font-extrabold text-[#2d3748] mb-2">Drag your photos here</h3>
+              <h3 className="text-xl font-extrabold text-[#2a6b78] mb-2">Drag your photos here</h3>
               <p className="text-[#718096] mb-6 font-medium">Choose at least 1 photo related to your property.</p>
               
               <label className="cursor-pointer neo-btn px-6 py-3 rounded-full text-sm font-extrabold inline-block shadow-sm">
@@ -396,14 +396,14 @@ export default function AddListingForm() {
             <p className="text-[#718096] font-medium mb-12">You can change it anytime.</p>
             
             <div className="relative flex justify-center items-baseline mx-auto w-full max-w-xs">
-              <span className="text-5xl font-extrabold text-[#2d3748] mr-2">৳</span>
+              <span className="text-5xl font-extrabold text-[#2a6b78] mr-2">৳</span>
               <input
                 type="number"
                 min="1"
                 value={data.price}
                 onChange={(e) => updateData("price", e.target.value)}
                 placeholder="0"
-                className="neo-inset w-full py-6 pr-4 pl-0 bg-transparent text-6xl font-extrabold text-[#6c63ff] placeholder-[#cbd5e0] focus:outline-none text-center rounded-[32px]"
+                className="neo-inset w-full py-6 pr-4 pl-0 bg-transparent text-6xl font-extrabold text-[#d32f2f] placeholder-[#cbd5e0] focus:outline-none text-center rounded-[32px]"
                 style={{ appearance: 'none' }}
               />
             </div>
@@ -425,7 +425,7 @@ export default function AddListingForm() {
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-4xl">🏜️</div>
                 )}
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold shadow-sm uppercase text-[#6c63ff]">
+                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold shadow-sm uppercase text-[#d32f2f]">
                   {data.type}
                 </div>
               </div>
@@ -433,7 +433,7 @@ export default function AddListingForm() {
               {/* Details Preview */}
               <div className="flex-1 w-full space-y-4">
                 <div>
-                  <h3 className="text-2xl font-extrabold text-[#2d3748] mb-1 leading-tight">{data.title || "Untitled Property"}</h3>
+                  <h3 className="text-2xl font-extrabold text-[#2a6b78] mb-1 leading-tight">{data.title || "Untitled Property"}</h3>
                   <p className="text-[#718096] font-semibold flex items-center gap-1">
                     <span className="text-lg">📍</span> {data.city || "City"}, {data.country || "Country"}
                   </p>
@@ -446,7 +446,7 @@ export default function AddListingForm() {
                 </div>
 
                 <div className="pt-4 border-t border-[#e2e8f0]/40 flex justify-between items-center">
-                  <span className="font-extrabold text-2xl text-[#6c63ff]">৳{data.price || "0"}<span className="text-sm text-[#a0aec0]"> / night</span></span>
+                  <span className="font-extrabold text-2xl text-[#d32f2f]">৳{data.price || "0"}<span className="text-sm text-[#a0aec0]"> / night</span></span>
                 </div>
               </div>
             </div>
@@ -475,8 +475,8 @@ export default function AddListingForm() {
             type="button"
             onClick={handleNext}
             disabled={!canProceed()}
-            className="neo-btn px-10 py-3 rounded-full text-sm font-extrabold text-white disabled:opacity-50 transition-all shadow-[0_5px_15px_rgba(108,99,255,0.4)]"
-            style={{ background: "linear-gradient(135deg, #6c63ff, #ff6584)" }}
+            className="neo-btn px-10 py-3 rounded-full text-sm font-extrabold text-white disabled:opacity-50 transition-all shadow-[0_5px_15px_rgba(211, 47, 47,0.4)]"
+            style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)" }}
           >
             Next
           </button>

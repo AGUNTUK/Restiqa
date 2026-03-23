@@ -175,8 +175,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
         <div
           className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-extrabold text-white shrink-0"
           style={{
-            background: "linear-gradient(135deg, #6c63ff, #ff6584)",
-            boxShadow: "4px 4px 14px rgba(108,99,255,0.35)",
+            background: "linear-gradient(135deg, #d32f2f, #8bc1c1)",
+            boxShadow: "4px 4px 14px rgba(211, 47, 47,0.35)",
           }}
         >
           {initial}
@@ -211,13 +211,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
       <div className="neo-inset p-2 rounded-2xl flex gap-2 mb-8 mx-auto w-full max-w-sm">
         <Link 
           href="?tab=traveler" 
-          className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "traveler" ? "neo-card text-[#6c63ff] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
+          className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "traveler" ? "neo-card text-[#d32f2f] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
         >
           Traveler
         </Link>
         <Link 
           href="?tab=host" 
-           className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "host" ? "neo-card text-[#ff6584] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
+           className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "host" ? "neo-card text-[#8bc1c1] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
         >
           Host
         </Link>
@@ -240,7 +240,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
               ].map(({ label, value }) => (
                 <div key={label} className="neo-card-sm p-4 rounded-xl">
                   <p className="text-xs font-bold uppercase tracking-wide mb-1 text-[#a0aec0]">{label}</p>
-                  <p className="text-sm font-semibold truncate text-[#2d3748]">{value}</p>
+                  <p className="text-sm font-semibold truncate text-[#2a6b78]">{value}</p>
                 </div>
               ))}
             </div>
@@ -283,7 +283,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                           <span className="text-[10px] sm:text-xs font-extrabold uppercase text-[#a0aec0] tracking-wider block mb-0.5">
                             {booking.guests_count} guest{booking.guests_count > 1 ? "s" : ""}
                           </span>
-                          <span className="text-sm font-extrabold text-[#6c63ff]">৳{Math.round(booking.total_price)}</span>
+                          <span className="text-sm font-extrabold text-[#d32f2f]">৳{Math.round(booking.total_price)}</span>
                         </div>
                         {(booking.status === "pending" || booking.status === "confirmed") && (
                           <form action={cancelBooking}>
@@ -314,7 +314,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
             <div className="grid gap-4 sm:grid-cols-2">
               {quickLinks.map(({ href, icon, label, sub }) => (
                 <Link key={label} href={href} className="neo-card rounded-[16px] p-5 flex items-center gap-4 transition-all hover:-translate-y-1">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-[3px_3px_10px_rgba(108,99,255,0.3)] bg-gradient-to-br from-[#6c63ff] to-[#ff6584]">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-[3px_3px_10px_rgba(211, 47, 47,0.3)] bg-gradient-to-br from-[#d32f2f] to-[#8bc1c1]">
                     {icon}
                   </div>
                   <div>
@@ -339,7 +339,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div className="neo-card p-6 rounded-[24px]">
               <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Earned</p>
-              <p className="text-3xl font-extrabold text-[#6c63ff]">৳{totalEarnings.toLocaleString()}</p>
+              <p className="text-3xl font-extrabold text-[#d32f2f]">৳{totalEarnings.toLocaleString()}</p>
             </div>
             <div className="neo-card p-6 rounded-[24px]">
               <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Completed Payouts</p>
@@ -359,7 +359,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                const heightPct = (m.earnings / maxEarning) * 100;
                return (
                  <div key={`${m.month}-${m.year}`} className="flex-1 flex flex-col justify-end items-center h-full group">
-                   <div className="w-full max-w-[40px] rounded-[10px] transition-all duration-500 bg-gradient-to-t from-[#6c63ff]/80 to-[#ff6584]/80 group-hover:from-[#6c63ff] group-hover:to-[#ff6584] relative flex justify-center shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" style={{ height: `${heightPct}%`, minHeight: '8px' }}>
+                   <div className="w-full max-w-[40px] rounded-[10px] transition-all duration-500 bg-gradient-to-t from-[#d32f2f]/80 to-[#8bc1c1]/80 group-hover:from-[#d32f2f] group-hover:to-[#8bc1c1] relative flex justify-center shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" style={{ height: `${heightPct}%`, minHeight: '8px' }}>
                      <span className="absolute -top-7 text-[10px] font-bold text-[#4a5568] opacity-0 group-hover:opacity-100 transition-opacity">৳{Math.round(m.earnings)}</span>
                    </div>
                    <span className="text-[10px] sm:text-xs font-extrabold uppercase text-[#a0aec0] mt-3 whitespace-nowrap tracking-wider">{m.label}</span>
@@ -377,7 +377,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                    <p className="text-sm font-extrabold text-[#1a202c] mb-1">{pm.provider}</p>
                    <p className="text-xs font-bold text-[#718096]">{pm.account_details}</p>
                  </div>
-                 {pm.is_default && <span className="text-[10px] font-extrabold uppercase bg-white/70 shadow-sm text-[#6c63ff] px-3 py-1.5 rounded-full backdrop-blur-md">Primary</span>}
+                 {pm.is_default && <span className="text-[10px] font-extrabold uppercase bg-white/70 shadow-sm text-[#d32f2f] px-3 py-1.5 rounded-full backdrop-blur-md">Primary</span>}
                </div>
              )) : (
                <div className="neo-inset p-5 rounded-[20px] text-center col-span-full">
@@ -396,7 +396,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                    <option value="Bank">Bank Account</option>
                  </select>
                  <input type="text" name="account_details" placeholder="Account Details (e.g. Number)" className="neo-inset rounded-[14px] px-4 py-3 text-sm font-bold bg-transparent focus:outline-none flex-[2]" required />
-                 <button type="submit" className="neo-btn px-6 py-3 rounded-[14px] text-sm font-extrabold text-[#6c63ff] whitespace-nowrap shadow-sm">Save Details</button>
+                 <button type="submit" className="neo-btn px-6 py-3 rounded-[14px] text-sm font-extrabold text-[#d32f2f] whitespace-nowrap shadow-sm">Save Details</button>
                </div>
              </form>
           </div>
@@ -439,7 +439,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                     </div>
                     {/* Actions */}
                     <div className="flex sm:flex-col justify-end gap-2 shrink-0 border-t sm:border-t-0 sm:border-l border-[#e2e8f0]/40 pt-3 sm:pt-0 sm:pl-3">
-                      <Link href={`/dashboard/edit-listing/${property.id}`} className="neo-btn px-4 py-2 rounded-xl font-bold text-xs text-[#6c63ff] flex-1 text-center items-center justify-center flex hover:underline">
+                      <Link href={`/dashboard/edit-listing/${property.id}`} className="neo-btn px-4 py-2 rounded-xl font-bold text-xs text-[#d32f2f] flex-1 text-center items-center justify-center flex hover:underline">
                         Edit
                       </Link>
                       <form action={deleteListing} className="flex-1 flex">
@@ -485,7 +485,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                     </p>
                   </div>
                   <div className="md:text-right shrink-0">
-                    <p className="text-sm font-extrabold text-[#6c63ff] mb-1">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9))}</p>
+                    <p className="text-sm font-extrabold text-[#d32f2f] mb-1">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9))}</p>
                     <p className="text-xs font-bold text-[#a0aec0] mb-3">Guest ID: {booking.user_id?.substring(0, 6).toUpperCase()}</p>
                     {booking.status === "pending" && (
                       <div className="flex gap-2 justify-end">

@@ -41,7 +41,7 @@ export default async function HostOverviewPage() {
   const upcomingBookings = bookings?.filter(b => new Date(b.checkin) > new Date()).length || 0;
 
   const stats = [
-    { label: "Total Earnings", value: `৳${Math.round(totalEarnings).toLocaleString()}`, icon: "💰", color: "from-[#6c63ff] to-[#8a84ff]" },
+    { label: "Total Earnings", value: `৳${Math.round(totalEarnings).toLocaleString()}`, icon: "💰", color: "from-[#d32f2f] to-[#8a84ff]" },
     { label: "Active Listings", value: activeListingsCount, icon: "🏡", color: "from-[#43e97b] to-[#38f9d7]" },
     { label: "Total Bookings", value: totalBookingsCount, icon: "📆", color: "from-[#fa709a] to-[#fee140]" },
     { label: "Upcoming Stays", value: upcomingBookings, icon: "✨", color: "from-[#f6d365] to-[#fda085]" }
@@ -77,7 +77,7 @@ export default async function HostOverviewPage() {
         <div className="lg:col-span-2">
           <div className="flex justify-between items-center mb-4 px-2">
             <h3 className="text-lg font-black text-[#1a202c]">Recent Reservations</h3>
-            <Link href="/host/bookings" className="text-xs font-bold text-[#6c63ff] hover:underline">View All</Link>
+            <Link href="/host/bookings" className="text-xs font-bold text-[#d32f2f] hover:underline">View All</Link>
           </div>
           <div className="neo-card rounded-[32px] overflow-hidden border border-white/40">
             <div className="overflow-x-auto">
@@ -115,7 +115,7 @@ export default async function HostOverviewPage() {
                             {booking.status}
                           </span>
                         </td>
-                        <td className="p-5 text-sm font-black text-[#6c63ff] text-right">
+                        <td className="p-5 text-sm font-black text-[#d32f2f] text-right">
                           ৳{Math.round(booking.host_earnings || (booking.total_price * 0.9)).toLocaleString()}
                         </td>
                       </tr>
@@ -130,7 +130,7 @@ export default async function HostOverviewPage() {
         {/* Quick Tips / Sidebar */}
         <div className="space-y-6">
           <h3 className="text-lg font-black text-[#1a202c] px-2">Hosting Tips</h3>
-          <div className="neo-card p-6 rounded-[28px] bg-gradient-to-br from-[#6c63ff]/10 to-transparent border border-[#6c63ff]/20">
+          <div className="neo-card p-6 rounded-[28px] bg-gradient-to-br from-[#d32f2f]/10 to-transparent border border-[#d32f2f]/20">
             <span className="text-2xl mb-2 block">💡</span>
             <p className="text-sm font-bold text-[#1a202c] mb-2 italic">Boost your visibility</p>
             <p className="text-xs font-medium text-[#718096] leading-relaxed">Hosts with professional photos see 40% more bookings. Consider updating your property images!</p>
@@ -139,7 +139,7 @@ export default async function HostOverviewPage() {
              <p className="text-xs font-black text-[#a0aec0] uppercase tracking-widest mb-4">Support</p>
              <p className="text-sm font-bold text-[#1a202c] mb-1">Need help?</p>
              <p className="text-xs font-medium text-[#718096] mb-4 leading-relaxed">Our support team is available 24/7 for our hosts.</p>
-             <button className="w-full py-3 rounded-2xl bg-white text-[#6c63ff] text-xs font-black shadow-md border border-white/60 hover:shadow-lg transition-all">Contact Us</button>
+             <button className="w-full py-3 rounded-2xl bg-white text-[#d32f2f] text-xs font-black shadow-md border border-white/60 hover:shadow-lg transition-all">Contact Us</button>
           </div>
         </div>
       </div>

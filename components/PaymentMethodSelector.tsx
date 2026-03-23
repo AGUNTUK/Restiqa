@@ -15,7 +15,7 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
     { id: "bkash", name: dict.payment.bkash || "bKash", icon: "💳", color: "#e2136e" },
     { id: "nagad", name: dict.payment.nagad || "Nagad", icon: "💸", color: "#f7941d" },
     { id: "upay", name: "Upay", icon: "📱", color: "#004B87" },
-    { id: "bank", name: "Bank Account", icon: "🏦", color: "#6c63ff" }
+    { id: "bank", name: "Bank Account", icon: "🏦", color: "#d32f2f" }
   ];
 
   const handleSelect = (id: string) => {
@@ -36,8 +36,8 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
             onClick={() => handleSelect(method.id)}
             className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all duration-300 ${
               selected === method.id
-                ? "border-[#6c63ff] bg-[#6c63ff]/5 shadow-[inset_4px_4px_8px_#c4c9ce,inset_-4px_-4px_8px_#ffffff]"
-                : "border-transparent bg-transparent hover:bg-[#6c63ff]/5"
+                ? "border-[#d32f2f] bg-[#d32f2f]/5 shadow-[inset_4px_4px_8px_#c4c9ce,inset_-4px_-4px_8px_#ffffff]"
+                : "border-transparent bg-transparent hover:bg-[#d32f2f]/5"
             }`}
           >
             <div className="flex items-center gap-4">
@@ -52,7 +52,7 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
               </span>
             </div>
             {selected === method.id && (
-              <div className="w-5 h-5 rounded-full bg-[#6c63ff] flex items-center justify-center">
+              <div className="w-5 h-5 rounded-full bg-[#d32f2f] flex items-center justify-center">
                 <div className="w-2 h-2 rounded-full bg-white" />
               </div>
             )}

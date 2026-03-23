@@ -51,7 +51,7 @@ export default async function AdminUsersPage() {
                     </div>
                   </td>
                   <td className="p-5">
-                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${user.role === 'admin' ? 'bg-gradient-to-r from-[#ff6584] to-[#ff849b] text-white' : user.role === 'host' ? 'bg-[#6c63ff]/10 text-[#6c63ff] border border-[#6c63ff]/20' : 'bg-gray-100 text-gray-500'}`}>
+                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${user.role === 'admin' ? 'bg-gradient-to-r from-[#8bc1c1] to-[#ff849b] text-white' : user.role === 'host' ? 'bg-[#d32f2f]/10 text-[#d32f2f] border border-[#d32f2f]/20' : 'bg-gray-100 text-gray-500'}`}>
                       {user.role}
                     </span>
                   </td>

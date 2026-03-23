@@ -35,7 +35,7 @@ export default async function BlogListingPage() {
     <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
       <div className="mb-16 text-center max-w-2xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight" style={{ color: "#1a202c" }}>
-          Travel <span className="text-[#6c63ff]">Insights</span>
+          Travel <span className="text-[#d32f2f]">Insights</span>
         </h1>
         <p className="text-lg md:text-xl text-[#718096] font-medium leading-relaxed">
           Expert guides, local secrets, and the best places to stay across beautiful Bangladesh. 
@@ -63,7 +63,7 @@ export default async function BlogListingPage() {
                 </div>
                 
                 <div className="px-3 flex flex-col flex-grow">
-                  <h2 className="text-xl font-extrabold mb-3 line-clamp-2 transition-colors group-hover:text-[#6c63ff]" style={{ color: "#1a202c" }}>
+                  <h2 className="text-xl font-extrabold mb-3 line-clamp-2 transition-colors group-hover:text-[#d32f2f]" style={{ color: "#1a202c" }}>
                     {post.title}
                   </h2>
                   <p className="text-[#718096] text-sm font-medium line-clamp-3 mb-6 leading-relaxed">

@@ -99,7 +99,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
             <button 
               type="button" 
               onClick={handleCopy}
-              className="p-2.5 bg-[#f0f3f8] rounded-lg shadow-[2px_2px_5px_#c4c9ce,-2px_-2px_5px_#ffffff] text-[#6c63ff] hover:text-[#5a52d5] active:shadow-[inset_2px_2px_5px_#c4c9ce,inset_-2px_-2px_5px_#ffffff] transition-all flex items-center justify-center"
+              className="p-2.5 bg-[#f0f3f8] rounded-lg shadow-[2px_2px_5px_#c4c9ce,-2px_-2px_5px_#ffffff] text-[#d32f2f] hover:text-[#5a52d5] active:shadow-[inset_2px_2px_5px_#c4c9ce,inset_-2px_-2px_5px_#ffffff] transition-all flex items-center justify-center"
               aria-label="Copy number"
             >
               {copied ? (
@@ -113,7 +113,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
 
         <div className="pt-4 border-t border-gray-200/50">
           <p className="text-[15px] text-[#4a5568] font-medium leading-relaxed mb-5">
-            Please send exactly <strong className="text-[#6c63ff] font-extrabold">{dict.common.currency}{amount}</strong> to the account above, then enter the Transaction ID below to verify your payment.
+            Please send exactly <strong className="text-[#d32f2f] font-extrabold">{dict.common.currency}{amount}</strong> to the account above, then enter the Transaction ID below to verify your payment.
           </p>
           
           <div className="space-y-4">
@@ -127,7 +127,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
                 placeholder="e.g. 017XXXXXXXX"
                 value={senderNumber}
                 onChange={(e) => setSenderNumber(e.target.value)}
-                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#6c63ff] focus:ring-4 focus:ring-[#6c63ff]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c] placeholder:text-gray-300"
+                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#d32f2f] focus:ring-4 focus:ring-[#d32f2f]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c] placeholder:text-gray-300"
                 required
               />
             </div>
@@ -143,7 +143,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
                 placeholder={`e.g. ${amount}`}
                 value={amountPaid}
                 onChange={(e) => setAmountPaid(e.target.value)}
-                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#6c63ff] focus:ring-4 focus:ring-[#6c63ff]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c] placeholder:text-gray-300"
+                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#d32f2f] focus:ring-4 focus:ring-[#d32f2f]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c] placeholder:text-gray-300"
                 required
               />
             </div>
@@ -158,7 +158,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
                 placeholder="e.g. 7X9A2B3D4"
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
-                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#6c63ff] focus:ring-4 focus:ring-[#6c63ff]/10 outline-none transition-all font-mono text-lg uppercase shadow-sm text-[#1a202c] placeholder:text-gray-300"
+                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#d32f2f] focus:ring-4 focus:ring-[#d32f2f]/10 outline-none transition-all font-mono text-lg uppercase shadow-sm text-[#1a202c] placeholder:text-gray-300"
                 required
               />
             </div>
@@ -171,7 +171,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
                 type="datetime-local"
                 value={transactionTime}
                 onChange={(e) => setTransactionTime(e.target.value)}
-                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#6c63ff] focus:ring-4 focus:ring-[#6c63ff]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c]"
+                className="w-full px-5 py-4 rounded-xl bg-white border-2 border-transparent focus:border-[#d32f2f] focus:ring-4 focus:ring-[#d32f2f]/10 outline-none transition-all font-mono text-lg shadow-sm text-[#1a202c]"
                 required
               />
             </div>
@@ -195,7 +195,7 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
           className={`w-full py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
             loading || !transactionId.trim() || !amountPaid || !senderNumber.trim() || !transactionTime
               ? 'bg-gray-100 text-gray-400 shadow-[inset_4px_4px_8px_#c4c9ce,inset_-4px_-4px_8px_#ffffff] cursor-not-allowed'
-              : 'bg-[#6c63ff] text-white shadow-[6px_6px_12px_#c4c9ce,-6px_-6px_12px_#ffffff] hover:bg-[#5a52d5] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.2)]'
+              : 'bg-[#d32f2f] text-white shadow-[6px_6px_12px_#c4c9ce,-6px_-6px_12px_#ffffff] hover:bg-[#5a52d5] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.2)]'
           }`}
         >
         {loading ? (

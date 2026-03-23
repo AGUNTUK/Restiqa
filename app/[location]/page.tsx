@@ -97,7 +97,7 @@ export default async function LocationPage({ params }: Props) {
     <div className="max-w-[1500px] mx-auto px-4 sm:px-6 py-12 lg:py-20">
       {/* Hero Section */}
       <div className="mb-12 max-w-3xl">
-        <nav className="flex items-center gap-2 text-sm font-bold text-[#6c63ff] mb-6 uppercase tracking-widest">
+        <nav className="flex items-center gap-2 text-sm font-bold text-[#d32f2f] mb-6 uppercase tracking-widest">
           <a href="/listings" className="hover:underline">Explore</a>
           <span>/</span>
           <span className="text-[#a0aec0]">{config.city}</span>
@@ -116,7 +116,7 @@ export default async function LocationPage({ params }: Props) {
       <div className="mb-16">
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#e2e8f0]">
           <h2 className="text-2xl font-bold text-[#1a202c]">Top Properties in {config.city}</h2>
-          <a href={`/listings?city=${config.city}`} className="text-[#6c63ff] font-bold text-sm hover:underline">
+          <a href={`/listings?city=${config.city}`} className="text-[#d32f2f] font-bold text-sm hover:underline">
             View all {config.city} stays →
           </a>
         </div>
@@ -139,7 +139,7 @@ export default async function LocationPage({ params }: Props) {
 
       {/* SEO Content Section (Optional extra value) */}
       <div className="bg-[#f7fafc] rounded-[40px] p-8 md:p-12 border border-white shadow-sm">
-        <h3 className="text-xl font-bold mb-4 text-[#2d3748]">Plan Your Trip to {config.city}</h3>
+        <h3 className="text-xl font-bold mb-4 text-[#2a6b78]">Plan Your Trip to {config.city}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[#4a5568] leading-relaxed">
           <div>
             <p className="mb-4">

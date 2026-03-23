@@ -99,11 +99,11 @@ export default async function ListingDetailsPage({ params }: PageProps) {
     <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 md:py-12">
       {/* 1. Header & Breadcrumbs */}
       <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-medium text-[#718096]">
-        <a href="/" className="hover:text-[#6c63ff] transition-colors">Home</a>
+        <a href="/" className="hover:text-[#d32f2f] transition-colors">Home</a>
         <span>/</span>
-        <a href="/listings" className="hover:text-[#6c63ff] transition-colors">{dict.nav.listings}</a>
+        <a href="/listings" className="hover:text-[#d32f2f] transition-colors">{dict.nav.listings}</a>
         <span>/</span>
-        <span className="text-[#2d3748] truncate max-w-[200px]">{l.title}</span>
+        <span className="text-[#2a6b78] truncate max-w-[200px]">{l.title}</span>
       </div>
 
       {/* 2. Title Section */}
@@ -113,12 +113,12 @@ export default async function ListingDetailsPage({ params }: PageProps) {
             {l.title}
           </h1>
           <div className="flex items-center gap-4 text-sm font-semibold">
-            <span className="flex items-center gap-1 text-[#2d3748]">
+            <span className="flex items-center gap-1 text-[#2a6b78]">
               <span className="text-[#f6ad55]">★</span> {Number(l.avg_rating).toFixed(1)} 
               <span className="text-[#a0aec0] font-normal">({l.review_count} {dict.listing.reviewsCount})</span>
             </span>
             <span className="text-[#a0aec0]">•</span>
-            <span className="text-[#718096] underline decoration-1 underline-offset-4 cursor-pointer hover:text-[#6c63ff] transition-colors">
+            <span className="text-[#718096] underline decoration-1 underline-offset-4 cursor-pointer hover:text-[#d32f2f] transition-colors">
               {l.location}, {l.city}
             </span>
           </div>
@@ -232,7 +232,7 @@ export default async function ListingDetailsPage({ params }: PageProps) {
             <h3 className="text-xl font-bold text-[#1a202c] mb-6">What this place offers</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
               {l.amenities.map((amenity) => (
-                <div key={amenity} className="flex items-center gap-4 text-[#2d3748]">
+                <div key={amenity} className="flex items-center gap-4 text-[#2a6b78]">
                   <span className="text-xl">
                     {amenity.toLowerCase().includes('wifi') ? '📶' : 
                      amenity.toLowerCase().includes('ac') || amenity.toLowerCase().includes('conditioning') ? '❄️' :

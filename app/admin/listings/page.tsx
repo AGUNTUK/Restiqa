@@ -54,7 +54,7 @@ export default async function AdminListingsPage({ searchParams }: { searchParams
               href={`/admin/listings?status=${tab.value}`}
               className={`px-6 py-3 rounded-[20px] text-xs font-bold transition-all flex items-center gap-2 ${
                 activeStatus === tab.value
-                  ? "bg-[#6c63ff] text-white shadow-lg neo-shadow-sm scale-105"
+                  ? "bg-[#d32f2f] text-white shadow-lg neo-shadow-sm scale-105"
                   : "bg-white/50 text-[#718096] hover:bg-white/80"
               }`}
             >
@@ -107,7 +107,7 @@ export default async function AdminListingsPage({ searchParams }: { searchParams
                       {(listing.users as any)?.name || "Unknown"}
                     </td>
                     <td className="p-6">
-                      <p className="text-sm font-extrabold text-[#6c63ff]">৳{Math.round(listing.price)}</p>
+                      <p className="text-sm font-extrabold text-[#d32f2f]">৳{Math.round(listing.price)}</p>
                       <p className="text-[10px] uppercase font-bold text-[#a0aec0]">per night</p>
                     </td>
                     {activeStatus === 'pending' && (

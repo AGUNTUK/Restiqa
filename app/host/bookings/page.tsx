@@ -83,8 +83,8 @@ export default async function HostBookingsPage() {
                         <div className="flex flex-col gap-1">
                           <p className="text-xs font-bold text-[#1a202c]">{checkin.toLocaleDateString()} - {checkout.toLocaleDateString()}</p>
                           <div className="flex items-center gap-2">
-                            {isActive && <span className="w-2 h-2 rounded-full bg-[#6c63ff] animate-pulse"></span>}
-                            <p className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-[#6c63ff]' : 'text-[#a0aec0]'}`}>
+                            {isActive && <span className="w-2 h-2 rounded-full bg-[#d32f2f] animate-pulse"></span>}
+                            <p className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-[#d32f2f]' : 'text-[#a0aec0]'}`}>
                               {isActive ? "Currently Staying" : isPast ? "Past Stay" : "Upcoming Stay"}
                             </p>
                           </div>
@@ -102,7 +102,7 @@ export default async function HostBookingsPage() {
                         </span>
                       </td>
                       <td className="p-6 text-right">
-                        <p className="text-base font-black text-[#6c63ff]">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9)).toLocaleString()}</p>
+                        <p className="text-base font-black text-[#d32f2f]">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9)).toLocaleString()}</p>
                         <p className="text-[9px] font-bold text-[#a0aec0] uppercase tracking-tighter">{booking.payout_status === 'released' ? 'Settled' : 'Unreleased'}</p>
                       </td>
                     </tr>

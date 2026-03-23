@@ -34,9 +34,9 @@ export default async function AdminRevenuePage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div className="neo-card p-8 rounded-[32px] border border-white/40">
           <p className="text-xs font-bold text-[#a0aec0] uppercase tracking-widest mb-2">Total Commission</p>
-          <p className="text-4xl font-extrabold text-[#6c63ff]">৳{Math.round(totalRevenue).toLocaleString()}</p>
-          <div className="mt-4 h-1 w-full bg-[#6c63ff]/10 rounded-full overflow-hidden">
-            <div className="h-full bg-[#6c63ff] w-[70%]" />
+          <p className="text-4xl font-extrabold text-[#d32f2f]">৳{Math.round(totalRevenue).toLocaleString()}</p>
+          <div className="mt-4 h-1 w-full bg-[#d32f2f]/10 rounded-full overflow-hidden">
+            <div className="h-full bg-[#d32f2f] w-[70%]" />
           </div>
         </div>
         <div className="neo-card p-8 rounded-[32px] border border-white/40">
@@ -85,7 +85,7 @@ export default async function AdminRevenuePage() {
                   <td className="p-5 text-sm font-bold text-[#4a5568]">
                     ৳{Math.round(booking.total_price).toLocaleString()}
                   </td>
-                  <td className="p-5 text-sm font-extrabold text-[#6c63ff]">
+                  <td className="p-5 text-sm font-extrabold text-[#d32f2f]">
                     ৳{Math.round(booking.commission_amount).toLocaleString()}
                   </td>
                   <td className="p-5 text-sm font-bold text-[#4a5568]">

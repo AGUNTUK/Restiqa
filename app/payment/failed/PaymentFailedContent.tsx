@@ -36,7 +36,7 @@ export default function PaymentFailedContent() {
             <p className="text-sm text-red-500 font-semibold mb-2">No active booking session found to retry.</p>
           )}
 
-          <Link href="/dashboard" className="w-full block py-4 rounded-xl font-bold text-[#4a5568] hover:text-[#2d3748] hover:bg-gray-100 transition-colors">
+          <Link href="/dashboard" className="w-full block py-4 rounded-xl font-bold text-[#4a5568] hover:text-[#2a6b78] hover:bg-gray-100 transition-colors">
             Return to Dashboard
           </Link>
         </div>

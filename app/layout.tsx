@@ -53,6 +53,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -61,7 +65,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#6c63ff",
+  themeColor: "#d32f2f",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5, // Allow zooming for accessibility but starting at 1
@@ -102,6 +106,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body
+        suppressHydrationWarning
         style={{
           background: "var(--bg)",
           color: "var(--text)",

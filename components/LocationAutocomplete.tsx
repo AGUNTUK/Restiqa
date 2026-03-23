@@ -174,7 +174,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
       <span>
         {parts.map((part, i) => (
           part.toLowerCase() === highlight.toLowerCase() ? (
-            <strong key={i} className="text-[#6c63ff] font-extrabold">{part}</strong>
+            <strong key={i} className="text-[#d32f2f] font-extrabold">{part}</strong>
           ) : (
             <span key={i}>{part}</span>
           )
@@ -199,7 +199,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full bg-transparent border-none outline-none text-[#2d3748] font-bold placeholder:text-[#a0aec0]"
+          className="w-full bg-transparent border-none outline-none text-[#2a6b78] font-bold placeholder:text-[#a0aec0]"
         />
       </div>
 
@@ -219,7 +219,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
                     </span>
                     <button 
                       onClick={(e) => { e.stopPropagation(); clearSearches(); }}
-                      className="text-[10px] font-bold text-[#6c63ff] uppercase hover:underline"
+                      className="text-[10px] font-bold text-[#d32f2f] uppercase hover:underline"
                     >
                       Clear
                     </button>
@@ -274,7 +274,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
                 type="button"
                 onClick={handleDetectLocation}
                 disabled={isLocating}
-                className="w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all text-left group hover:bg-[#6c63ff]/5 text-[#6c63ff] border-t border-gray-100"
+                className="w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all text-left group hover:bg-[#d32f2f]/5 text-[#d32f2f] border-t border-gray-100"
               >
                 <span className={`text-xl transition-transform duration-300 ${isLocating ? "animate-spin" : "group-hover:scale-125"}`}>
                   {isLocating ? "⏳" : "📍"}
@@ -303,7 +303,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
           {groupedSuggestions.districts.length > 0 && (
             <div>
               <div className="px-4 py-2 text-[10px] font-extrabold text-[#a0aec0] uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6c63ff]"></span> Districts
+                <span className="w-1.5 h-1.5 rounded-full bg-[#d32f2f]"></span> Districts
               </div>
               {groupedSuggestions.districts.map((loc) => {
                 const globalIdx = suggestions.indexOf(loc);
@@ -313,7 +313,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
                     onClick={() => handleSelect(loc)}
                     onMouseEnter={() => setActiveIndex(globalIdx)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                      activeIndex === globalIdx ? "bg-[#6c63ff] text-white shadow-lg -translate-y-0.5" : "text-[#4a5568] hover:bg-gray-50"
+                      activeIndex === globalIdx ? "bg-[#d32f2f] text-white shadow-lg -translate-y-0.5" : "text-[#4a5568] hover:bg-gray-50"
                     }`}
                   >
                     <span className="text-lg">📍</span>
@@ -333,7 +333,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
           {groupedSuggestions.areas.length > 0 && (
             <div className={groupedSuggestions.districts.length > 0 ? "mt-2 pt-2 border-t border-gray-100" : ""}>
               <div className="px-4 py-2 text-[10px] font-extrabold text-[#a0aec0] uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6584]"></span> Local Areas
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8bc1c1]"></span> Local Areas
               </div>
               {groupedSuggestions.areas.map((loc) => {
                 const globalIdx = suggestions.indexOf(loc);
@@ -343,7 +343,7 @@ const LocationAutocomplete: React.FC<LocationAutocompleteProps> = ({
                     onClick={() => handleSelect(loc)}
                     onMouseEnter={() => setActiveIndex(globalIdx)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                      activeIndex === globalIdx ? "bg-[#6c63ff] text-white shadow-lg -translate-y-0.5" : "text-[#4a5568] hover:bg-gray-50"
+                      activeIndex === globalIdx ? "bg-[#d32f2f] text-white shadow-lg -translate-y-0.5" : "text-[#4a5568] hover:bg-gray-50"
                     }`}
                   >
                     <span className="text-lg">🏠</span>

@@ -32,7 +32,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className="min-h-screen bg-[#f0f4f8] flex flex-col md:flex-row">
       <aside className="w-full md:w-64 neo-card shrink-0 p-6 flex flex-col gap-8 rounded-none md:min-h-screen border-r border-white/50 z-10 sticky top-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6c63ff] to-[#ff6584] flex items-center justify-center text-white font-extrabold shadow-[2px_2px_8px_rgba(108,99,255,0.4)]">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d32f2f] to-[#8bc1c1] flex items-center justify-center text-white font-extrabold shadow-[2px_2px_8px_rgba(211, 47, 47,0.4)]">
             A
           </div>
           <div>
@@ -51,7 +51,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         </nav>
         
         <div className="mt-auto hidden md:block">
-          <Link href="/dashboard" className="flex items-center justify-center w-full py-3 neo-inset rounded-xl text-xs font-bold text-[#a0aec0] bg-transparent hover:text-[#6c63ff] transition-colors">
+          <Link href="/dashboard" className="flex items-center justify-center w-full py-3 neo-inset rounded-xl text-xs font-bold text-[#a0aec0] bg-transparent hover:text-[#d32f2f] transition-colors">
             Exit Hub
           </Link>
         </div>

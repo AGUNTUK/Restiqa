@@ -47,7 +47,7 @@ export default function ReviewForm({ listingId, slug, dict }: ReviewFormProps) {
         <p className="text-[#718096]">Your review has been submitted successfully.</p>
         <button 
           onClick={() => setSuccess(false)}
-          className="mt-6 text-sm font-bold text-[#6c63ff] hover:underline"
+          className="mt-6 text-sm font-bold text-[#d32f2f] hover:underline"
         >
           Write another review
         </button>
@@ -86,7 +86,7 @@ export default function ReviewForm({ listingId, slug, dict }: ReviewFormProps) {
             required
             minLength={5}
             rows={4}
-            className="w-full neo-shadow-inset bg-[#f7fafc] border-none rounded-2xl p-4 text-[#2d3748] focus:ring-2 focus:ring-[#6c63ff]/20 placeholder-[#a0aec0] transition-all resize-none"
+            className="w-full neo-shadow-inset bg-[#f7fafc] border-none rounded-2xl p-4 text-[#2a6b78] focus:ring-2 focus:ring-[#d32f2f]/20 placeholder-[#a0aec0] transition-all resize-none"
             placeholder="Tell us what you liked about your stay..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}

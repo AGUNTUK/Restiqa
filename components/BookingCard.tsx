@@ -23,7 +23,7 @@ function SubmitButton({ dict }: { dict: typeof dictionaries["en"] }) {
       className={`neo-btn neo-btn-primary w-full py-4 rounded-[16px] font-extrabold text-lg transition-transform ${
         pending ? "opacity-70 cursor-not-allowed" : "hover:-translate-y-1 active:scale-95"
       }`}
-      style={{ boxShadow: "0 10px 25px -5px rgba(108, 99, 255, 0.4)" }}
+      style={{ boxShadow: "0 10px 25px -5px rgba(211, 47, 47, 0.4)" }}
     >
       {pending ? dict.booking.reserving : dict.booking.reserve}
     </button>
@@ -116,7 +116,7 @@ export default function BookingCard({ listingId, pricePerNight, maxGuests, dict 
                 min={todayStr}
                 value={checkin}
                 onChange={(e) => setCheckin(e.target.value)}
-                className="w-full bg-transparent text-sm font-bold text-[#2d3748] focus:outline-none appearance-none"
+                className="w-full bg-transparent text-sm font-bold text-[#2a6b78] focus:outline-none appearance-none"
                 style={{ colorScheme: "light" }}
               />
             </div>
@@ -135,7 +135,7 @@ export default function BookingCard({ listingId, pricePerNight, maxGuests, dict 
                 min={checkin || todayStr}
                 value={checkout}
                 onChange={(e) => setCheckout(e.target.value)}
-                className="w-full bg-transparent text-sm font-bold text-[#2d3748] focus:outline-none appearance-none"
+                className="w-full bg-transparent text-sm font-bold text-[#2a6b78] focus:outline-none appearance-none"
                 style={{ colorScheme: "light" }}
               />
             </div>
@@ -153,9 +153,9 @@ export default function BookingCard({ listingId, pricePerNight, maxGuests, dict 
               name="guests"
               value={guests}
               onChange={(e) => setGuests(parseInt(e.target.value, 10))}
-              className="w-full bg-transparent text-sm font-bold text-[#2d3748] focus:outline-none appearance-none pr-4"
+              className="w-full bg-transparent text-sm font-bold text-[#2a6b78] focus:outline-none appearance-none pr-4"
               style={{
-                backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232d3748%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")`,
+                backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232a6b78%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "right 0.2rem top 50%",
                 backgroundSize: "0.65rem auto",

@@ -64,7 +64,7 @@ export default async function HomePage() {
             {dict.hero.titleBase}
             <span
               style={{
-                background: "linear-gradient(135deg, #6c63ff, #ff6584)",
+                background: "linear-gradient(135deg, #d32f2f, #8bc1c1)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -112,7 +112,7 @@ export default async function HomePage() {
         {/* Header */}
         <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#6c63ff" }}>
+            <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#d32f2f" }}>
               {dict.common.handpicked}
             </p>
             <h2
@@ -125,7 +125,7 @@ export default async function HomePage() {
           <Link
             href="/listings"
             className="neo-btn px-5 py-2.5 text-sm rounded-xl no-underline"
-            style={{ textDecoration: "none", color: "#6c63ff" }}
+            style={{ textDecoration: "none", color: "#d32f2f" }}
           >
             {dict.common.viewAll}
           </Link>
@@ -153,7 +153,7 @@ export default async function HomePage() {
       >
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-8">
-            <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#6c63ff" }}>
+            <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#d32f2f" }}>
               {dict.common.explore}
             </p>
             <h2
@@ -186,7 +186,7 @@ export default async function HomePage() {
                   <p className="text-xs mb-1" style={{ color: "#a0aec0" }}>
                     {d.country === "Bangladesh" ? dict.common.bangladesh : d.country}
                   </p>
-                  <p className="text-xs font-semibold" style={{ color: "#6c63ff" }}>
+                  <p className="text-xs font-semibold" style={{ color: "#d32f2f" }}>
                     {d.listings.toLocaleString()} {dict.common.listingsCount}
                   </p>
                 </div>
@@ -201,7 +201,7 @@ export default async function HomePage() {
       ═══════════════════════════════════════════ */}
       <section className="max-w-6xl mx-auto px-6 py-14">
         <div className="text-center mb-10">
-          <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#6c63ff" }}>
+          <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#d32f2f" }}>
             {dict.common.promise}
           </p>
           <h2
@@ -218,8 +218,8 @@ export default async function HomePage() {
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"
                 style={{
-                  background: "linear-gradient(135deg,#6c63ff,#ff6584)",
-                  boxShadow: "4px 4px 12px rgba(108,99,255,0.3)",
+                  background: "linear-gradient(135deg,#d32f2f,#8bc1c1)",
+                  boxShadow: "4px 4px 12px rgba(211, 47, 47,0.3)",
                 }}
               >
                 {icon}
@@ -239,9 +239,9 @@ export default async function HomePage() {
         <div
           className="relative overflow-hidden rounded-[24px] text-center"
           style={{
-            background: "linear-gradient(135deg, #6c63ff 0%, #ff6584 100%)",
+            background: "linear-gradient(135deg, #d32f2f 0%, #8bc1c1 100%)",
             padding: "clamp(2.5rem, 5vw, 4rem) 2rem",
-            boxShadow: "10px 10px 30px rgba(108,99,255,0.3), -4px -4px 16px rgba(255,255,255,0.6)",
+            boxShadow: "10px 10px 30px rgba(211, 47, 47,0.3), -4px -4px 16px rgba(255,255,255,0.6)",
           }}
         >
           {/* Backdrop blobs */}
@@ -273,7 +273,7 @@ export default async function HomePage() {
               id="cta-browse"
               style={{
                 background: "#fff",
-                color: "#6c63ff",
+                color: "#d32f2f",
                 textDecoration: "none",
                 boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
                 fontSize: "0.95rem",

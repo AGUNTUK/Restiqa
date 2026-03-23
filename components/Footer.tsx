@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { type dictionaries } from "@/lib/i18n/dictionaries";
+import Logo from "./Logo";
 
 export default function Footer({ dict, locale }: { dict: typeof dictionaries["en"]; locale: string }) {
   const footerLinksArr = [
@@ -63,35 +64,9 @@ export default function Footer({ dict, locale }: { dict: typeof dictionaries["en
         >
           {/* Brand column */}
           <div>
-            <Link
-              href="/"
-              style={{
-                fontWeight: 800,
-                fontSize: "1.3rem",
-                color: "var(--primary)",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                marginBottom: "0.75rem",
-              }}
-            >
-              <span
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 7,
-                  background: "linear-gradient(135deg, var(--primary), var(--accent))",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "0.85rem",
-                }}
-              >
-                🏠
-              </span>
-              Restiqa
-            </Link>
+            <div style={{ marginBottom: "0.75rem" }}>
+              <Logo width={165} height={52} />
+            </div>
             <p
               style={{
                 color: "var(--text-muted)",

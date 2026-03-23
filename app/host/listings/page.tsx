@@ -69,7 +69,7 @@ export default async function HostListingsPage() {
                 </div>
 
                 <div className="px-1">
-                  <h3 className="text-lg font-black text-[#1a202c] mb-1 line-clamp-1 group-hover:text-[#6c63ff] transition-colors">{listing.title}</h3>
+                  <h3 className="text-lg font-black text-[#1a202c] mb-1 line-clamp-1 group-hover:text-[#d32f2f] transition-colors">{listing.title}</h3>
                   <p className="text-xs font-bold text-[#a0aec0] mb-4 flex items-center gap-1.5 uppercase tracking-wide">
                     📍 {listing.city} • {listing.type}
                   </p>
@@ -86,10 +86,10 @@ export default async function HostListingsPage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="flex-1 py-3 rounded-2xl bg-white text-[#6c63ff] text-xs font-black shadow-md border border-white/60 hover:shadow-lg transition-all">
+                    <button className="flex-1 py-3 rounded-2xl bg-white text-[#d32f2f] text-xs font-black shadow-md border border-white/60 hover:shadow-lg transition-all">
                       Edit Listing
                     </button>
-                    <Link href={`/listing/${listing.slug}`} className="p-3 rounded-2xl bg-white text-[#a0aec0] hover:text-[#6c63ff] border border-white/60 shadow-md">
+                    <Link href={`/listing/${listing.slug}`} className="p-3 rounded-2xl bg-white text-[#a0aec0] hover:text-[#d32f2f] border border-white/60 shadow-md">
                       👁️
                     </Link>
                   </div>

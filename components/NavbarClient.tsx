@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signOut } from "@/app/actions/auth";
 import LanguageToggle from "./LanguageToggle";
+import Logo from "./Logo";
 
 type NavUser = { email: string; name: string | null } | null;
 type NavDict = { home: string; listings: string; login: string; dashboard: string; findStay: string; signOut: string; becomeHost: string };
@@ -46,35 +47,7 @@ export default function NavbarClient({
         }}
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{
-            fontWeight: 800,
-            fontSize: "1.4rem",
-            letterSpacing: "-0.03em",
-            color: "#6c63ff",
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.4rem",
-          }}
-        >
-          <span
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              background: "linear-gradient(135deg,#6c63ff,#ff6584)",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "1rem",
-            }}
-          >
-            🏠
-          </span>
-          Restiqa
-        </Link>
+        <Logo width={180} height={60} />
 
         {/* Desktop nav links */}
         <ul
@@ -104,7 +77,7 @@ export default function NavbarClient({
                     fontWeight: 600,
                     fontSize: "0.9rem",
                     textDecoration: "none",
-                    color: isActive ? "#6c63ff" : "#718096",
+                    color: isActive ? "#d32f2f" : "#718096",
                     boxShadow: isActive
                       ? "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff"
                       : "none",
@@ -130,7 +103,7 @@ export default function NavbarClient({
                   fontWeight: 600,
                   fontSize: "0.9rem",
                   textDecoration: "none",
-                  color: pathname === "/dashboard" ? "#6c63ff" : "#718096",
+                  color: pathname === "/dashboard" ? "#d32f2f" : "#718096",
                   boxShadow: pathname === "/dashboard"
                     ? "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff"
                     : "none",
@@ -157,7 +130,7 @@ export default function NavbarClient({
                   width: 36,
                   height: 36,
                   borderRadius: 10,
-                  background: "linear-gradient(135deg,#6c63ff,#ff6584)",
+                  background: "linear-gradient(135deg,#d32f2f,#8bc1c1)",
                   color: "#fff",
                   fontWeight: 800,
                   fontSize: "0.9rem",
@@ -165,7 +138,7 @@ export default function NavbarClient({
                   alignItems: "center",
                   justifyContent: "center",
                   textDecoration: "none",
-                  boxShadow: "3px 3px 8px rgba(108,99,255,0.4)",
+                  boxShadow: "3px 3px 8px rgba(211, 47, 47,0.4)",
                 }}
               >
                 {displayInitial}
@@ -234,7 +207,7 @@ export default function NavbarClient({
           }}
         >
             {[0, 1, 2].map((i) => (
-              <span key={i} className="transition-all duration-300" style={{ width: i === 1 && menuOpen ? 18 : 22, height: 2, background: "#6c63ff", display: "block", borderRadius: 2 }} />
+              <span key={i} className="transition-all duration-300" style={{ width: i === 1 && menuOpen ? 18 : 22, height: 2, background: "#d32f2f", display: "block", borderRadius: 2 }} />
             ))}
         </button>
       </nav>
@@ -258,13 +231,13 @@ export default function NavbarClient({
               key={href}
               href={href}
               onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#6c63ff]/20"
+              className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#d32f2f]/20"
               style={{
                 fontWeight: 700,
                 textDecoration: "none",
                 minHeight: "64px",
-                color: pathname === href ? "#6c63ff" : "#4a5568",
-                background: pathname === href ? "rgba(108, 99, 255, 0.08)" : "transparent",
+                color: pathname === href ? "#d32f2f" : "#4a5568",
+                background: pathname === href ? "rgba(211, 47, 47, 0.08)" : "transparent",
                 marginBottom: "0.4rem",
               }}
             >
@@ -276,13 +249,13 @@ export default function NavbarClient({
             <Link
               href="/dashboard"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#6c63ff]/20"
+              className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#d32f2f]/20"
               style={{ 
                 fontWeight: 700, 
                 textDecoration: "none", 
                 minHeight: "64px",
-                color: pathname === "/dashboard" ? "#6c63ff" : "#4a5568",
-                background: pathname === "/dashboard" ? "rgba(108, 99, 255, 0.08)" : "transparent",
+                color: pathname === "/dashboard" ? "#d32f2f" : "#4a5568",
+                background: pathname === "/dashboard" ? "rgba(211, 47, 47, 0.08)" : "transparent",
                 marginBottom: "0.4rem",
               }}
             >
@@ -307,7 +280,7 @@ export default function NavbarClient({
             <Link 
               href="/login" 
               onClick={() => setMenuOpen(false)} 
-              className="flex items-center gap-3 px-4 py-4 rounded-2xl font-bold text-[#6c63ff] active:scale-95 no-underline"
+              className="flex items-center gap-3 px-4 py-4 rounded-2xl font-bold text-[#d32f2f] active:scale-95 no-underline"
             >
               <span className="text-xl">👤</span>
               {dict.login}

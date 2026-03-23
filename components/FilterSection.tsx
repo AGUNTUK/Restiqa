@@ -105,7 +105,7 @@ export default function FilterSection({ dict }: FilterSectionProps) {
                 onClick={() => setType(t.value)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   type === t.value 
-                    ? "bg-[#6c63ff] text-white shadow-lg neo-shadow-sm scale-105" 
+                    ? "bg-[#d32f2f] text-white shadow-lg neo-shadow-sm scale-105" 
                     : "bg-white/50 text-[#718096] hover:bg-white/80"
                 }`}
               >
@@ -126,7 +126,7 @@ export default function FilterSection({ dict }: FilterSectionProps) {
           </button>
           <button 
             onClick={clearFilters}
-            className="w-full py-2 rounded-xl text-xs font-bold text-[#a0aec0] hover:text-[#ff6584] transition-colors"
+            className="w-full py-2 rounded-xl text-xs font-bold text-[#a0aec0] hover:text-[#8bc1c1] transition-colors"
           >
             Clear All
           </button>

@@ -103,7 +103,7 @@ export default async function AdminPayoutsPage() {
                 
                 <div className="sm:text-right w-full sm:w-auto flex flex-col items-start sm:items-end gap-1 border-t sm:border-t-0 pt-4 sm:pt-0 border-white/20">
                   <p className="text-[10px] font-black text-[#a0aec0] uppercase tracking-widest">To be released</p>
-                  <p className="text-3xl font-black text-[#6c63ff] mb-4">৳{Math.round(hostEarnings).toLocaleString()}</p>
+                  <p className="text-3xl font-black text-[#d32f2f] mb-4">৳{Math.round(hostEarnings).toLocaleString()}</p>
                   <form action={releasePayout}>
                     <input type="hidden" name="bookingId" value={booking.id} />
                     <button 
@@ -111,7 +111,7 @@ export default async function AdminPayoutsPage() {
                       disabled={!isReady}
                       className={`px-8 py-3 rounded-2xl text-sm font-black transition-all w-full sm:w-auto ${
                         isReady 
-                          ? "bg-gradient-to-tr from-[#6c63ff] to-[#ff6584] text-white shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95" 
+                          ? "bg-gradient-to-tr from-[#d32f2f] to-[#8bc1c1] text-white shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95" 
                           : "bg-white/50 text-[#a0aec0] cursor-not-allowed grayscale"
                       }`}
                     >

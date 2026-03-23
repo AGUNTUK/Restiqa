@@ -19,7 +19,7 @@ export default async function PaymentPage({ params }: PageProps) {
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-3xl font-bold mb-4">Supabase Not Configured</h1>
         <p className="text-[#718096]">Check your .env.local file to configure credentials.</p>
-        <Link href="/dashboard" className="text-[#6c63ff] font-bold mt-4 inline-block">← Back to dashboard</Link>
+        <Link href="/dashboard" className="text-[#d32f2f] font-bold mt-4 inline-block">← Back to dashboard</Link>
       </div>
     );
   }
@@ -94,8 +94,8 @@ export default async function PaymentPage({ params }: PageProps) {
             </div>
             <div className="flex-1 py-1">
               <p className="text-xs font-extrabold uppercase tracking-widest text-[#a0aec0] mb-1">{listingCity}</p>
-              <h3 className="font-extrabold text-base text-[#2d3748] leading-tight mb-1">{listingTitle}</h3>
-              <p className="text-sm font-semibold text-[#6c63ff]">
+              <h3 className="font-extrabold text-base text-[#2a6b78] leading-tight mb-1">{listingTitle}</h3>
+              <p className="text-sm font-semibold text-[#d32f2f]">
                 {booking.guests_count} {booking.guests_count > 1 ? dict.booking.guests : dict.booking.guest}
               </p>
             </div>
@@ -104,7 +104,7 @@ export default async function PaymentPage({ params }: PageProps) {
           <div className="neo-inset p-4 rounded-2xl mb-6">
             <div className="flex justify-between items-center mb-3">
               <span className="text-xs font-bold text-[#a0aec0] uppercase tracking-wider">{dict.booking.checkIn} / {dict.booking.checkOut}</span>
-              <span className="text-[10px] font-bold text-[#2d3748]">{checkinDate} - {checkoutDate}</span>
+              <span className="text-[10px] font-bold text-[#2a6b78]">{checkinDate} - {checkoutDate}</span>
             </div>
             <div className="flex justify-between items-center py-4 border-t" style={{ borderColor: "#e2e8f0" }}>
               <span className="font-bold text-[#4a5568]">{dict.payment.totalPay}</span>

@@ -36,7 +36,7 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
             </div>
             <div className="neo-badge bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1">
               <span style={{ color: "#f6ad55" }}>★</span>{" "}
-              <span style={{ color: "#2d3748" }}>{Number(listing.avg_rating).toFixed(1)}</span>
+              <span style={{ color: "#2a6b78" }}>{Number(listing.avg_rating).toFixed(1)}</span>
               <span style={{ color: "#a0aec0", fontWeight: 'normal' }}>({listing.review_count})</span>
             </div>
           </div>
@@ -80,8 +80,8 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
               </span>
             </div>
             <div
-              className="px-4 py-2 rounded-xl text-sm font-bold bg-[#e8edf2] transition-colors group-hover:bg-[#6c63ff] group-hover:text-white"
-              style={{ color: "#6c63ff" }}
+              className="px-4 py-2 rounded-xl text-sm font-bold bg-[#e8edf2] transition-colors group-hover:bg-[#d32f2f] group-hover:text-white"
+              style={{ color: "#d32f2f" }}
             >
               {dict.listing.view}
             </div>

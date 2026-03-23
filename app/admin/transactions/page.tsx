@@ -48,11 +48,11 @@ export default async function AdminTransactionsPage() {
                     {tx.booking_id?.split("-")[0] || "N/A"}
                   </td>
                   <td className="p-5">
-                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${tx.type === 'commission' ? 'bg-gradient-to-r from-[#6c63ff] to-[#ff6584] text-white' : tx.type === 'payment' ? 'bg-[#43e97b]/20 text-[#28a745]' : tx.type === 'refund' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'}`}>
+                    <span className={`px-3 py-1.5 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${tx.type === 'commission' ? 'bg-gradient-to-r from-[#d32f2f] to-[#8bc1c1] text-white' : tx.type === 'payment' ? 'bg-[#43e97b]/20 text-[#28a745]' : tx.type === 'refund' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'}`}>
                       {tx.type}
                     </span>
                   </td>
-                  <td className="p-5 text-sm font-extrabold text-[#6c63ff] text-right">
+                  <td className="p-5 text-sm font-extrabold text-[#d32f2f] text-right">
                     {tx.type === 'refund' || tx.type === 'payout' ? "-" : "+"} ৳{Math.round(tx.amount)}
                   </td>
                 </tr>

@@ -91,7 +91,7 @@ export default function ListingsMap({ listings }: ListingsMapProps) {
               </div>
               <Link 
                 href={`/listing/${activeListing.id}`}
-                className="text-xs font-bold text-[#6c63ff] hover:underline"
+                className="text-xs font-bold text-[#d32f2f] hover:underline"
               >
                 View Details →
               </Link>

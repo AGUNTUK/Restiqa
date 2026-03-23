@@ -35,7 +35,7 @@ export default function SinglePropertyMap({ lat, lng, title }: SinglePropertyMap
         >
           <AdvancedMarker position={{ lat, lng }}>
             <div className="relative">
-              <div className="w-10 h-10 bg-[#6c63ff] rounded-full flex items-center justify-center text-white text-xl shadow-xl neo-shadow-sm border-2 border-white animate-bounce">
+              <div className="w-10 h-10 bg-[#d32f2f] rounded-full flex items-center justify-center text-white text-xl shadow-xl neo-shadow-sm border-2 border-white animate-bounce">
                 🏠
               </div>
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-r border-b border-[#e2e8f0]" />

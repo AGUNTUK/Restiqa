@@ -46,8 +46,8 @@ export default async function HostEarningsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div className="neo-card p-8 rounded-[32px] border-l-8 border-[#6c63ff] bg-white ring-1 ring-black/5 relative overflow-hidden group">
-          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#6c63ff] opacity-10 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
+        <div className="neo-card p-8 rounded-[32px] border-l-8 border-[#d32f2f] bg-white ring-1 ring-black/5 relative overflow-hidden group">
+          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#d32f2f] opacity-10 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
           <p className="text-xs font-black uppercase tracking-widest text-[#a0aec0] mb-2">Total Generated</p>
           <h2 className="text-4xl font-black text-[#1a202c]">৳{Math.round(totalEarned).toLocaleString()}</h2>
           <p className="text-[10px] font-bold text-[#a0aec0] mt-4 uppercase">Lifetime earnings share</p>
@@ -94,7 +94,7 @@ export default async function HostEarningsPage() {
                     <td className="p-7 text-sm font-bold text-[#718096]">{(booking.listings as any)?.title}</td>
                     <td className="p-7 text-sm font-black text-[#1a202c]">৳{Math.round(booking.total_price)}</td>
                     <td className="p-7 text-sm font-bold text-red-500/70">- ৳{Math.round(booking.commission_amount || (booking.total_price * 0.1))}</td>
-                    <td className="p-7 text-base font-black text-[#6c63ff]">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9))}</td>
+                    <td className="p-7 text-base font-black text-[#d32f2f]">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9))}</td>
                     <td className="p-7 text-right">
                       <span className={`px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm ${
                         booking.payout_status === 'released' 

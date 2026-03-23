@@ -116,14 +116,14 @@ function PaymentSuccessContent() {
         <div className="neo-card max-w-sm w-full p-8 md:p-10 rounded-[32px] text-center flex flex-col items-center space-y-6">
           <div className="relative w-24 h-24 flex items-center justify-center">
             {/* Pulsing rings */}
-            <div className="absolute inset-0 rounded-full border-4 border-[#6c63ff]/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
-            <div className="absolute inset-2 rounded-full border-4 border-[#6c63ff]/40 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_0.5s]"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-[#d32f2f]/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+            <div className="absolute inset-2 rounded-full border-4 border-[#d32f2f]/40 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_0.5s]"></div>
             
             {/* Core spinner */}
-            <div className="w-16 h-16 border-4 border-[#6c63ff]/30 border-t-[#6c63ff] rounded-full animate-spin"></div>
+            <div className="w-16 h-16 border-4 border-[#d32f2f]/30 border-t-[#d32f2f] rounded-full animate-spin"></div>
             
             {/* Lock icon in center */}
-            <svg className="absolute w-6 h-6 text-[#6c63ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute w-6 h-6 text-[#d32f2f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <rect x="5" y="11" width="14" height="10" rx="2" ry="2" strokeWidth={2.5} />
               <path d="M8 11V7a4 4 0 018 0v4" strokeWidth={2.5} strokeLinecap="round" />
             </svg>
@@ -137,7 +137,7 @@ function PaymentSuccessContent() {
           </div>
 
           <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-            <div className="bg-[#6c63ff] h-1.5 rounded-full animate-[indeterminate_2s_ease-in-out_infinite] w-1/2"></div>
+            <div className="bg-[#d32f2f] h-1.5 rounded-full animate-[indeterminate_2s_ease-in-out_infinite] w-1/2"></div>
           </div>
           
           <p className="text-[10px] uppercase tracking-widest text-[#a0aec0] font-bold">
@@ -159,7 +159,7 @@ function PaymentSuccessContent() {
           </div>
           <h2 className="text-3xl font-extrabold text-[#1a202c] mb-4">Verification Failed</h2>
           <p className="text-[#4a5568] font-bold mb-8">{errorMessage}</p>
-          <Link href="/dashboard" className="w-full py-4 px-6 bg-[#1a202c] hover:bg-[#2d3748] text-white font-bold rounded-2xl shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff] transition-all block text-center">
+          <Link href="/dashboard" className="w-full py-4 px-6 bg-[#1a202c] hover:bg-[#2a6b78] text-white font-bold rounded-2xl shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff] transition-all block text-center">
             Return to Dashboard
           </Link>
         </div>
@@ -179,7 +179,7 @@ function PaymentSuccessContent() {
         
         {/* Background confeti style elements */}
         <div className="absolute top-[-20%] left-[-10%] w-40 h-40 bg-[#43e97b]/10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-32 h-32 bg-[#6c63ff]/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-32 h-32 bg-[#d32f2f]/10 rounded-full blur-xl"></div>
 
         {/* Success Icon */}
         <div className="relative mx-auto w-24 h-24 bg-gradient-to-br from-[#43e97b] to-[#38f9d7] rounded-full flex items-center justify-center mb-6 shadow-[0_8px_16px_rgba(67,233,123,0.3)]">
@@ -199,14 +199,14 @@ function PaymentSuccessContent() {
             </div>
             <div>
               <p className="text-[10px] font-extrabold text-[#a0aec0] uppercase tracking-widest mb-1">{propertyCity}</p>
-              <h3 className="font-extrabold text-[#2d3748] text-sm leading-tight line-clamp-2">{propertyTitle}</h3>
+              <h3 className="font-extrabold text-[#2a6b78] text-sm leading-tight line-clamp-2">{propertyTitle}</h3>
             </div>
           </div>
 
           <div className="flex justify-between items-end">
             <div>
               <p className="text-[10px] font-extrabold text-[#a0aec0] uppercase tracking-widest mb-1">Amount Paid</p>
-              <p className="text-2xl font-black text-[#6c63ff]">৳{amountPaid}</p>
+              <p className="text-2xl font-black text-[#d32f2f]">৳{amountPaid}</p>
             </div>
             <div className="text-right">
               <span className="inline-flex items-center justify-center px-4 py-1.5 bg-[#43e97b]/10 text-[#28a745] font-extrabold text-[10px] uppercase tracking-widest rounded-lg border border-[#43e97b]/20">
@@ -216,7 +216,7 @@ function PaymentSuccessContent() {
           </div>
         </div>
 
-        <Link href="/dashboard" className="w-full py-4 px-6 bg-[#6c63ff] hover:bg-[#5a52d5] text-white font-bold rounded-2xl shadow-[6px_6px_12px_#c4c9ce,-6px_-6px_12px_#ffffff] transition-all transform active:scale-95 block text-center uppercase tracking-widest text-sm">
+        <Link href="/dashboard" className="w-full py-4 px-6 bg-[#d32f2f] hover:bg-[#5a52d5] text-white font-bold rounded-2xl shadow-[6px_6px_12px_#c4c9ce,-6px_-6px_12px_#ffffff] transition-all transform active:scale-95 block text-center uppercase tracking-widest text-sm">
           View Dashboard
         </Link>
       </div>
@@ -228,7 +228,7 @@ export default function PaymentSuccessPage() {
   return (
     <Suspense fallback={
       <div className="min-h-[70vh] flex flex-col items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#6c63ff] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-[#d32f2f] border-t-transparent rounded-full animate-spin"></div>
       </div>
     }>
       <PaymentSuccessContent />

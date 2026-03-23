@@ -94,8 +94,8 @@ export default async function BlogDetailsPage({ params }: PageProps) {
   const renderContent = (content: string) => {
     return content.split('\n').map((line, i) => {
       if (line.startsWith('# ')) return <h1 key={i} className="text-3xl md:text-5xl font-extrabold mb-8 mt-12 text-[#1a202c]">{line.substring(2)}</h1>;
-      if (line.startsWith('## ')) return <h2 key={i} className="text-2xl md:text-3xl font-bold mb-6 mt-10 text-[#2d3748]">{line.substring(3)}</h2>;
-      if (line.startsWith('### ')) return <h3 key={i} className="text-xl font-bold mb-4 mt-8 text-[#2d3748]">{line.substring(4)}</h3>;
+      if (line.startsWith('## ')) return <h2 key={i} className="text-2xl md:text-3xl font-bold mb-6 mt-10 text-[#2a6b78]">{line.substring(3)}</h2>;
+      if (line.startsWith('### ')) return <h3 key={i} className="text-xl font-bold mb-4 mt-8 text-[#2a6b78]">{line.substring(4)}</h3>;
       if (line.startsWith('* ')) return <li key={i} className="ml-6 mb-2 list-disc text-[#4a5568]">{line.substring(2)}</li>;
       if (line.startsWith('[View All')) {
         const match = line.match(/\[(.*?)\]\((.*?)\)/);
@@ -108,7 +108,7 @@ export default async function BlogDetailsPage({ params }: PageProps) {
           <p key={i} className="text-lg text-[#4a5568] leading-relaxed mb-6">
             {parts.map((p, j) => {
               const m = p.match(/\[(.*?)\]\((.*?)\)/);
-              if (m) return <Link key={j} href={m[2]} className="text-[#6c63ff] font-bold hover:underline">{m[1]}</Link>;
+              if (m) return <Link key={j} href={m[2]} className="text-[#d32f2f] font-bold hover:underline">{m[1]}</Link>;
               return p;
             })}
           </p>
@@ -124,7 +124,7 @@ export default async function BlogDetailsPage({ params }: PageProps) {
       {/* Back button */}
       <Link 
         href="/blog" 
-        className="inline-flex items-center gap-2 mb-10 text-[#6c63ff] font-extrabold text-sm no-underline hover:underline group"
+        className="inline-flex items-center gap-2 mb-10 text-[#d32f2f] font-extrabold text-sm no-underline hover:underline group"
       >
         <span className="transition-transform group-hover:-translate-x-1">←</span> {dict.blog?.backToList || "Back to Blog"}
       </Link>
@@ -194,7 +194,7 @@ export default async function BlogDetailsPage({ params }: PageProps) {
           />
         </div>
         <div className="text-center md:text-left">
-          <h3 className="font-extrabold text-xl mb-2 text-[#2d3748]">
+          <h3 className="font-extrabold text-xl mb-2 text-[#2a6b78]">
             {dict.blog?.aboutAuthor || "About the Author"}
           </h3>
           <p className="text-[#718096] leading-relaxed text-sm font-medium">
@@ -208,7 +208,7 @@ export default async function BlogDetailsPage({ params }: PageProps) {
       
       {/* Newsletter / CTA */}
       <div className="max-w-3xl mx-auto mt-20 text-center">
-        <div className="neo-card p-10 md:p-16 rounded-[48px] bg-gradient-to-br from-[#6c63ff] to-[#ff6584] text-white overflow-hidden relative">
+        <div className="neo-card p-10 md:p-16 rounded-[48px] bg-gradient-to-br from-[#d32f2f] to-[#8bc1c1] text-white overflow-hidden relative">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Never miss an adventure</h2>
@@ -219,7 +219,7 @@ export default async function BlogDetailsPage({ params }: PageProps) {
                 placeholder="Enter your email" 
                 className="flex-grow bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50"
               />
-              <button className="bg-white text-[#6c63ff] px-8 py-4 rounded-2xl font-extrabold hover:bg-[#f7fafc] transition-all active:scale-95 shadow-xl">
+              <button className="bg-white text-[#d32f2f] px-8 py-4 rounded-2xl font-extrabold hover:bg-[#f7fafc] transition-all active:scale-95 shadow-xl">
                 Subscribe
               </button>
             </div>
@@ -267,7 +267,7 @@ async function FeaturedStays({ blogTitle }: { blogTitle: string }) {
         ))}
       </div>
       <div className="text-center">
-        <Link href={`/${city.toLowerCase().replace(/\s+/g, '-')}`} className="neo-btn px-8 py-3 rounded-xl font-extrabold inline-block no-underline" style={{ background: "#e8edf2", color: "#6c63ff", boxShadow: "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff" }}>
+        <Link href={`/${city.toLowerCase().replace(/\s+/g, '-')}`} className="neo-btn px-8 py-3 rounded-xl font-extrabold inline-block no-underline" style={{ background: "#e8edf2", color: "#d32f2f", boxShadow: "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff" }}>
           View all stays in {city} →
         </Link>
       </div>

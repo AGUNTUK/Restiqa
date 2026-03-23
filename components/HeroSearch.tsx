@@ -125,7 +125,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
               className="bg-transparent border-none outline-none py-4 text-sm flex-1"
-              style={{ color: checkIn ? "#2d3748" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+              style={{ color: checkIn ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
               min={today}
             />
           </div>
@@ -147,7 +147,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
               className="bg-transparent border-none outline-none py-4 text-sm flex-1"
-              style={{ color: checkOut ? "#2d3748" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+              style={{ color: checkOut ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
               min={checkIn || today}
             />
           </div>

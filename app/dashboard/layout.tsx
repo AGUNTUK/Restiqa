@@ -17,7 +17,7 @@ export default async function DashboardLayout({
         <div className="neo-card rounded-[20px] p-10">
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5"
-            style={{ background: "linear-gradient(135deg,#6c63ff,#ff6584)", boxShadow: "4px 4px 14px rgba(108,99,255,0.3)" }}
+            style={{ background: "linear-gradient(135deg,#d32f2f,#8bc1c1)", boxShadow: "4px 4px 14px rgba(211, 47, 47,0.3)" }}
           >
             🔑
           </div>

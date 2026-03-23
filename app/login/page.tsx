@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useActionState } from "react";
 import { signIn, signUp } from "@/app/actions/auth";
+import Logo from "@/components/Logo";
 
 type AuthState = { error?: string; success?: string } | undefined;
 
@@ -28,23 +29,8 @@ export default function LoginPage() {
     >
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 no-underline font-extrabold text-2xl"
-            style={{ color: "#6c63ff", textDecoration: "none" }}
-          >
-            <span
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-              style={{
-                background: "linear-gradient(135deg,#6c63ff,#ff6584)",
-                boxShadow: "4px 4px 12px rgba(108,99,255,0.35)",
-              }}
-            >
-              🏠
-            </span>
-            Restiqa
-          </Link>
+        <div className="text-center mb-8 flex justify-center">
+          <Logo width={240} height={75} />
         </div>
 
         {/* Card */}
@@ -59,7 +45,7 @@ export default function LoginPage() {
                 className="flex-1 py-2.5 text-sm font-bold rounded-lg transition-all"
                 style={{
                   background: tab === t ? "#e8edf2" : "transparent",
-                  color: tab === t ? "#6c63ff" : "#a0aec0",
+                  color: tab === t ? "#d32f2f" : "#a0aec0",
                   boxShadow: tab === t
                     ? "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff"
                     : "none",
@@ -170,7 +156,7 @@ export default function LoginPage() {
                 type="button"
                 className="neo-btn flex-1 py-2.5 rounded-xl text-sm font-semibold gap-2"
                 id={`social-${id}`}
-                style={{ color: "#2d3748" }}
+                style={{ color: "#2a6b78" }}
               >
                 <span style={{ fontWeight: 700, color }}>{icon}</span>
                 {label}
@@ -186,7 +172,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => setTab(tab === "login" ? "signup" : "login")}
             className="font-bold"
-            style={{ background: "none", border: "none", color: "#6c63ff", cursor: "pointer" }}
+            style={{ background: "none", border: "none", color: "#d32f2f", cursor: "pointer" }}
           >
             {tab === "login" ? "Sign up" : "Sign in"}
           </button>
@@ -222,7 +208,7 @@ function SignInFields({
         label="Password"
         htmlFor="si-password"
         right={
-          <Link href="#" className="text-xs font-semibold" style={{ color: "#6c63ff", textDecoration: "none" }}>
+          <Link href="#" className="text-xs font-semibold" style={{ color: "#d32f2f", textDecoration: "none" }}>
             Forgot?
           </Link>
         }

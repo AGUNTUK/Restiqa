@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import Logo from "@/components/Logo";
 
 export default async function HostLayout({ children }: { children: ReactNode }) {
   const supabase = await createClient();
@@ -32,9 +33,9 @@ export default async function HostLayout({ children }: { children: ReactNode }) 
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white/40 backdrop-blur-md border-r border-white/60 p-6 flex flex-col gap-8 transition-all">
         <div className="flex flex-col gap-1">
-          <Link href="/" className="text-2xl font-black text-[#6c63ff] mb-6 tracking-tighter">RESTIQA</Link>
-          <div className="px-3 py-2 bg-[#6c63ff]/10 rounded-xl mb-6">
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#6c63ff]">Host Control Panel</p>
+          <div className="mb-6"><Logo width={200} height={64} /></div>
+          <div className="px-3 py-2 bg-[#d32f2f]/10 rounded-xl mb-6">
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#d32f2f]">Host Control Panel</p>
           </div>
         </div>
 
@@ -43,7 +44,7 @@ export default async function HostLayout({ children }: { children: ReactNode }) 
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-[#718096] hover:bg-white hover:text-[#6c63ff] hover:shadow-md transition-all group"
+              className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-[#718096] hover:bg-white hover:text-[#d32f2f] hover:shadow-md transition-all group"
             >
               <span className="text-lg group-hover:scale-125 transition-transform">{item.icon}</span>
               {item.name}
