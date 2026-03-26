@@ -33,9 +33,13 @@ export async function releasePayout(formData: FormData): Promise<void> {
     throw new Error("Payout already released!");
   }
 
+  const { getPlatformSettings } = await import("@/lib/settings");
+  const settings = await getPlatformSettings();
+  const scale = settings.commission_rate;
+
   const hostId = (booking.listings as any).host_id;
-  const hostEarnings = booking.host_earnings || (booking.total_price * 0.9);
-  const commission = booking.commission_amount || (booking.total_price * 0.1);
+  const hostEarnings = booking.host_earnings || (booking.total_price * (1 - scale));
+  const commission = booking.commission_amount || (booking.total_price * scale);
 
   // 1. Update payout status
   const { error: updateError } = await supabase

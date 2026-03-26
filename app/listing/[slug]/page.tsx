@@ -9,6 +9,7 @@ import BookingWidget from "./BookingWidget";
 import SinglePropertyMap from "@/components/SinglePropertyMap";
 import ReviewList from "@/components/ReviewList";
 import ReviewForm from "@/components/ReviewForm";
+import MobileStickyBook from "@/components/MobileStickyBook";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -250,7 +251,7 @@ export default async function ListingDetailsPage({ params }: PageProps) {
         </div>
 
         {/* Right Side: Booking Widget */}
-        <div className="space-y-6">
+        <div className="space-y-6" id="booking-widget-container">
           <BookingWidget 
             listingId={l.id} 
             price={l.price} 
@@ -308,6 +309,16 @@ export default async function ListingDetailsPage({ params }: PageProps) {
           <ReviewForm listingId={l.id} slug={slug} dict={dict} />
         </div>
       </div>
+
+      {/* Global Mobile CTA */}
+      <MobileStickyBook 
+        price={l.price}
+        rating={Number(l.avg_rating)}
+        reviewsCount={l.review_count}
+        currency={dict.common.currency}
+        pricePerNight={dict.common.pricePerNight}
+        reserveBtn={dict.booking.reserve || "Reserve"}
+      />
     </div>
   );
 }

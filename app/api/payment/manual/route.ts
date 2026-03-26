@@ -72,8 +72,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Booking is not in pending state" }, { status: 400 });
     }
 
+    const { getPlatformSettings } = await import("@/lib/settings");
+    const settings = await getPlatformSettings();
+
     const baseAmount = booking.total_amount || booking.total_price;
-    const commission = Number(baseAmount) * 0.10;
+    const commission = Number(baseAmount) * settings.commission_rate;
     const hostEarnings = Number(baseAmount) - commission;
 
     // Include the deterministic 1-9 BDT unique payment offset required for verification

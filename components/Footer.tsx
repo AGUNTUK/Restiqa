@@ -23,10 +23,10 @@ export default function Footer({ dict, locale }: { dict: typeof dictionaries["en
     {
       heading: dict.common.popularDest,
       links: [
-        { href: "/dhaka", label: dict.search.cities.dhaka },
-        { href: "/coxs-bazar", label: dict.search.cities.coxsBazar },
-        { href: "/sylhet", label: dict.search.cities.sylhet },
-        { href: "/sajek", label: dict.search.cities.sajek },
+        { href: "/listings?city=dhaka", label: dict.search.cities.dhaka },
+        { href: "/listings?city=coxsBazar", label: dict.search.cities.coxsBazar },
+        { href: "/listings?city=sylhet", label: dict.search.cities.sylhet },
+        { href: "/listings?city=sajek", label: dict.search.cities.sajek },
       ],
     },
     {
@@ -40,92 +40,45 @@ export default function Footer({ dict, locale }: { dict: typeof dictionaries["en
   ];
 
   return (
-    <footer
-      style={{
-        background: "var(--bg)",
-        borderTop: "1px solid #dde2e7",
-        marginTop: "auto",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "3rem 1.5rem 1.5rem",
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: "2rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          {/* Brand column */}
-          <div>
-            <div style={{ marginBottom: "0.75rem" }}>
-              <Logo width={165} height={52} />
+    <footer className="relative mt-auto pt-16 pb-8 overflow-hidden" style={{ background: "#e0e5ec" }}>
+      {/* Decorative Blob */}
+      <div className="absolute -bottom-24 -left-20 w-96 h-96 rounded-full bg-[#d32f2f] opacity-5 blur-[100px] pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
+          
+          {/* Brand Identity */}
+          <div className="lg:col-span-2">
+            <div className="mb-6 inline-block">
+              <Logo width={180} height={60} />
             </div>
-            <p
-              style={{
-                color: "var(--text-muted)",
-                fontSize: "0.88rem",
-                lineHeight: 1.6,
-                marginBottom: "1rem",
-              }}
-            >
+            <p className="text-[#718096] text-sm leading-relaxed mb-8 max-w-xs font-medium">
               {dict.footer.about}
             </p>
-            <div style={{ display: "flex", gap: "0.6rem" }}>
-              {["𝕏", "f", "in"].map((icon) => (
+            <div className="flex gap-4">
+              {["𝕏", "f", "in", "📸"].map((icon) => (
                 <button
                   key={icon}
-                  className="neo-btn"
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 8,
-                    fontSize: "0.85rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--primary)",
-                  }}
+                  className="w-10 h-10 rounded-xl bg-[#e0e5ec] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff] hover:shadow-inner flex items-center justify-center text-[#d32f2f] transition-all hover:scale-105 active:scale-95 group"
                 >
-                  {icon}
+                  <span className="text-sm font-black group-hover:scale-110 transition-transform">{icon}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* Link Verticals */}
           {footerLinksArr.map(({ heading, links }) => (
-            <div key={heading}>
-              <h3
-                style={{
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--text-muted)",
-                  marginBottom: "0.9rem",
-                }}
-              >
+            <div key={heading} className="space-y-6">
+              <h3 className="text-[#1a202c] font-black text-[10px] uppercase tracking-[0.15em] opacity-60">
                 {heading}
               </h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+              <ul className="space-y-3">
                 {links.map(({ href, label }) => (
                   <li key={label}>
                     <Link
                       href={href}
-                      className="footer-link"
-                      style={{
-                        color: "var(--text)",
-                        textDecoration: "none",
-                        fontSize: "0.92rem",
-                        transition: "color 0.2s",
-                      }}
+                      className="text-[#4a5568] text-sm font-bold no-underline hover:text-[#d32f2f] transition-colors"
                     >
                       {label}
                     </Link>
@@ -136,24 +89,20 @@ export default function Footer({ dict, locale }: { dict: typeof dictionaries["en
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div
-          style={{
-            borderTop: "1px solid #dde2e7",
-            paddingTop: "1.2rem",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "0.5rem",
-          }}
-        >
-          <p style={{ color: "var(--text-muted)", fontSize: "0.83rem" }} suppressHydrationWarning>
-            © {new Date().getFullYear()} Restiqa. {dict.footer.rights}
+        {/* Separator */}
+        <div className="w-full h-[1px] bg-white/40 shadow-sm mb-8"></div>
+
+        {/* Global Bottom Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[#a0aec0] text-xs font-black tracking-widest uppercase italic bg-white/30 px-4 py-2 rounded-full shadow-inner" suppressHydrationWarning>
+            © {new Date().getFullYear()} Restiqa Marketplace. {dict.footer.rights}
           </p>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.83rem" }}>
-            {dict.footer.builtWith}
-          </p>
+          
+          <div className="flex items-center gap-4 text-[10px] font-black text-[#a0aec0] uppercase tracking-widest">
+            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#43e97b] animate-pulse"></span> App Status: Operational</span>
+            <span className="w-[1px] h-3 bg-gray-300"></span>
+            <span>Version 2.4.0</span>
+          </div>
         </div>
       </div>
     </footer>

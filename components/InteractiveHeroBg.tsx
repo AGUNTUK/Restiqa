@@ -5,15 +5,48 @@ import { useEffect, useRef } from "react";
 // Top tier travel/real-estate photography from Unsplash
 const ITEMS = [
   { 
+    id: 1, 
+    type: "glass", 
+    icon: "🏠", 
+    top: "20%", 
+    left: "5%", 
+    delay: "0s", 
+    rotate: "-rotate-6",
+    size: "w-24 h-24 text-4xl",
+    speed: 0.8
+  },
+  { 
     id: 2, 
     type: "glass", 
     icon: "🌴", 
     top: "15%", 
-    left: "10%", 
+    left: "15%", 
     delay: "2s", 
     rotate: "rotate-12",
     size: "w-20 h-20 text-3xl",
     speed: 1.5
+  },
+  { 
+    id: 3, 
+    type: "glass", 
+    icon: "🏖️", 
+    top: "65%", 
+    left: "8%", 
+    delay: "1s", 
+    rotate: "rotate-6",
+    size: "w-16 h-16 text-2xl",
+    speed: 1.2
+  },
+  { 
+    id: 4, 
+    type: "glass", 
+    icon: "📷", 
+    top: "80%", 
+    left: "20%", 
+    delay: "3s", 
+    rotate: "-rotate-12",
+    size: "w-20 h-20 text-3xl",
+    speed: 1.8
   },
   { 
     id: 6, 
@@ -27,14 +60,36 @@ const ITEMS = [
     speed: 2
   },
   { 
+    id: 7, 
+    type: "glass", 
+    icon: "🧳", 
+    top: "25%", 
+    left: "85%", 
+    delay: "1.5s", 
+    rotate: "-rotate-6",
+    size: "w-24 h-24 text-4xl",
+    speed: 0.9
+  },
+  { 
     id: 8, 
     type: "glass", 
     icon: "🗺️", 
     top: "75%", 
-    left: "85%", 
+    left: "75%", 
     delay: "5s", 
     rotate: "rotate-3",
-    size: "w-16 h-16 text-xl",
+    size: "w-20 h-20 text-3xl",
+    speed: 1.4
+  },
+  { 
+    id: 9, 
+    type: "glass", 
+    icon: "🛳️", 
+    top: "60%", 
+    left: "90%", 
+    delay: "2.5s", 
+    rotate: "rotate-12",
+    size: "w-16 h-16 text-2xl",
     speed: 1.2
   },
 ];
@@ -110,7 +165,7 @@ export default function InteractiveHeroBg() {
                 }}
               >
                 <div 
-                  className={`neo-card flex items-center justify-center bg-white/50 backdrop-blur-xl shadow-lg border border-white/60 ${item.size} ${item.rotate} rounded-[20px] ${item.id > 4 ? 'hidden sm:block' : ''}`}
+                  className={`neo-card flex items-center justify-center bg-white/40 backdrop-blur-2xl shadow-[10px_10px_30px_rgba(0,0,0,0.05)] border border-white/80 ${item.size} ${item.rotate} rounded-[32px] ${item.id > 4 ? 'hidden sm:flex' : 'flex'} animate-in zoom-in-50 duration-1000`}
                 >
                   {item.icon}
                 </div>

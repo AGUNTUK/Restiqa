@@ -1,15 +1,21 @@
 import { createClient } from "@/lib/supabase/server";
 import PaymentActionButtons from "./PaymentActionButtons";
 import Link from "next/link";
+import AdminSearch from "@/components/AdminSearch";
+import AdminPagination from "@/components/AdminPagination";
 
 export const metadata = {
   title: "Admin - Pending Payments",
   description: "Verify Manual Transactions",
 };
 
-export default async function AdminPaymentsPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
+const ITEMS_PER_PAGE = 15;
+
+export default async function AdminPaymentsPage({ searchParams }: { searchParams: Promise<{ filter?: string; q?: string; page?: string }> }) {
   const resolvedParams = await searchParams;
   const filter = resolvedParams?.filter || "all";
+  const searchQuery = resolvedParams?.q || "";
+  const page = Number(resolvedParams?.page) || 1;
   
   const supabase = await createClient();
 
@@ -26,7 +32,7 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
       booking_id,
       users!transactions_user_id_fkey(name, email),
       bookings(created_at, total_price, total_amount)
-    `)
+    `, { count: "exact" })
     .order("created_at", { ascending: false });
 
   if (filter !== "all") {
@@ -35,7 +41,29 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
     query = query.in("status", ["pending", "pending verification", "safe", "suspicious", "high risk"]);
   }
 
-  const { data: transactions, error } = await query;
+  let totalCount = 0;
+
+  if (!searchQuery) {
+    const from = (page - 1) * ITEMS_PER_PAGE;
+    const to = from + ITEMS_PER_PAGE - 1;
+    query = query.range(from, to);
+  }
+
+  let { data: transactions, error, count } = await query;
+  totalCount = count || 0;
+
+  if (transactions && searchQuery) {
+    const q = searchQuery.toLowerCase();
+    transactions = transactions.filter((tx: any) => 
+      tx.gateway_transaction_id?.toLowerCase().includes(q) || 
+      tx.sender_number?.toLowerCase().includes(q) ||
+      tx.users?.name?.toLowerCase().includes(q)
+    );
+    totalCount = transactions.length;
+
+    const from = (page - 1) * ITEMS_PER_PAGE;
+    transactions = transactions.slice(from, from + ITEMS_PER_PAGE);
+  }
 
   if (error) {
     console.error("Failed to load pending payments:", error);
@@ -50,12 +78,15 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
           <p className="text-[#a0aec0] font-bold text-sm tracking-wide uppercase">Approve manual payments submitted by users</p>
         </div>
         
-        {/* URL Parameter Filter UI */}
-        <div className="flex flex-wrap gap-2">
-           <Link href="?filter=all" className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "all" ? "bg-[#1a202c] text-white" : "bg-white text-[#718096] hover:border-gray-300"}`}>All</Link>
-           <Link href="?filter=safe" className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "safe" ? "bg-green-600 text-white" : "bg-white text-[#718096] hover:border-green-300"}`}>Safe</Link>
-           <Link href="?filter=suspicious" className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "suspicious" ? "bg-orange-500 text-white" : "bg-white text-[#718096] hover:border-orange-300"}`}>Suspicious</Link>
-           <Link href="?filter=high risk" className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "high risk" ? "bg-red-600 text-white" : "bg-white text-[#718096] hover:border-red-300"}`}>High Risk</Link>
+        <div className="flex flex-col items-end gap-3 w-full md:w-auto">
+          <AdminSearch placeholder="Search by name, number, or Gateway ID..." />
+          {/* URL Parameter Filter UI */}
+          <div className="flex flex-wrap justify-end gap-2 mt-2">
+             <Link href={`?filter=all${searchQuery ? `&q=${searchQuery}` : ""}`} className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "all" ? "bg-[#1a202c] text-white" : "bg-white text-[#718096] hover:border-gray-300"}`}>All</Link>
+             <Link href={`?filter=safe${searchQuery ? `&q=${searchQuery}` : ""}`} className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "safe" ? "bg-green-600 text-white" : "bg-white text-[#718096] hover:border-green-300"}`}>Safe</Link>
+             <Link href={`?filter=suspicious${searchQuery ? `&q=${searchQuery}` : ""}`} className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "suspicious" ? "bg-orange-500 text-white" : "bg-white text-[#718096] hover:border-orange-300"}`}>Suspicious</Link>
+             <Link href={`?filter=high risk${searchQuery ? `&q=${searchQuery}` : ""}`} className={`px-4 py-2 rounded-xl text-xs uppercase tracking-widest font-extrabold transition-all border border-transparent shadow-sm ${filter === "high risk" ? "bg-red-600 text-white" : "bg-white text-[#718096] hover:border-red-300"}`}>High Risk</Link>
+          </div>
         </div>
       </div>
 
@@ -65,10 +96,111 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
             No matching transactions found. 
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[1000px]">
-              <thead>
-                <tr className="bg-white/40 border-b border-white/60">
+          <div className="w-full">
+            {/* Mobile Cards View */}
+            <div className="md:hidden flex flex-col divide-y divide-white/40">
+              {transactions.map((tx: any) => {
+                  const txBooking = tx.bookings;
+                  const expectedAmount = txBooking?.total_amount || txBooking?.total_price || 0;
+                  const txTime = new Date(tx.created_at).getTime();
+                  const bookingTime = new Date(txBooking?.created_at || tx.created_at).getTime();
+                  const timeDiffMinutes = (txTime - bookingTime) / (1000 * 60);
+
+                  const isAmountMatch = expectedAmount > 0 && Math.abs(tx.amount - expectedAmount) < 1; 
+                  const isRecent = timeDiffMinutes >= 0 && timeDiffMinutes <= 120;
+                  const isLikelyValid = isAmountMatch && isRecent && (tx.status === "safe" || tx.status === "pending verification");
+
+                  const fraudReasons: string[] = [];
+                  if (tx.gateway_transaction_id?.includes("-DUP-")) {
+                    fraudReasons.push("Duplicate TrxID");
+                  }
+                  if (expectedAmount > 0 && Math.abs(tx.amount - expectedAmount) > 1) {
+                    fraudReasons.push("Wrong Amount");
+                  }
+                  if (tx.submitted_at) {
+                    const submitTime = new Date(tx.submitted_at).getTime();
+                    const submissionAgeMinutes = (submitTime - txTime) / (1000 * 60);
+                    if (submissionAgeMinutes > 15 || submissionAgeMinutes < -5) {
+                      fraudReasons.push("Too Old");
+                    }
+                  }
+
+                  const isRisky = tx.status === "suspicious" || tx.status === "high risk";
+
+                  return (
+                    <div key={tx.id} className={`p-4 flex flex-col gap-4 transition-colors ${isRisky ? "bg-red-50/60" : "hover:bg-white/20"}`}>
+                      <div className="flex justify-between items-start">
+                        <div className="flex flex-col">
+                          <p className="text-sm font-extrabold text-[#1a202c] truncate">{tx.users?.name || "Unknown User"}</p>
+                          <p className="text-xs font-medium text-[#718096] truncate pr-2">{tx.users?.email || ""}</p>
+                          <p className="text-[10px] text-[#a0aec0] mt-1 font-mono uppercase tracking-widest">Ref: {tx.booking_id?.split("-")[0]}</p>
+                        </div>
+                        <span className={`shrink-0 px-3 py-1 rounded-full text-[9px] font-extrabold uppercase shadow-sm ${
+                          tx.status === "high risk" ? "bg-red-600 text-white" : tx.status === "suspicious" ? "bg-orange-500 text-white" : tx.status === "safe" || tx.status === "pending verification" ? "bg-green-500 text-white" : "bg-gray-300 text-gray-800"
+                        }`}>
+                          {tx.status}
+                        </span>
+                      </div>
+                      
+                      <div className="bg-white/30 rounded-xl p-3 border border-white/50 text-sm">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-[10px] text-[#a0aec0] uppercase tracking-widest font-bold">Trx ID</span>
+                          <span className="font-mono font-bold text-[#4a5568] truncate ml-2">
+                            {tx.gateway_transaction_id?.replace(/-DUP-\d+/g, "") || "N/A"}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-[10px] text-[#a0aec0] uppercase tracking-widest font-bold">Account</span>
+                          <span className="px-2 py-0.5 bg-blue-100/50 text-blue-700 rounded text-xs font-mono font-bold">
+                            {tx.sender_number || "N/A"}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] text-[#a0aec0] uppercase tracking-widest font-bold">Amount</span>
+                          <div className="text-right">
+                            <span className="font-extrabold text-[#1a202c]">৳{Math.round(tx.amount)}</span>
+                            {!isAmountMatch && expectedAmount > 0 && (
+                              <p className="text-[9px] font-bold text-red-500 uppercase tracking-widest mt-0.5">
+                                Exp: ৳{Math.round(expectedAmount)}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {(isLikelyValid || fraudReasons.length > 0) && (
+                        <div className="flex flex-wrap gap-2">
+                          {isLikelyValid && (
+                            <span className="px-2 py-1 bg-[#43e97b]/10 text-[#28a745] rounded-md text-[10px] font-extrabold uppercase tracking-widest border border-[#43e97b]/20">
+                              🌟 Likely valid
+                            </span>
+                          )}
+                          {fraudReasons.map((reason, idx) => (
+                            <span key={idx} className="px-2 py-1 bg-red-100 text-red-700 rounded-md text-[10px] font-extrabold uppercase tracking-wider border border-red-200">
+                              ⚠ {reason}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mt-1 flex items-center justify-between text-[10px] text-[#a0aec0] font-bold uppercase tracking-widest">
+                        <span>Tx: {new Date(tx.created_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                        {tx.submitted_at && <span>Sub: {new Date(tx.submitted_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>}
+                      </div>
+
+                      <div className="mt-2 text-right">
+                        <PaymentActionButtons transactionId={tx.id} />
+                      </div>
+                    </div>
+                  );
+              })}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[1000px]">
+                <thead>
+                  <tr className="bg-white/40 border-b border-white/60">
                   <th className="p-5 text-xs font-bold uppercase tracking-widest text-[#a0aec0]">User Details</th>
                   <th className="p-5 text-xs font-bold uppercase tracking-widest text-[#a0aec0]">Transaction ID</th>
                   <th className="p-5 text-xs font-bold uppercase tracking-widest text-[#a0aec0]">Sender Number</th>
@@ -182,8 +314,11 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
               </tbody>
             </table>
           </div>
+          </div>
         )}
       </div>
+
+      <AdminPagination totalItems={totalCount} itemsPerPage={ITEMS_PER_PAGE} />
     </div>
   );
 }

@@ -68,8 +68,11 @@ export async function createBooking(formData: FormData) {
     return { error: `Maximum allowed guests is ${listing.max_guests}.` };
   }
 
+  const { getPlatformSettings } = await import("@/lib/settings");
+  const settings = await getPlatformSettings();
+
   const totalPrice = listing.price * nights;
-  const commission = totalPrice * 0.10;
+  const commission = totalPrice * settings.commission_rate;
   const hostEarnings = totalPrice - commission;
 
   // 4. Insert the booking into the database and get the ID back

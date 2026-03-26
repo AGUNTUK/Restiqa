@@ -44,7 +44,7 @@ export default async function HomePage() {
         {/* Interactive Travel Parallax Background */}
         <DynamicHeroBg />
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-12 w-full text-center pointer-events-none [&>*]:pointer-events-auto">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-10 sm:pb-12 w-full text-center pointer-events-none [&>*]:pointer-events-auto">
           {/* Pill badge */}
           <div className="inline-flex items-center gap-2 neo-badge mb-5">
             <span>✨</span>
@@ -54,9 +54,8 @@ export default async function HomePage() {
           </div>
 
           <h1
-            className="font-extrabold tracking-tight leading-tight mb-4"
+            className="font-extrabold tracking-tight leading-tight mb-4 text-[2.2rem] sm:text-5xl lg:text-6xl"
             style={{
-              fontSize: "clamp(2.2rem, 5vw, 3.6rem)",
               letterSpacing: "-0.03em",
               color: "#1a202c",
             }}
@@ -74,7 +73,7 @@ export default async function HomePage() {
           </h1>
 
           <p
-            className="text-lg leading-relaxed max-w-xl mx-auto mb-10"
+            className="text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-8 sm:mb-10 px-2 sm:px-0"
             style={{ color: "#718096" }}
           >
             {dict.hero.subtitle}

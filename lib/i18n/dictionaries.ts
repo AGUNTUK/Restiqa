@@ -11,9 +11,9 @@ export const dictionaries = {
     },
     hero: {
       badge: "The New Standard of Travel",
-      titleBase: "Your Gateway to ",
-      titleHighlight: "Beautiful Bangladesh",
-      subtitle: "Discover handpicked rentals — apartments, villas, and hidden gems across Bangladesh.",
+      titleBase: "Book Your Next Stay ",
+      titleHighlight: "in Minutes",
+      subtitle: "Best prices. Trusted hosts. Instant booking.",
     },
     search: {
       location: "Where are you going?",

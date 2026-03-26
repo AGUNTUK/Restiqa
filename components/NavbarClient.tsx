@@ -6,18 +6,21 @@ import { useState } from "react";
 import { signOut } from "@/app/actions/auth";
 import LanguageToggle from "./LanguageToggle";
 import Logo from "./Logo";
+import NotificationBell, { NotificationType } from "./NotificationBell";
 
-type NavUser = { email: string; name: string | null } | null;
+type NavUser = { id?: string; email: string; name: string | null } | null;
 type NavDict = { home: string; listings: string; login: string; dashboard: string; findStay: string; signOut: string; becomeHost: string };
 
 export default function NavbarClient({ 
   user,
   dict,
-  locale
+  locale,
+  initialNotifications = []
 }: { 
   user: NavUser;
   dict: NavDict;
   locale: string;
+  initialNotifications?: NotificationType[];
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -121,8 +124,9 @@ export default function NavbarClient({
         <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           <LanguageToggle currentLocale={locale} />
           {user ? (
-            /* Authenticated: avatar + sign out */
+            /* Authenticated: notifications + avatar + sign out */
             <>
+              <NotificationBell initialNotifications={initialNotifications} />
               <Link
                 href="/dashboard"
                 title={user.email}
@@ -192,24 +196,26 @@ export default function NavbarClient({
         </div>
 
         {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="mobile-menu-btn"
-          aria-label="Toggle menu"
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            display: "none",
-            flexDirection: "column",
-            gap: 5,
-            padding: 4,
-          }}
-        >
+        <div className="mobile-menu-btn" style={{ display: "none", alignItems: "center", gap: "0.5rem" }}>
+          {user && <NotificationBell initialNotifications={initialNotifications} />}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+              padding: 4,
+            }}
+          >
             {[0, 1, 2].map((i) => (
               <span key={i} className="transition-all duration-300" style={{ width: i === 1 && menuOpen ? 18 : 22, height: 2, background: "#d32f2f", display: "block", borderRadius: 2 }} />
             ))}
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile dropdown */}
