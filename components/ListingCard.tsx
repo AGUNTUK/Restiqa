@@ -19,7 +19,7 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
 
   return (
     <Link href={`/listing/${listing.slug || listing.id}`} className="block group no-underline animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both">
-      <div className="neo-card rounded-[32px] p-4 transition-all duration-500 hover:-translate-y-3 hover:shadow-[12px_12px_24px_#c4c9ce,-12px_-12px_24px_#ffffff] border border-white/50">
+      <div className="neo-card rounded-[32px] p-4 transition-all duration-500 hover:-translate-y-3 hover:shadow-[12px_12px_24px_#c4c9ce,-12px_-12px_24px_#ffffff] border border-white/50 hover:bg-[#d32f2f]">
         {/* Thumbnail */}
         <div className="relative aspect-[4/3] rounded-[16px] overflow-hidden mb-4">
           <Image
@@ -44,19 +44,18 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
 
         {/* Content */}
         <div className="px-1">
-          <div className="flex justify-between items-start gap-2 mb-1">
             <h3
-              className="font-bold text-lg truncate"
+              className="font-bold text-lg truncate transition-colors group-hover:text-white"
               style={{ color: "#1a202c", letterSpacing: "-0.01em" }}
             >
               {listing.title}
             </h3>
           </div>
-          <p className="text-sm font-medium truncate mb-3" style={{ color: "#718096" }}>
+          <p className="text-sm font-medium truncate mb-3 transition-colors group-hover:text-white/80" style={{ color: "#718096" }}>
             {listing.city}, {listing.country}
           </p>
 
-          <div className="flex items-center gap-4 text-xs font-semibold mb-4" style={{ color: "#a0aec0" }}>
+          <div className="flex items-center gap-4 text-xs font-semibold mb-4 transition-colors group-hover:text-white/70" style={{ color: "#a0aec0" }}>
             <span className="flex items-center gap-1.5">
               🛏️ {listing.beds} {listing.beds === 1 ? dict.listing.bed : dict.listing.beds}
             </span>
@@ -69,25 +68,24 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
           </div>
 
           {/* Footer (Price & CTA) */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#e2e8f0]">
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#e2e8f0] group-hover:border-white/20">
             <div>
-              <span className="font-extrabold text-xl" style={{ color: "#1a202c" }}>
+              <span className="font-extrabold text-xl transition-colors group-hover:text-white" style={{ color: "#1a202c" }}>
                 {dict.common.currency}{Math.round(listing.price)}
               </span>
-              <span className="text-xs font-semibold" style={{ color: "#a0aec0" }}>
+              <span className="text-xs font-semibold transition-colors group-hover:text-white/60" style={{ color: "#a0aec0" }}>
                 {" "}
                 {dict.common.pricePerNight}
               </span>
             </div>
             <div
-              className="px-4 py-2 rounded-xl text-sm font-bold bg-[#e8edf2] transition-colors group-hover:bg-[#d32f2f] group-hover:text-white"
+              className="px-4 py-2 rounded-xl text-sm font-bold bg-[#e8edf2] transition-all group-hover:bg-white group-hover:text-[#d32f2f]"
               style={{ color: "#d32f2f" }}
             >
               {dict.listing.view}
             </div>
           </div>
         </div>
-      </div>
     </Link>
   );
 }
