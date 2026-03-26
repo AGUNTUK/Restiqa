@@ -10,7 +10,7 @@ export default async function AdminTransactionsPage() {
   const supabase = await createClient();
   const { data: transactions } = await supabase
     .from("transactions")
-    .select("*, users!transactions_user_id_fkey(full_name)")
+    .select("*, users!transactions_user_id_fkey(name)")
     .order("created_at", { ascending: false });
 
   if (!transactions) return <div className="p-8">No transactions found.</div>;
@@ -42,7 +42,7 @@ export default async function AdminTransactionsPage() {
                     <p className="text-xs font-bold text-[#718096]">{new Date(tx.created_at).toLocaleString()}</p>
                   </td>
                   <td className="p-5 text-sm font-bold text-[#4a5568]">
-                    {(tx.users as any)?.full_name || "System"}
+                    {(tx.users as any)?.name || "System"}
                   </td>
                   <td className="p-5 text-xs font-bold text-[#a0aec0]">
                     {tx.booking_id?.split("-")[0] || "N/A"}

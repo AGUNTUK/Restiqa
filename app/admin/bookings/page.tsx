@@ -13,7 +13,7 @@ export default async function AdminBookingsPage() {
   // Notice: Using explicit relationship hinting might be required if schema ambiguous
   const { data: bookings } = await supabase
     .from("bookings")
-    .select("*, user_details:users!bookings_user_id_fkey(full_name), listings(title, host_details:users!listings_host_id_fkey(full_name))")
+    .select("*, user_details:users!bookings_user_id_fkey(name), listings(title, host_details:users!listings_host_id_fkey(name))")
     .order("created_at", { ascending: false });
 
   if (!bookings) return <div className="p-8">No bookings found.</div>;
@@ -48,8 +48,8 @@ export default async function AdminBookingsPage() {
                       <p className="text-xs font-bold text-[#718096]">{checkin} - {checkout}</p>
                     </td>
                     <td className="p-5">
-                      <p className="text-sm font-bold text-[#4a5568] mb-1"><span className="text-[10px] text-[#a0aec0] uppercase tracking-wider block">Guest:</span> {(booking.user_details as any)?.full_name || "Unknown"}</p>
-                      <p className="text-sm font-bold text-[#4a5568]"><span className="text-[10px] text-[#a0aec0] uppercase tracking-wider block">Host:</span> {((booking.listings as any)?.host_details as any)?.full_name || "Unknown"}</p>
+                      <p className="text-sm font-bold text-[#4a5568] mb-1"><span className="text-[10px] text-[#a0aec0] uppercase tracking-wider block">Guest:</span> {(booking.user_details as any)?.name || "Unknown"}</p>
+                      <p className="text-sm font-bold text-[#4a5568]"><span className="text-[10px] text-[#a0aec0] uppercase tracking-wider block">Host:</span> {((booking.listings as any)?.host_details as any)?.name || "Unknown"}</p>
                     </td>
                     <td className="p-5">
                       <Link href={`/listing/${booking.listing_id}`} className="hover:underline">

@@ -41,11 +41,11 @@ export default async function AdminUsersPage() {
                         {user.avatar_url ? (
                            <img src={user.avatar_url} alt="avatar" className="w-full h-full object-cover" />
                         ) : (
-                           user.full_name?.charAt(0) || "U"
+                           user.name?.charAt(0) || "U"
                         )}
                       </div>
                       <div>
-                        <p className="font-extrabold text-sm text-[#1a202c]">{user.full_name || "Unknown"}</p>
+                        <p className="font-extrabold text-sm text-[#1a202c]">{user.name || "Unknown"}</p>
                         <p className="text-xs font-bold text-[#a0aec0] mt-1 hidden sm:block">{user.id}</p>
                       </div>
                     </div>

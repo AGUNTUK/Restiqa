@@ -24,7 +24,7 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
       gateway_transaction_id,
       sender_number,
       booking_id,
-      users!transactions_user_id_fkey(full_name, email),
+      users!transactions_user_id_fkey(name, email),
       bookings(created_at, total_price, total_amount)
     `)
     .order("created_at", { ascending: false });
@@ -113,7 +113,7 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
                       className={`border-b transition-colors ${isRisky ? "bg-red-50/60 border-red-100 hover:bg-red-100/60" : "border-white/40 hover:bg-white/20"}`}
                     >
                       <td className="p-5">
-                      <p className="text-sm font-extrabold text-[#1a202c]">{tx.users?.full_name || "Unknown User"}</p>
+                      <p className="text-sm font-extrabold text-[#1a202c]">{tx.users?.name || "Unknown User"}</p>
                       <p className="text-xs font-medium text-[#718096]">{tx.users?.email || ""}</p>
                       <p className="text-[10px] text-[#a0aec0] mt-1 font-mono">Booking Ref: {tx.booking_id?.split("-")[0]}</p>
                     </td>
