@@ -11,10 +11,19 @@ import { useRecentSearches } from "@/lib/hooks/useRecentSearches";
 
 type Guests = { adults: number; children: number; infants: number };
 
+const CATEGORIES = [
+  { key: "apartment", label: "Apartments", icon: "🏠" },
+  { key: "hotel",     label: "Hotels",     icon: "🏨" },
+  { key: "resort",   label: "Tours",      icon: "🗺️" },
+] as const;
+
+type Category = typeof CATEGORIES[number]["key"];
+
 export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }) {
   const router = useRouter();
   const { addSearch } = useRecentSearches();
 
+  const [activeCategory, setActiveCategory] = useState<Category>("apartment");
   const [location, setLocation] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -68,6 +77,11 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
       params.set("amenities", filters.join(","));
     }
 
+    // Pass the category as type filter
+    if (activeCategory) {
+      params.set("type", activeCategory);
+    }
+
     // Save to Recent Searches
     addSearch({
       location,
@@ -80,10 +94,31 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
   }
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="neo-card w-full max-w-4xl mx-auto rounded-[20px] p-3"
-    >
+    <div className="w-full max-w-4xl mx-auto">
+      {/* ── Category Tabs ── */}
+      <div className="flex gap-1 mb-3 p-1 bg-white/60 backdrop-blur-md rounded-2xl shadow-[4px_4px_10px_rgba(0,0,0,0.06),-4px_-4px_10px_#ffffff] w-fit">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.key}
+            type="button"
+            onClick={() => setActiveCategory(cat.key)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300"
+            style={{
+              background: activeCategory === cat.key ? "#d32f2f" : "transparent",
+              color: activeCategory === cat.key ? "white" : "#718096",
+              boxShadow: activeCategory === cat.key ? "0 4px 12px rgba(211,47,47,0.35)" : "none",
+              transform: activeCategory === cat.key ? "translateY(-1px)" : "none",
+            }}
+          >
+            <span>{cat.icon}</span>{cat.label}
+          </button>
+        ))}
+      </div>
+
+      <form
+        onSubmit={handleSearch}
+        className="neo-card w-full rounded-[20px] p-3"
+      >
       {/* Desktop: single row | Mobile: stacked */}
       <div className="flex flex-col lg:flex-row gap-2">
         {/* Location */}
@@ -167,7 +202,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
             className="neo-btn neo-btn-primary rounded-xl font-extrabold text-sm px-8 py-4 w-full lg:w-auto whitespace-nowrap active:scale-95 transition-all"
             id="hero-search-btn"
           >
-            🔍 {dict.search.searchBtn}
+            🔍 Search {CATEGORIES.find(c => c.key === activeCategory)?.label}
           </button>
         </div>
       </div>
@@ -214,5 +249,6 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
       </div>
 
     </form>
+    </div>
   );
 }
