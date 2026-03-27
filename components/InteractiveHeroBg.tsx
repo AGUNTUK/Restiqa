@@ -100,7 +100,8 @@ export default function InteractiveHeroBg() {
   useEffect(() => {
     // Spatial parallax math linked to mouse coordinates
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
+      // Performance guard: Only run if we have a cursor/mouse (not on mobile/touch)
+      if (!containerRef.current || window.matchMedia("(pointer: coarse)").matches) return;
       const { clientX, clientY } = e;
       
       // Calculate delta from center of screen (-1 to 1)
@@ -133,15 +134,15 @@ export default function InteractiveHeroBg() {
     >
       {/* ── Soft Ambient Nebulas ── */}
       <div
-        className="absolute -top-[20%] -left-[10%] w-[60%] h-[80%] rounded-full opacity-15 mix-blend-multiply blur-[120px] animate-pulse-slow"
+        className="absolute -top-[20%] -left-[10%] w-[60%] h-[80%] rounded-full opacity-15 mix-blend-multiply blur-[80px] sm:blur-[120px] animate-pulse-slow"
         style={{ background: "#d32f2f" }}
       />
       <div
-        className="absolute top-[10%] -right-[15%] w-[55%] h-[85%] rounded-full opacity-10 mix-blend-multiply blur-[120px] animate-pulse-slow"
+        className="absolute top-[10%] -right-[15%] w-[55%] h-[85%] rounded-full opacity-10 mix-blend-multiply blur-[80px] sm:blur-[120px] animate-pulse-slow"
         style={{ background: "#8bc1c1", animationDelay: "2s" }}
       />
       <div
-        className="absolute -bottom-[20%] left-[20%] w-[40%] h-[60%] rounded-full opacity-10 mix-blend-multiply blur-[100px] animate-pulse-slow"
+        className="absolute -bottom-[20%] left-[20%] w-[40%] h-[60%] rounded-full opacity-10 mix-blend-multiply blur-[70px] sm:blur-[100px] animate-pulse-slow"
         style={{ background: "#43e97b", animationDelay: "1s" }}
       />
 
@@ -165,7 +166,7 @@ export default function InteractiveHeroBg() {
                 }}
               >
                 <div 
-                  className={`neo-card flex items-center justify-center bg-white/40 backdrop-blur-2xl shadow-[10px_10px_30px_rgba(0,0,0,0.05)] border border-white/80 ${item.size} ${item.rotate} rounded-[32px] ${item.id > 4 ? 'hidden sm:flex' : 'flex'} animate-in zoom-in-50 duration-1000`}
+                  className={`neo-card flex items-center justify-center bg-white/40 backdrop-blur-md sm:backdrop-blur-2xl shadow-[10px_10px_30px_rgba(0,0,0,0.05)] border border-white/80 ${item.size} ${item.rotate} rounded-[32px] ${item.id > 3 ? 'hidden sm:flex' : 'flex'} animate-in zoom-in-50 duration-1000`}
                 >
                   {item.icon}
                 </div>
@@ -185,3 +186,4 @@ export default function InteractiveHeroBg() {
     </div>
   );
 }
+
