@@ -43,7 +43,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   const quickLinks = [
     { href: "/listings", icon: "🔍", label: "Browse Listings", sub: "Find your next stay" },
     { href: "#", icon: "❤️", label: "Saved Listings", sub: "Properties you liked" },
-    { href: "#", icon: "⚙️", label: "Account Settings", sub: "Manage your profile" },
+    { href: "/dashboard/profile", icon: "⚙️", label: "Account Settings", sub: "Manage your profile" },
   ];
 
   /* -------------------------------------------------------------------------- */
