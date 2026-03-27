@@ -8,9 +8,10 @@ import { type Listing } from "@/lib/types/database";
 
 interface ListingsMapProps {
   listings: Listing[];
+  onBoundsChange?: (bounds: { sw: { lat: number, lng: number }, ne: { lat: number, lng: number } } | null) => void;
 }
 
-export default function ListingsMap({ listings }: ListingsMapProps) {
+export default function ListingsMap({ listings, onBoundsChange }: ListingsMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
   const [activeListing, setActiveListing] = useState<Listing | null>(null);
 
@@ -63,6 +64,7 @@ export default function ListingsMap({ listings }: ListingsMapProps) {
 
           {/* Map Effects / Controls */}
           <MapBoundsFit listings={listings} />
+          <MapEvents onBoundsChange={onBoundsChange} />
         </Map>
       </APIProvider>
 
@@ -101,6 +103,33 @@ export default function ListingsMap({ listings }: ListingsMapProps) {
       )}
     </div>
   );
+}
+
+function MapEvents({ onBoundsChange }: { onBoundsChange?: ListingsMapProps["onBoundsChange"] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !onBoundsChange) return;
+
+    const listener = map.addListener("idle", () => {
+      const bounds = map.getBounds();
+      if (!bounds) return;
+
+      const sw = bounds.getSouthWest();
+      const ne = bounds.getNorthEast();
+
+      onBoundsChange({
+        sw: { lat: sw.lat(), lng: sw.lng() },
+        ne: { lat: ne.lat(), lng: ne.lng() }
+      });
+    });
+
+    return () => {
+      google.maps.event.removeListener(listener);
+    };
+  }, [map, onBoundsChange]);
+
+  return null;
 }
 
 // Helper component to auto-fit map bounds to listings

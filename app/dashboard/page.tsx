@@ -100,6 +100,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   let hostBookings: any[] = [];
   let myPayoutMethods: any[] = [];
   let totalEarnings = 0;
+  let totalViews = 0;
   let monthlyEarnings = 0;
   let completedPayoutEarnings = 0;
   let pendingEarnings = 0;
@@ -138,6 +139,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
     if (myProperties.length > 0) {
       const listingIds = myProperties.map((l) => l.id);
       
+      // Fetch views count
+      const { count: viewsCount } = await supabase
+        .from("listing_views")
+        .select("*", { count: 'exact', head: true })
+        .in("listing_id", listingIds);
+
+      totalViews = viewsCount || 0;
+
       const { data: bData } = await supabase
         .from("bookings")
         .select(`
@@ -385,18 +394,22 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
           
           {/* Earnings Summary */}
           <h2 className="font-bold text-lg mb-4 text-[#1a202c]">Overview</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div className="neo-card p-6 rounded-[24px]">
               <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Earned</p>
-              <p className="text-3xl font-extrabold text-[#d32f2f]">৳{totalEarnings.toLocaleString()}</p>
+              <p className="text-2xl font-extrabold text-[#d32f2f]">৳{totalEarnings.toLocaleString()}</p>
+            </div>
+            <div className="neo-card p-6 rounded-[24px]">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Views</p>
+              <p className="text-2xl font-extrabold text-[#38b2ac]">{totalViews.toLocaleString()}</p>
             </div>
             <div className="neo-card p-6 rounded-[24px]">
               <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Completed Payouts</p>
-              <p className="text-3xl font-extrabold text-[#43e97b]">৳{completedPayoutEarnings.toLocaleString()}</p>
+              <p className="text-2xl font-extrabold text-[#43e97b]">৳{completedPayoutEarnings.toLocaleString()}</p>
             </div>
             <div className="neo-inset p-6 rounded-[24px]">
               <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Pending</p>
-              <p className="text-3xl font-extrabold text-[#718096]">৳{pendingEarnings.toLocaleString()}</p>
+              <p className="text-2xl font-extrabold text-[#718096]">৳{pendingEarnings.toLocaleString()}</p>
             </div>
           </div>
 

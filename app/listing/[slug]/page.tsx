@@ -12,6 +12,7 @@ import ReviewForm from "@/components/ReviewForm";
 import MobileStickyBook from "@/components/MobileStickyBook";
 
 import FavoriteButton from "@/components/FavoriteButton";
+import { trackListingView } from "@/app/actions/analytics";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,6 +39,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!listing) return { title: "Listing Not Found" };
 
+  const ogUrl = new URL(`${siteUrl}/api/og`);
+  ogUrl.searchParams.set("title", listing.title);
+  ogUrl.searchParams.set("price", Math.round(listing.price).toString());
+  ogUrl.searchParams.set("city", listing.city || "");
+  if (listing.images?.[0]) ogUrl.searchParams.set("image", listing.images[0]);
+
   return {
     title: `${listing.title} in ${listing.city}`,
     description: `Book your stay at ${listing.title} on Restiqa for ৳${Math.round(listing.price)}/night.`,
@@ -46,7 +53,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: `Premium stay in ${listing.city}. Book now on Restiqa.`,
       images: [
         {
-          url: listing.images?.[0] || "/og-image.png",
+          url: ogUrl.toString(),
           width: 1200,
           height: 630,
           alt: listing.title,
@@ -58,8 +65,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: "summary_large_image",
       title: listing.title,
-      description: `Check out this stay on Restiqa`,
-      images: [listing.images?.[0] || "/og-image.png"],
+      description: `Book your stay at ${listing.title} for ৳${Math.round(listing.price)}/night.`,
+      images: [ogUrl.toString()],
     },
   };
 }

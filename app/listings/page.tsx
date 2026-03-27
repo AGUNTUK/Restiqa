@@ -6,6 +6,7 @@ import { DynamicListingsMap } from "@/components/LazyWrappers";
 import { getDictionary, getLocale } from "@/lib/i18n";
 import FilterSection from "@/components/FilterSection";
 import ViewToggle from "@/components/ViewToggle";
+import MapFilterHandler from "@/components/MapFilterHandler";
 
 export const revalidate = 60; // Revalidate every 60 seconds (ISR)
 
@@ -37,6 +38,12 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
   const type = typeof rawParams.type === "string" ? rawParams.type : null;
   const view = typeof rawParams.view === "string" ? rawParams.view : "list";
 
+  // Map Bounds
+  const swLat = typeof rawParams.swLat === "string" ? parseFloat(rawParams.swLat) : null;
+  const swLng = typeof rawParams.swLng === "string" ? parseFloat(rawParams.swLng) : null;
+  const neLat = typeof rawParams.neLat === "string" ? parseFloat(rawParams.neLat) : null;
+  const neLng = typeof rawParams.neLng === "string" ? parseFloat(rawParams.neLng) : null;
+
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
     let query = supabase
@@ -63,6 +70,14 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
 
     if (type && type !== 'all') {
       query = query.eq("type", type);
+    }
+
+    if (swLat !== null && neLat !== null && swLng !== null && neLng !== null) {
+      query = query
+        .gte("latitude", swLat)
+        .lte("latitude", neLat)
+        .gte("longitude", swLng)
+        .lte("longitude", neLng);
     }
 
     if (amenitiesStr) {
@@ -135,9 +150,7 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
 
         {/* Right Side: Sticky Interactive Map */}
         <div className={`w-full lg:w-[45%] xl:w-[40%] relative ${view === 'map' ? 'block min-h-[500px] h-[calc(100vh-140px)]' : 'hidden lg:block'}`}>
-          <div className="sticky top-24 h-full w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/20">
-            <DynamicListingsMap listings={listings as ListingWithStats[]} />
-          </div>
+          <MapFilterHandler listings={listings as ListingWithStats[]} />
         </div>
       </div>
     </div>
