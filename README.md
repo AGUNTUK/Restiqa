@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Restiqa - Premium Travel Marketplace 🇧🇩 🚀
 
-## Getting Started
+Restiqa is a high-end, world-class travel platform designed for the unique tourism landscape of Bangladesh. Built with **Next.js 15**, **Supabase**, and a custom **Neomorphic-Glassmorphism** design system, it offers a seamless booking experience for guests and powerful management tools for hosts.
 
-First, run the development server:
+![Restiqa Hero](public/og-image.png)
 
+## ✨ Elite Features
+
+### 📱 Full Progressive Web App (PWA)
+Restiqa is a "Native-Grade" web app. Users on iOS and Android can install it directly to their home screen with a dedicated icon, splash screen, and standalone window experience.
+
+### 🗺️ Airbnb-Style Map Search
+Experience ultra-fast discovery with our **Map-Search Synchronization**. Moving the interactive map instantly filters the properties listing to show only what's in your current view.
+
+### 🖼️ Dynamic SEO & Social Sharing
+Every listing is optimized for viral growth. When shared on social media, Restiqa automatically generates a custom OpenGraph image overlaying the price, city, and branding directly onto the property photo.
+
+### 📊 Host Analytics & Dashboard
+A dedicated suite for property owners.
+- **Real-time View Tracking**: See exactly how many people have viewed your listings.
+- **Earnings Insights**: 6-month visual history of revenue.
+- **Payout Management**: Integrated BKash, Rocket, and Bank Transfer tracking.
+
+### 🛡️ Hardened Security
+- **Strict RLS Policies**: Enterprise-grade data isolation between users.
+- **Admin Console**: Master-level control over all listings, bookings, and users.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Database & Auth**: [Supabase](https://supabase.com/)
+- **Styling**: Tailwind CSS + Custom Neomorphic Glassmorphism
+- **Maps**: Google Maps JavaScript API
+- **Analytics**: Vercel Analytics & Speed Insights
+- **Emails**: Resend API
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone & Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/AGUNTUK/restiqa.git
+cd restiqa
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Variables
+Create a `.env.local` file in the root directory:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+RESEND_API_KEY=your_resend_key
+```
 
-## Learn More
+### 3. Database Setup
+1. Create a new project on [Supabase](https://supabase.com/).
+2. Run the SQL migrations found in the `supabase/migrations/` folder in order.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Run Locally
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📖 Deployment
+The project is optimized for deployment on **Vercel**. Simply connect your repository and ensure all environment variables are correctly configured.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+Internal use only. © 2026 Restiqa Team.
