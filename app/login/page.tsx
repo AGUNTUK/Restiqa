@@ -149,7 +149,6 @@ export default function LoginPage() {
           <div className="flex gap-3">
             {[
               { id: "google", label: "Google", icon: "G", color: "#4285F4" },
-              { id: "apple", label: "Apple", icon: "🍎", color: "#1a202c" },
             ].map(({ id, label, icon, color }) => (
               <button
                 key={id}
