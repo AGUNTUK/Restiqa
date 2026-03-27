@@ -304,7 +304,7 @@ export default function NavbarClient({
         .desktop-logo { display: flex; }
 
         @media (max-width: 768px) {
-          .navbar-inner { padding: 0 0.75rem; }
+          .navbar-inner { padding: 0 0.4rem; }
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .mobile-logo { display: flex; }

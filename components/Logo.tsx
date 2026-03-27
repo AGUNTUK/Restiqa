@@ -23,13 +23,13 @@ export default function Logo({ className = "", width = 150, height = 50 }: LogoP
     >
       <div 
         className="relative flex items-center justify-start shrink-0" 
-        style={{ width, height, position: 'relative' }}
+        style={{ height, width: 'auto', position: 'relative' }}
       >
         {/* We use standard img with fallback, as the user needs to provide the actual logo file (e.g. logo.png or logo.webp) */}
         <img 
           src="/logo.png" 
           alt="Restiqa Logo" 
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          style={{ height: '100%', width: 'auto', objectFit: 'contain', display: 'block' }}
           onError={(e) => {
             // Fallback to stylized text if logo.png is missing
             e.currentTarget.style.display = 'none';
