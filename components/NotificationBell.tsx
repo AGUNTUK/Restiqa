@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 import { markNotificationsRead } from "@/app/actions/notifications";
 
 export type NotificationType = {
@@ -14,12 +15,53 @@ export type NotificationType = {
   created_at: string;
 };
 
-export default function NotificationBell({ initialNotifications }: { initialNotifications: NotificationType[] }) {
+export default function NotificationBell({ 
+  initialNotifications,
+  userId
+}: { 
+  initialNotifications: NotificationType[];
+  userId?: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(initialNotifications);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  // Sync state with initial notifications if they change externally (e.g. on navigation)
+  useEffect(() => {
+    setNotifications(initialNotifications);
+  }, [initialNotifications]);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const supabase = createClient();
+
+    // Subscribe to real-time notification inserts for this specific user
+    const channel = supabase
+      .channel(`realtime:notifications:user_${userId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${userId}`,
+        },
+        (payload) => {
+          const newNotif = payload.new as NotificationType;
+          setNotifications((prev) => [newNotif, ...prev]);
+          
+          // Optional: Add sound or desktop notification trigger here
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [userId]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

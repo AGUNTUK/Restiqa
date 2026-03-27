@@ -129,7 +129,7 @@ export default function NavbarClient({
           {user ? (
             /* Authenticated: notifications + avatar + sign out */
             <>
-              <NotificationBell initialNotifications={initialNotifications} />
+              <NotificationBell initialNotifications={initialNotifications} userId={user.id || ""} />
               <Link
                 href="/dashboard"
                 title={user.email}
@@ -200,7 +200,7 @@ export default function NavbarClient({
 
         {/* Mobile hamburger */}
         <div className="mobile-menu-btn" style={{ display: "none", alignItems: "center", gap: "0.5rem" }}>
-          {user && <NotificationBell initialNotifications={initialNotifications} />}
+          {user && <NotificationBell initialNotifications={initialNotifications} userId={user.id || ""} />}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
