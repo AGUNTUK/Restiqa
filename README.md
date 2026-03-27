@@ -9,8 +9,9 @@ Restiqa is a high-end, world-class travel platform designed for the unique touri
 ### 📱 Full Progressive Web App (PWA)
 Restiqa is a "Native-Grade" web app. Users on iOS and Android can install it directly to their home screen with a dedicated icon, splash screen, and standalone window experience.
 
-### 🗺️ Airbnb-Style Map Search
-Experience ultra-fast discovery with our **Map-Search Synchronization**. Moving the interactive map instantly filters the properties listing to show only what's in your current view.
+### 🗺️ Specialized Search & Discovery
+- **Airbnb-Style Map Sync**: Experience ultra-fast discovery with our **Map-Search Synchronization**. Moving the interactive map instantly filters the properties listing to show only what's in your current view.
+- **Tour-Specific Logic**: The platform dynamically adapts to the selected category. Selecting **Tours** swaps standard stay inputs for a specialized **Travel Date** and **Duration** selector—perfect for booking experiences.
 
 ### 🖼️ Dynamic SEO & Social Sharing
 Every listing is optimized for viral growth. When shared on social media, Restiqa automatically generates a custom OpenGraph image overlaying the price, city, and branding directly onto the property photo.
