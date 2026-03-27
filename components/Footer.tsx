@@ -33,8 +33,8 @@ export default function Footer({ dict, locale }: { dict: typeof dictionaries["en
       heading: dict.footer.support,
       links: [
         { href: "#", label: dict.footer.helpCenter },
-        { href: "#", label: dict.footer.privacy },
-        { href: "#", label: dict.footer.terms },
+        { href: "/privacy", label: dict.footer.privacy },
+        { href: "/terms", label: dict.footer.terms },
       ],
     },
   ];
