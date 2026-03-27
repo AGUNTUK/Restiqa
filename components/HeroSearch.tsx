@@ -96,13 +96,13 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* ── Category Tabs ── */}
-      <div className="flex gap-1 mb-3 p-1 bg-white/60 backdrop-blur-md rounded-2xl shadow-[4px_4px_10px_rgba(0,0,0,0.06),-4px_-4px_10px_#ffffff] w-fit">
+      <div className="flex gap-1 mb-3 p-1 bg-white/60 backdrop-blur-md rounded-2xl shadow-[4px_4px_10px_rgba(0,0,0,0.06),-4px_-4px_10px_#ffffff] w-full">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.key}
             type="button"
             onClick={() => setActiveCategory(cat.key)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300"
+            className="flex flex-1 items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300"
             style={{
               background: activeCategory === cat.key ? "#d32f2f" : "transparent",
               color: activeCategory === cat.key ? "white" : "#718096",
@@ -110,7 +110,8 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
               transform: activeCategory === cat.key ? "translateY(-1px)" : "none",
             }}
           >
-            <span>{cat.icon}</span>{cat.label}
+            <span className="text-base sm:text-lg">{cat.icon}</span>
+            <span className="whitespace-nowrap">{cat.label}</span>
           </button>
         ))}
       </div>
