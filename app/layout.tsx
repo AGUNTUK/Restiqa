@@ -52,14 +52,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  manifest: "/manifest.json",
+  manifest: "/manifest",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Restiqa",
   },
 };
@@ -86,9 +86,6 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="mobile-web-app-capable" content="yes" />
         {/* Google tag (gtag.js) */}
         <Script
           async
