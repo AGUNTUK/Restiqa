@@ -27,6 +27,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
   const [location, setLocation] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [tourDuration, setTourDuration] = useState("");
   const [guests, setGuests] = useState<Guests>({ adults: 1, children: 0, infants: 0 });
 
   // Advanced Filters
@@ -80,6 +81,10 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
     // Pass the category as type filter
     if (activeCategory) {
       params.set("type", activeCategory);
+    }
+    // Pass tour duration if set
+    if (activeCategory === "resort" && tourDuration) {
+      params.set("duration", tourDuration);
     }
 
     // Save to Recent Searches
@@ -147,7 +152,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
 
         {/* Dates — conditional based on category */}
         {activeCategory === "resort" ? (
-          // Tours: single Travel Date field
+          // Tours: single Travel Date field + Duration
           <>
             <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
             <div className="flex-1 min-w-0">
@@ -165,6 +170,29 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
                   style={{ color: checkIn ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
                   min={today}
                 />
+              </div>
+            </div>
+
+            {/* Duration */}
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
+            <div className="flex-1 min-w-0">
+              <label htmlFor="hero-duration" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
+                Duration <span style={{ color: "#cbd5e0", fontWeight: 400 }}>(Optional)</span>
+              </label>
+              <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
+                <span className="text-base">⏱️</span>
+                <select
+                  id="hero-duration"
+                  value={tourDuration}
+                  onChange={(e) => setTourDuration(e.target.value)}
+                  className="bg-transparent border-none outline-none py-4 text-sm flex-1 cursor-pointer"
+                  style={{ color: tourDuration ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+                >
+                  <option value="">Any Duration</option>
+                  {[1,2,3,4,5,6,7].map(d => (
+                    <option key={d} value={d}>{d} {d === 1 ? "Day" : "Days"}</option>
+                  ))}
+                </select>
               </div>
             </div>
           </>
