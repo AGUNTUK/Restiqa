@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Restiqa",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Restiqa Travel Marketplace",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Restiqa — Premium Travel Marketplace in Bangladesh",
     description: "Discover and book unique stays across Bangladesh with ease.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
