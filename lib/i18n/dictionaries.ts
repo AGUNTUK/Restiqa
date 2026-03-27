@@ -44,6 +44,20 @@ export const dictionaries = {
       nearSea: "Near Sea",
       hillView: "Hill View",
       cityCenter: "City Center",
+      priceRange: "Price Range",
+      propertyType: "Property Type",
+      allTypes: "All Types",
+      apply: "Apply Filters",
+      showMap: "Show Map",
+      showList: "Show List"
+    },
+    dashboard: {
+      saved: "Saved",
+      wishlist: "Wishlist",
+      noSaved: "No saved stays yet",
+      phone: "Phone Number",
+      emergencyContact: "Emergency Contact",
+      manageProfile: "Manage Profile"
     },
     common: {
       pricePerNight: "/ night",
@@ -220,6 +234,20 @@ export const dictionaries = {
       nearSea: "সমুদ্রের কাছে",
       hillView: "পাহাড় ভিউ",
       cityCenter: "শহরের কেন্দ্রে",
+      priceRange: "মূল্য পরিসীমা",
+      propertyType: "প্রপার্টি টাইপ",
+      allTypes: "সব ধরনের",
+      apply: "ফিল্টার প্রয়োগ করুন",
+      showMap: "ম্যাপ দেখুন",
+      showList: "লিস্ট দেখুন"
+    },
+    dashboard: {
+      saved: "সেভ করা",
+      wishlist: "উইশলিস্ট",
+      noSaved: "এখনও কোনও সেভ করা জায়গা নেই",
+      phone: "ফোন নম্বর",
+      emergencyContact: "জরুরী যোগাযোগ",
+      manageProfile: "প্রোফাইল আপডেট করুন"
     },
     common: {
       pricePerNight: "/ রাত",

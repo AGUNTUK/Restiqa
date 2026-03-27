@@ -90,7 +90,7 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 relative">
         
         {/* View Toggle (Mobile Only) */}
-        <ViewToggle />
+        <ViewToggle dict={dict} />
 
         {/* Left Side: scrollable Listings */}
         <div className={`w-full lg:w-[55%] xl:w-[60%] flex flex-col ${view === 'map' ? 'hidden lg:flex' : 'flex'}`}>
