@@ -6,6 +6,8 @@ import { signOut } from "@/app/actions/auth";
 import { deleteListing, addPayoutMethod } from "@/app/actions/host";
 import { updateBookingStatus, cancelBooking } from "@/app/actions/booking";
 import Image from "next/image";
+import { getDictionary } from "@/lib/i18n";
+import ListingCard from "@/components/ListingCard";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -17,6 +19,7 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 export default async function DashboardPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const tab = typeof params.tab === "string" ? params.tab : "traveler";
+  const dict = await getDictionary();
 
   const supabase = await createClient();
   const {
@@ -42,7 +45,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
 
   const quickLinks = [
     { href: "/listings", icon: "🔍", label: "Browse Listings", sub: "Find your next stay" },
-    { href: "#", icon: "❤️", label: "Saved Listings", sub: "Properties you liked" },
+    { href: "/dashboard?tab=saved", icon: "❤️", label: "Saved Listings", sub: "Properties you liked" },
     { href: "/dashboard/profile", icon: "⚙️", label: "Account Settings", sub: "Manage your profile" },
   ];
 
@@ -71,6 +74,23 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
       .order("checkin", { ascending: false });
     
     if (data) bookings = data;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                              SAVED LISTINGS FETCH                          */
+  /* -------------------------------------------------------------------------- */
+  let savedListings: any[] = [];
+  if (isSupabaseConfigured() && user && tab === "saved") {
+    const { data } = await supabase
+      .from("saved_listings")
+      .select(`
+        listing_id,
+        listings_with_stats (*)
+      `)
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+    
+    if (data) savedListings = data.map(d => d.listings_with_stats);
   }
 
   /* -------------------------------------------------------------------------- */
@@ -208,12 +228,18 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
       </div>
 
       {/* ── Segmented Tab Control ── */}
-      <div className="neo-inset p-2 rounded-2xl flex gap-2 mb-8 mx-auto w-full max-w-sm">
+      <div className="neo-inset p-2 rounded-2xl flex gap-2 mb-8 mx-auto w-full max-w-md">
         <Link 
           href="?tab=traveler" 
           className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "traveler" ? "neo-card text-[#d32f2f] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
         >
           Traveler
+        </Link>
+        <Link 
+          href="?tab=saved" 
+          className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "saved" ? "neo-card text-[#f6ad55] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
+        >
+          Saved
         </Link>
         <Link 
           href="?tab=host" 
@@ -325,6 +351,29 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/*                                 SAVED TAB                                 */}
+      {/* ========================================================================= */}
+      {tab === "saved" && (
+        <div className="animate-in fade-in duration-500">
+          <h2 className="font-bold text-lg mb-4 text-[#1a202c]">Your Wishlist</h2>
+          {savedListings.length > 0 ? (
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
+              {savedListings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} dict={dict} />
+              ))}
+            </div>
+          ) : (
+            <div className="neo-inset p-12 rounded-[24px] text-center w-full">
+               <div className="text-4xl mb-4">❤️</div>
+               <h3 className="font-bold text-lg text-[#1a202c] mb-2">No saved stays yet</h3>
+               <p className="text-sm text-[#718096] mb-6 max-w-xs mx-auto">Explore amazing places and tap the heart icon to save your favorites here.</p>
+               <Link href="/listings" className="neo-btn neo-btn-primary px-8 py-3 rounded-xl font-bold text-sm inline-block shadow-lg">Start Exploring</Link>
+            </div>
+          )}
         </div>
       )}
 

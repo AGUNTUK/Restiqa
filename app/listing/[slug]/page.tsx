@@ -11,6 +11,8 @@ import ReviewList from "@/components/ReviewList";
 import ReviewForm from "@/components/ReviewForm";
 import MobileStickyBook from "@/components/MobileStickyBook";
 
+import FavoriteButton from "@/components/FavoriteButton";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -18,12 +20,13 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://restiqa.com";
   
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
   
   let query = supabase
     .from("listings_with_stats")
-    .select("title, city");
+    .select("id, title, city, images, price");
   
   if (isUuid) {
     query = query.or(`id.eq.${slug},slug.eq.${slug}`);
@@ -37,7 +40,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${listing.title} in ${listing.city}`,
-    description: `Book your stay at ${listing.title} on Restiqa.`,
+    description: `Book your stay at ${listing.title} on Restiqa for ৳${Math.round(listing.price)}/night.`,
+    openGraph: {
+      title: `${listing.title} | Restiqa Stays`,
+      description: `Premium stay in ${listing.city}. Book now on Restiqa.`,
+      images: [
+        {
+          url: listing.images?.[0] || "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: listing.title,
+        },
+      ],
+      type: "website",
+      url: `${siteUrl}/listing/${slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: listing.title,
+      description: `Check out this stay on Restiqa`,
+      images: [listing.images?.[0] || "/og-image.png"],
+    },
   };
 }
 
@@ -128,9 +151,10 @@ export default async function ListingDetailsPage({ params }: PageProps) {
           <button className="neo-btn px-4 py-2 text-sm flex items-center gap-2">
             <span>📤</span> Share
           </button>
-          <button className="neo-btn px-4 py-2 text-sm flex items-center gap-2">
-            <span>🤍</span> Save
-          </button>
+          <FavoriteButton 
+            listingId={l.id} 
+            className="neo-btn px-4 py-2 text-sm flex items-center gap-2"
+          />
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { type ListingWithStats } from "@/lib/types/database";
 import { type dictionaries } from "@/lib/i18n/dictionaries";
+import FavoriteButton from "./FavoriteButton";
 
 interface ListingCardProps {
   listing: ListingWithStats;
@@ -33,15 +34,22 @@ export default function ListingCard({ listing, dict }: ListingCardProps) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={listing.id === "bd-1"}
           />
-          {/* Badges */}
-          <div className="absolute top-3 inset-x-3 flex justify-between items-start pointer-events-none">
-            <div className="neo-badge bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold shadow-sm flex items-center gap-1 border border-white/50" style={{ color: "#d32f2f" }}>
+          {/* Badges & Save */}
+          <div className="absolute top-3 inset-x-3 flex justify-between items-start">
+            <div className="neo-badge bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold shadow-sm flex items-center gap-1 border border-white/50 pointer-events-none" style={{ color: "#d32f2f" }}>
               <span className="text-xs">🛡️</span> {dict.listing.verified || "Verified"}
             </div>
-            <div className="neo-badge bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1">
-              <span style={{ color: "#f6ad55" }}>★</span>{" "}
-              <span style={{ color: "#2a6b78" }}>{Number(listing.avg_rating).toFixed(1)}</span>
-              <span style={{ color: "#a0aec0", fontWeight: 'normal' }}>({listing.review_count})</span>
+            
+            <div className="flex flex-col items-end gap-2">
+              <FavoriteButton 
+                listingId={listing.id} 
+                className="bg-black/20 backdrop-blur-md p-2 rounded-full hover:bg-black/40"
+              />
+              <div className="neo-badge bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1 pointer-events-none">
+                <span style={{ color: "#f6ad55" }}>★</span>{" "}
+                <span style={{ color: "#2a6b78" }}>{Number(listing.avg_rating).toFixed(1)}</span>
+                <span style={{ color: "#a0aec0", fontWeight: 'normal' }}>({listing.review_count})</span>
+              </div>
             </div>
           </div>
         </div>
