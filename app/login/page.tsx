@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useActionState } from "react";
-import { signIn, signUp } from "@/app/actions/auth";
+import { signIn, signUp, signInWithGoogle } from "@/app/actions/auth";
 import Logo from "@/components/Logo";
 
 type AuthState = { error?: string; success?: string } | undefined;
@@ -145,23 +145,18 @@ export default function LoginPage() {
             <div className="flex-1 h-px" style={{ background: "#dde2e7" }} />
           </div>
 
-          {/* Social (UI only — wire via Supabase OAuth later) */}
-          <div className="flex gap-3">
-            {[
-              { id: "google", label: "Google", icon: "G", color: "#4285F4" },
-            ].map(({ id, label, icon, color }) => (
-              <button
-                key={id}
-                type="button"
-                className="neo-btn flex-1 py-2.5 rounded-xl text-sm font-semibold gap-2"
-                id={`social-${id}`}
-                style={{ color: "#2a6b78" }}
-              >
-                <span style={{ fontWeight: 700, color }}>{icon}</span>
-                {label}
-              </button>
-            ))}
-          </div>
+          {/* Google OAuth */}
+          <form action={signInWithGoogle}>
+            <button
+              type="submit"
+              className="neo-btn w-full py-2.5 rounded-xl text-sm font-semibold gap-2 flex items-center justify-center"
+              id="social-google"
+              style={{ color: "#2a6b78" }}
+            >
+              <span style={{ fontWeight: 700, color: "#4285F4" }}>G</span>
+              Continue with Google
+            </button>
+          </form>
         </div>
 
         {/* Bottom toggle */}
