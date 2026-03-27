@@ -53,6 +53,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   manifest: "/manifest",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
