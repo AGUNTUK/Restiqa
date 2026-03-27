@@ -22,7 +22,7 @@ export default function Logo({ className = "", width = 150, height = 50 }: LogoP
       }}
     >
       <div 
-        className="relative flex items-center justify-center shrink-0" 
+        className="relative flex items-center justify-start shrink-0" 
         style={{ width, height, position: 'relative' }}
       >
         {/* We use standard img with fallback, as the user needs to provide the actual logo file (e.g. logo.png or logo.webp) */}

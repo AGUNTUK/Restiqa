@@ -38,10 +38,10 @@ export default function NavbarClient({
       }}
     >
       <nav
+        className="navbar-inner"
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "0 1.5rem",
           height: 68,
           display: "flex",
           alignItems: "center",
@@ -50,7 +50,10 @@ export default function NavbarClient({
         }}
       >
         {/* Logo */}
-        <Logo width={180} height={60} />
+        <div className="navbar-logo-container">
+          <Logo width={180} height={60} className="desktop-logo" />
+          <Logo width={140} height={45} className="mobile-logo" />
+        </div>
 
         {/* Desktop nav links */}
         <ul
@@ -296,9 +299,16 @@ export default function NavbarClient({
       )}
 
       <style>{`
+        .navbar-inner { padding: 0 1.5rem; }
+        .mobile-logo { display: none; }
+        .desktop-logo { display: flex; }
+
         @media (max-width: 768px) {
+          .navbar-inner { padding: 0 0.75rem; }
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .mobile-logo { display: flex; }
+          .desktop-logo { display: none; }
         }
       `}</style>
     </header>
