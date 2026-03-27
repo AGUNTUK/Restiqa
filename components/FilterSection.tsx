@@ -73,25 +73,53 @@ export default function FilterSection({ dict }: FilterSectionProps) {
     <div className="neo-card p-6 md:p-8 rounded-[32px] mb-10 border border-white/40">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
-        {/* Price Range */}
+        {/* Price Range Slider */}
         <div className="space-y-4">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0]">Price Range (৳)</p>
-          <div className="flex items-center gap-3">
-            <input 
-              type="number" 
-              placeholder="Min"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              className="w-full neo-inset p-3 rounded-xl text-sm font-bold bg-transparent outline-none focus:placeholder-transparent"
+          <div className="flex justify-between items-end">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0]">Price Range</p>
+            <p className="text-sm font-extrabold text-[#d32f2f]">
+              ৳{minPrice || "0"} - ৳{maxPrice || "50k+"}
+            </p>
+          </div>
+          
+          <div className="relative h-10 flex items-center group">
+            <div className="absolute w-full h-1.5 bg-[#e2e8f0]/40 rounded-full" />
+            <div 
+              className="absolute h-1.5 bg-gradient-to-r from-[#d32f2f] to-[#8bc1c1] rounded-full shadow-sm"
+              style={{
+                left: `${(Number(minPrice) / 50000) * 100}%`,
+                right: `${100 - (Number(maxPrice || 50000) / 50000) * 100}%`
+              }}
             />
-            <span className="text-[#a0aec0]">-</span>
             <input 
-              type="number" 
-              placeholder="Max"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              className="w-full neo-inset p-3 rounded-xl text-sm font-bold bg-transparent outline-none focus:placeholder-transparent"
+              type="range"
+              min="0"
+              max="50000"
+              step="500"
+              value={minPrice || "0"}
+              onChange={(e) => {
+                const val = Math.min(Number(e.target.value), Number(maxPrice || 50000) - 500);
+                setMinPrice(val.toString());
+              }}
+              className="absolute w-full h-1.5 appearance-none bg-transparent pointer-events-none z-10 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#d32f2f]"
             />
+            <input 
+              type="range"
+              min="0"
+              max="50000"
+              step="500"
+              value={maxPrice || "50000"}
+              onChange={(e) => {
+                const val = Math.max(Number(e.target.value), Number(minPrice || 0) + 500);
+                setMaxPrice(val.toString());
+              }}
+              className="absolute w-full h-1.5 appearance-none bg-transparent pointer-events-none z-20 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-[#8bc1c1]"
+            />
+          </div>
+          <div className="flex justify-between text-[10px] font-bold text-[#a0aec0] uppercase tracking-tighter">
+            <span>৳0</span>
+            <span>৳25k</span>
+            <span>৳50k+</span>
           </div>
         </div>
 

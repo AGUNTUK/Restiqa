@@ -5,6 +5,7 @@ import ListingCard from "@/components/ListingCard";
 import { DynamicListingsMap } from "@/components/LazyWrappers";
 import { getDictionary, getLocale } from "@/lib/i18n";
 import FilterSection from "@/components/FilterSection";
+import ViewToggle from "@/components/ViewToggle";
 
 export const revalidate = 60; // Revalidate every 60 seconds (ISR)
 
@@ -34,6 +35,7 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
   const minPrice = typeof rawParams.minPrice === "string" ? parseInt(rawParams.minPrice, 10) : null;
   const maxPrice = typeof rawParams.maxPrice === "string" ? parseInt(rawParams.maxPrice, 10) : null;
   const type = typeof rawParams.type === "string" ? rawParams.type : null;
+  const view = typeof rawParams.view === "string" ? rawParams.view : "list";
 
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
@@ -87,8 +89,11 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
     <div className="max-w-[1500px] mx-auto px-4 sm:px-6 py-8 lg:py-12">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 relative">
         
+        {/* View Toggle (Mobile Only) */}
+        <ViewToggle />
+
         {/* Left Side: scrollable Listings */}
-        <div className="w-full lg:w-[55%] xl:w-[60%] flex flex-col">
+        <div className={`w-full lg:w-[55%] xl:w-[60%] flex flex-col ${view === 'map' ? 'hidden lg:flex' : 'flex'}`}>
           {/* Page Header */}
           <div className="mb-8">
             <h1 className="font-extrabold text-3xl md:text-4xl mb-3 text-[#1a202c] tracking-tight">
@@ -129,8 +134,8 @@ export default async function ListingsPage({ searchParams }: { searchParams: Sea
         </div>
 
         {/* Right Side: Sticky Interactive Map */}
-        <div className="hidden lg:block lg:w-[45%] xl:w-[40%] relative">
-          <div className="sticky top-24 h-[calc(100vh-140px)] w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/20">
+        <div className={`w-full lg:w-[45%] xl:w-[40%] relative ${view === 'map' ? 'block min-h-[500px] h-[calc(100vh-140px)]' : 'hidden lg:block'}`}>
+          <div className="sticky top-24 h-full w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/20">
             <DynamicListingsMap listings={listings as ListingWithStats[]} />
           </div>
         </div>
