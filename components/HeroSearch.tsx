@@ -145,51 +145,72 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
           </div>
         </div>
 
-        {/* Divider (desktop only) */}
-        <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
+        {/* Dates — conditional based on category */}
+        {activeCategory === "resort" ? (
+          // Tours: single Travel Date field
+          <>
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
+            <div className="flex-1 min-w-0">
+              <label htmlFor="hero-traveldate" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
+                Travel Date
+              </label>
+              <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
+                <span className="text-base">🗓️</span>
+                <input
+                  id="hero-traveldate"
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => { setCheckIn(e.target.value); setCheckOut(e.target.value); }}
+                  className="bg-transparent border-none outline-none py-4 text-sm flex-1"
+                  style={{ color: checkIn ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+                  min={today}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          // Apartments / Hotels: Check-in + Check-out
+          <>
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
+            <div className="flex-1 min-w-0">
+              <label htmlFor="hero-checkin" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
+                {dict.search.checkIn}
+              </label>
+              <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
+                <span className="text-base">📅</span>
+                <input
+                  id="hero-checkin"
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                  className="bg-transparent border-none outline-none py-4 text-sm flex-1"
+                  style={{ color: checkIn ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+                  min={today}
+                />
+              </div>
+            </div>
 
-        {/* Check-in */}
-        <div className="flex-1 min-w-0">
-          <label htmlFor="hero-checkin" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
-            {dict.search.checkIn}
-          </label>
-          <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
-            <span className="text-base">📅</span>
-            <input
-              id="hero-checkin"
-              type="date"
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              className="bg-transparent border-none outline-none py-4 text-sm flex-1"
-              style={{ color: checkIn ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
-              min={today}
-            />
-          </div>
-        </div>
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
 
-        {/* Divider */}
-        <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />
-
-        {/* Check-out */}
-        <div className="flex-1 min-w-0">
-          <label htmlFor="hero-checkout" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
-            {dict.search.checkOut}
-          </label>
-          <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
-            <span className="text-base">📅</span>
-            <input
-              id="hero-checkout"
-              type="date"
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="bg-transparent border-none outline-none py-4 text-sm flex-1"
-              style={{ color: checkOut ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
-              min={checkIn || today}
-            />
-          </div>
-        </div>
-
-        {/* Guests via Portal */}
+            <div className="flex-1 min-w-0">
+              <label htmlFor="hero-checkout" className="block text-[10px] font-bold uppercase tracking-widest mb-1 pl-1" style={{ color: "#a0aec0" }}>
+                {dict.search.checkOut}
+              </label>
+              <div className="neo-inset flex items-center gap-2 px-3 rounded-xl">
+                <span className="text-base">📅</span>
+                <input
+                  id="hero-checkout"
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                  className="bg-transparent border-none outline-none py-4 text-sm flex-1"
+                  style={{ color: checkOut ? "#2a6b78" : "#a0aec0", fontFamily: "inherit", minWidth: 0 }}
+                  min={checkIn || today}
+                />
+              </div>
+            </div>
+          </>
+        )}
         <GuestSelector 
           guests={guests} 
           onGuestsChange={changeGuest} 
