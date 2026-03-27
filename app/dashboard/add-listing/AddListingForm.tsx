@@ -32,6 +32,7 @@ interface DraftData {
   baths: string;
   price: string;
   amenities: string[];
+  duration?: string;
 }
 
 const DEFAULT_DATA: DraftData = {
@@ -45,6 +46,7 @@ const DEFAULT_DATA: DraftData = {
   baths: "1",
   price: "",
   amenities: [],
+  duration: "",
 };
 
 const DRAFT_KEY = "restiqa_host_draft";
@@ -131,6 +133,10 @@ export default function AddListingForm() {
     }
 
     images.forEach((file) => formData.append("images", file));
+
+    if (data.duration) {
+      formData.append("duration", data.duration);
+    }
 
     const result = await createListing(formData);
     if (result?.error) {
@@ -282,7 +288,7 @@ export default function AddListingForm() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className={`grid ${data.type === 'tour' || data.type === 'resort' ? 'grid-cols-2' : 'grid-cols-3'} gap-4`}>
               <div className="neo-card p-4 rounded-2xl text-center">
                 <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Guests</label>
                 <input
@@ -293,27 +299,44 @@ export default function AddListingForm() {
                   className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
                 />
               </div>
-              <div className="neo-card p-4 rounded-2xl text-center">
-                <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Beds</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={data.beds}
-                  onChange={(e) => updateData("beds", e.target.value)}
-                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
-                />
-              </div>
-              <div className="neo-card p-4 rounded-2xl text-center">
-                <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Baths</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  min="0.5"
-                  value={data.baths}
-                  onChange={(e) => updateData("baths", e.target.value)}
-                  className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
-                />
-              </div>
+
+              {(data.type === 'tour' || data.type === 'resort') ? (
+                <div className="neo-card p-4 rounded-2xl text-center">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Duration (Days)</label>
+                  <input
+                    type="number"
+                    min="1"
+                    placeholder="e.g. 3"
+                    value={data.duration}
+                    onChange={(e) => updateData("duration", e.target.value)}
+                    className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="neo-card p-4 rounded-2xl text-center">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Beds</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={data.beds}
+                      onChange={(e) => updateData("beds", e.target.value)}
+                      className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
+                    />
+                  </div>
+                  <div className="neo-card p-4 rounded-2xl text-center">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Baths</label>
+                    <input
+                      type="number"
+                      step="0.5"
+                      min="0.5"
+                      value={data.baths}
+                      onChange={(e) => updateData("baths", e.target.value)}
+                      className="neo-inset w-full p-3 rounded-xl text-lg font-bold text-[#d32f2f] text-center focus:outline-none"
+                    />
+                  </div>
+                </>
+              )}
             </div>
 
             <div>

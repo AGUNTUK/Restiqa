@@ -14,7 +14,7 @@ type Guests = { adults: number; children: number; infants: number };
 const CATEGORIES = [
   { key: "apartment", label: "Apartments", icon: "🏠" },
   { key: "hotel",     label: "Hotels",     icon: "🏨" },
-  { key: "resort",   label: "Tours",      icon: "🗺️" },
+  { key: "tour",   label: "Tours",      icon: "🗺️" },
 ] as const;
 
 type Category = typeof CATEGORIES[number]["key"];
@@ -83,7 +83,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
       params.set("type", activeCategory);
     }
     // Pass tour duration if set
-    if (activeCategory === "resort" && tourDuration) {
+    if (activeCategory === "tour" && tourDuration) {
       params.set("duration", tourDuration);
     }
 
@@ -151,7 +151,7 @@ export default function HeroSearch({ dict }: { dict: typeof dictionaries["en"] }
         </div>
 
         {/* Dates — conditional based on category */}
-        {activeCategory === "resort" ? (
+        {activeCategory === "tour" ? (
           // Tours: single Travel Date field + Duration
           <>
             <div className="hidden lg:block w-px self-stretch" style={{ background: "#d1d9e0" }} />

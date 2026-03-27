@@ -30,6 +30,7 @@ export async function createListing(formData: FormData) {
   const maxGuests = parseInt(formData.get("maxGuests") as string, 10);
   const beds = parseInt(formData.get("beds") as string, 10);
   const baths = parseInt(formData.get("baths") as string, 10);
+  const duration = formData.get("duration") ? parseInt(formData.get("duration") as string, 10) : null;
 
   // Validate required
   if (!title || !description || isNaN(price) || !city || isNaN(maxGuests)) {
@@ -94,6 +95,7 @@ export async function createListing(formData: FormData) {
       baths,
       amenities,
       images,
+      duration,
     })
     .select("id")
     .single();
