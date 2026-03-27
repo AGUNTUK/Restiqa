@@ -108,6 +108,9 @@ export default async function ListingDetailsPage({ params }: PageProps) {
 
   const l = listing as ListingWithStats;
 
+  // Track the view (Fire and forget)
+  trackListingView(l.id);
+
   // Fetch reviews
   const { data: reviewsData } = await supabase
     .from("reviews")
