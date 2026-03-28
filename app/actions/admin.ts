@@ -111,3 +111,87 @@ export async function updateListingStatus(formData: FormData): Promise<void> {
 
   revalidatePath("/admin/listings");
 }
+export async function approveHostApplication(formData: FormData): Promise<void> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
+  if (profile?.role !== "admin") throw new Error("Unauthorized: Admin access required");
+
+  const appId = formData.get("applicationId") as string;
+  if (!appId) throw new Error("Missing application ID");
+
+  // 1. Fetch application details
+  const { data: app, error: fetchError } = await supabase
+    .from("host_applications")
+    .select("*, listings(id)")
+    .eq("id", appId)
+    .single();
+
+  if (fetchError || !app) throw new Error("Application not found");
+
+  // 2. Update User Role
+  const { error: userError } = await supabase
+    .from("users")
+    .update({ role: "host" })
+    .eq("id", app.user_id);
+
+  if (userError) throw new Error("Failed to update user role");
+
+  // 3. Approve Listing
+  if (app.listing_id) {
+    const { error: listingError } = await supabase
+      .from("listings")
+      .update({ status: "approved" })
+      .eq("id", app.listing_id);
+    
+    if (listingError) console.error("Failed to approve listing during host application approval");
+  }
+
+  // 4. Mark Application as Approved
+  const { error: appUpdateError } = await supabase
+    .from("host_applications")
+    .update({ status: "approved" })
+    .eq("id", appId);
+
+  if (appUpdateError) throw new Error("Failed to update application status");
+
+  revalidatePath("/admin/applications");
+  revalidatePath("/admin/users");
+  revalidatePath("/admin/listings");
+}
+
+export async function rejectHostApplication(formData: FormData): Promise<void> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
+  if (profile?.role !== "admin") throw new Error("Unauthorized: Admin access required");
+
+  const appId = formData.get("applicationId") as string;
+  const reason = formData.get("reason") as string;
+  if (!appId) throw new Error("Missing application ID");
+
+  // 1. Fetch application to get listing_id
+  const { data: app } = await supabase.from("host_applications").select("listing_id").eq("id", appId).single();
+
+  // 2. Mark Application as Rejected
+  const { error: appUpdateError } = await supabase
+    .from("host_applications")
+    .update({ 
+      status: "rejected",
+      admin_message: reason 
+    })
+    .eq("id", appId);
+
+  if (appUpdateError) throw new Error("Failed to reject application");
+
+  // 3. Optionally reject the listing too
+  if (app?.listing_id) {
+    await supabase.from("listings").update({ status: "rejected" }).eq("id", app.listing_id);
+  }
+
+  revalidatePath("/admin/applications");
+}

@@ -4,22 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createListing(formData: FormData) {
-  const supabase = await createClient();
-
-  // 1. Authenticate user
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    return { error: "You must be logged in to create a listing." };
-  }
-
-  // Verify Role securely
-  const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
-  if (profile?.role !== "host" && profile?.role !== "admin") {
-    return { error: "Unauthorized: Host access required to create listings." };
-  }
-
+/** helper to handle listing logic for both new listings and applications */
+async function sharedListingCreate(supabase: any, user: any, formData: FormData, status: "pending" | "approved" = "pending") {
   // 2. Extract basic fields
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
@@ -37,27 +23,26 @@ export async function createListing(formData: FormData) {
     return { error: "Please fill in all required fields correctly." };
   }
 
-  // Amenities: gather checking multiple checkbox inputs named "amenities"
+  // Amenities
   const amenities = formData.getAll("amenities") as string[];
 
   // 3. Handle File Uploads
   const images: string[] = [];
   const files = formData.getAll("images") as File[];
   
-  if (!files || files.length === 0 || files[0].size === 0) {
+  if (!files || files.length === 0 || (files[0] instanceof File && files[0].size === 0)) {
     return { error: "Please upload at least one image." };
   }
 
   for (const file of files) {
-    if (file.size > 0 && file.type.startsWith("image/")) {
+    if (file instanceof File && file.size > 0 && file.type.startsWith("image/")) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       
-      // Generate a unique filename: user_id/timestamp_filename
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
 
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from("listings")
         .upload(fileName, buffer, {
           contentType: file.type,
@@ -69,7 +54,6 @@ export async function createListing(formData: FormData) {
         return { error: `Failed to upload image: ${file.name}` };
       }
 
-      // Generate the public URL immediately after successful upload
       const { data: publicUrlData } = supabase.storage
         .from("listings")
         .getPublicUrl(fileName);
@@ -96,6 +80,7 @@ export async function createListing(formData: FormData) {
       amenities,
       images,
       duration,
+      status,
     })
     .select("id")
     .single();
@@ -105,10 +90,78 @@ export async function createListing(formData: FormData) {
     return { error: "Failed to save the listing to the database." };
   }
 
-  // 5. Success
+  return { success: true, listingId: newListing.id };
+}
+
+export async function createListing(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return { error: "You must be logged in to create a listing." };
+  }
+
+  // Verify Role securely
+  const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
+  if (profile?.role !== "host" && profile?.role !== "admin") {
+    return { error: "Unauthorized: Host access required to create listings." };
+  }
+
+  const result = await sharedListingCreate(supabase, user, formData, "approved");
+  if (result.error) return result;
+
   revalidatePath("/dashboard");
   revalidatePath("/listings");
   redirect("/dashboard");
+}
+
+export async function submitHostApplication(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return { error: "You must be logged in to apply." };
+  }
+
+  // 1. Check if user already has a pending application
+  const { data: existingApp } = await supabase
+    .from("host_applications")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("status", "pending")
+    .single();
+
+  if (existingApp) {
+    return { error: "You already have a pending application." };
+  }
+
+  // 2. Create the pending listing
+  const result = await sharedListingCreate(supabase, user, formData, "pending");
+  if (result.error) return result;
+
+  // 3. Create the application record
+  const fullName = formData.get("fullName") as string;
+  const phone = formData.get("phone") as string;
+  const experience = formData.get("experience") as string;
+
+  const { error: appError } = await supabase
+    .from("host_applications")
+    .insert({
+      user_id: user.id,
+      listing_id: result.listingId,
+      full_name: fullName,
+      phone,
+      experience,
+      status: 'pending'
+    });
+
+  if (appError) {
+    console.error("Application insert error:", appError);
+    return { error: "Failed to submit your application. Please try again." };
+  }
+
+  revalidatePath("/become-a-host");
+  return { success: true };
 }
 
 export async function deleteListing(formData: FormData): Promise<void> {
@@ -161,29 +214,9 @@ export async function addPayoutMethod(formData: FormData): Promise<void> {
   revalidatePath("/host");
 }
 
-/* ── Become a Host ──────────────────────────────── */
+/* ── Become a Host (Legacy) ───────────────────────── */
 export async function becomeHost(_formData?: FormData): Promise<void> {
-  const supabase = await createClient();
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    redirect("/login");
-  }
-
-  const { error: updateError } = await supabase
-    .from("users")
-    .update({ role: "host" })
-    .eq("id", user.id);
-
-  if (updateError) {
-    console.error("Error updating role to host:", updateError);
-    // You might want to redirect to an error page or similar
-    throw new Error("Failed to update account role");
-  }
-
-  revalidatePath("/dashboard");
-  revalidatePath("/host");
-  revalidatePath("/become-a-host");
-  redirect("/host");
+  // Redirect to the new application flow instead of instant upgrade
+  redirect("/become-a-host/apply");
 }
 

@@ -81,11 +81,13 @@ export async function POST(request: Request) {
       console.error("ZiniPay Payment Creation Failed:", ziniResponse);
       return NextResponse.json({ 
         error: ziniResponse.message || "Failed to generate payment URL" 
-      }, { status: 500 });
+      }, { status: 400 }); // Changed to 400 as it's likely a request issue (e.g. domain mismatch)
     }
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("ZiniPay Create API Route Error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ 
+      error: error.message || "Internal server error" 
+    }, { status: 500 });
   }
 }

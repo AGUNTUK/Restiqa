@@ -15,9 +15,27 @@ export default async function BecomeAHostPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   let isHost = false;
+  let applicationStatus: string | null = null;
+  let adminMessage: string | null = null;
+
   if (user) {
     const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
     isHost = profile?.role === "host" || profile?.role === "admin";
+
+    if (!isHost) {
+      const { data: app } = await supabase
+        .from("host_applications")
+        .select("status, admin_message")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+      
+      if (app) {
+        applicationStatus = app.status;
+        adminMessage = app.admin_message;
+      }
+    }
   }
 
   return (
@@ -31,23 +49,47 @@ export default async function BecomeAHostPage() {
           {dict.becomeHost.subtitle}
         </p>
         {isHost ? (
-          <Link
-            href="/host"
-            className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
-            style={{ background: "linear-gradient(135deg, #43e97b, #38f9d7)", color: "#fff" }}
-          >
-            Go to Host Dashboard
-          </Link>
-        ) : (
-          <form action={becomeHost}>
-            <button
-              type="submit"
+          <div className="space-y-4">
+            <p className="text-green-600 font-bold">You are already a Host!</p>
+            <Link
+              href="/host"
               className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
-              style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)", color: "#fff" }}
+              style={{ background: "linear-gradient(135deg, #43e97b, #38f9d7)", color: "#fff" }}
             >
-              {dict.becomeHost.cta}
-            </button>
-          </form>
+              Go to Host Dashboard
+            </Link>
+          </div>
+        ) : applicationStatus === "pending" ? (
+          <div className="p-10 rounded-3xl bg-amber-50 border-2 border-amber-200 shadow-inner">
+            <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 text-amber-600">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 className="text-2xl font-black text-amber-800 mb-2">Application Under Review</h3>
+            <p className="text-amber-700 font-medium max-w-xs mx-auto">
+              Our team is currently reviewing your registration. We'll update your status very soon!
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {applicationStatus === "rejected" && (
+              <div className="p-6 rounded-2xl bg-red-50 border border-red-100 mb-8 text-left">
+                <p className="text-red-700 font-bold mb-1 flex items-center gap-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                   Previous Application Rejected
+                </p>
+                <p className="text-red-600/80 text-sm font-medium">
+                  Reason: {adminMessage || "No reason provided."}
+                </p>
+              </div>
+            )}
+            <Link
+              href="/become-a-host/apply"
+              className="neo-btn neo-btn-primary px-12 py-6 rounded-[24px] font-black text-xl inline-block transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_-10px_rgba(211,47,47,0.3)]"
+              style={{ background: "linear-gradient(135deg, #d32f2f, #a12c2c)", color: "#fff" }}
+            >
+              {applicationStatus === "rejected" ? "Apply Again" : dict.becomeHost.cta}
+            </Link>
+          </div>
         )}
       </section>
 

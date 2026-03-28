@@ -41,7 +41,7 @@ export async function createZiniPayment(params: {
   webhook_url?: string;
   customer_name?: string;
   customer_email?: string;
-}) {
+}): Promise<ZiniCreateResponse> {
   if (!ZINIPAY_API_KEY) {
     throw new Error("ZINIPAY_API_KEY is not configured in environment variables.");
   }
@@ -54,8 +54,8 @@ export async function createZiniPayment(params: {
     metadata: {
       bookingId: params.bookingId,
     },
-    customer_name: params.customer_name,
-    customer_email: params.customer_email,
+    cus_name: params.customer_name,
+    cus_email: params.customer_email,
   };
 
   const response = await fetch(ZINIPAY_CREATE_URL, {
@@ -67,6 +67,23 @@ export async function createZiniPayment(params: {
     body: JSON.stringify(body),
   });
 
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("ZiniPay API Error Response:", errorText);
+    try {
+      const errorJson = JSON.parse(errorText);
+      return {
+        status: false,
+        message: errorJson.message || errorJson.error || `API returned ${response.status}`,
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: `API returned ${response.status}`,
+      };
+    }
+  }
+
   const data: ZiniCreateResponse = await response.json();
   return data;
 }
@@ -74,7 +91,7 @@ export async function createZiniPayment(params: {
 /**
  * Verifies a payment with ZiniPay using invoiceId
  */
-export async function verifyZiniPayment(invoiceId: string) {
+export async function verifyZiniPayment(invoiceId: string): Promise<ZiniVerifyResponse> {
   if (!ZINIPAY_API_KEY) {
     throw new Error("ZINIPAY_API_KEY is not configured in environment variables.");
   }
