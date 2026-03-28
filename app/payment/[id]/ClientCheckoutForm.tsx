@@ -23,9 +23,6 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
 
   // Hardcoded payment details for demonstration
   const paymentDetails: Record<string, { label: string; value: string }> = {
-    bkash: { label: "bKash Personal Number", value: "01787916775" },
-    nagad: { label: "Nagad Personal Number", value: "01787916775" },
-    upay: { label: "Upay Personal Number", value: "01787916775" },
     bank: { label: "DBBL Bank Account", value: "1041030115084" },
   };
 

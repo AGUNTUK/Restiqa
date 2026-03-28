@@ -13,9 +13,6 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
 
   const methods = [
     { id: "zinipay", name: "Automatic Payment (bKash/Nagad)", icon: "⚡", color: "#d32f2f" },
-    { id: "bkash", name: dict.payment.bkash || "bKash (Manual)", icon: "💳", color: "#e2136e" },
-    { id: "nagad", name: dict.payment.nagad || "Nagad (Manual)", icon: "💸", color: "#f7941d" },
-    { id: "upay", name: "Upay (Manual)", icon: "📱", color: "#004B87" },
     { id: "bank", name: "Bank Account (Manual)", icon: "🏦", color: "#d32f2f" }
   ];
 
