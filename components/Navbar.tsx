@@ -3,7 +3,7 @@ import NavbarClient from "./NavbarClient";
 import { getDictionary, getLocale } from "@/lib/i18n";
 
 export default async function Navbar() {
-  let user: { id: string; email: string; name: string | null } | null = null;
+  let user: { id: string; email: string; name: string | null; role: string } | null = null;
   let notifications = [];
 
   if (isSupabaseConfigured()) {
@@ -11,6 +11,13 @@ export default async function Navbar() {
       const supabase = await createClient();
       const { data } = await supabase.auth.getUser();
       if (data.user) {
+        // Fetch role
+        const { data: profile } = await supabase
+          .from("users")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
         user = {
           id: data.user.id,
           email: data.user.email!,
@@ -18,6 +25,7 @@ export default async function Navbar() {
             data.user.user_metadata?.full_name ||
             data.user.email?.split("@")[0] ||
             null,
+          role: profile?.role || 'guest'
         };
 
         const { data: notifsRes } = await supabase

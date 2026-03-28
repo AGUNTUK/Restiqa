@@ -8,7 +8,7 @@ import LanguageToggle from "./LanguageToggle";
 import Logo from "./Logo";
 import NotificationBell, { NotificationType } from "./NotificationBell";
 
-type NavUser = { id?: string; email: string; name: string | null } | null;
+type NavUser = { id?: string; email: string; name: string | null; role?: string } | null;
 type NavDict = { home: string; listings: string; login: string; dashboard: string; findStay: string; signOut: string; becomeHost: string };
 
 export default function NavbarClient({ 
@@ -101,7 +101,7 @@ export default function NavbarClient({
           {user && (
             <li>
               <Link
-                href="/dashboard"
+                href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
                 style={{
                   display: "inline-block",
                   padding: "0.45rem 1.1rem",
@@ -109,11 +109,11 @@ export default function NavbarClient({
                   fontWeight: 600,
                   fontSize: "0.9rem",
                   textDecoration: "none",
-                  color: pathname === "/dashboard" ? "#d32f2f" : "#718096",
-                  boxShadow: pathname === "/dashboard"
+                  color: (pathname === "/dashboard" || pathname === "/host") ? "#d32f2f" : "#718096",
+                  boxShadow: (pathname === "/dashboard" || pathname === "/host")
                     ? "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff"
                     : "none",
-                  background: pathname === "/dashboard" ? "#e8edf2" : "transparent",
+                  background: (pathname === "/dashboard" || pathname === "/host") ? "#e8edf2" : "transparent",
                   transition: "all 0.2s ease",
                 }}
               >
@@ -131,7 +131,7 @@ export default function NavbarClient({
             <>
               <NotificationBell initialNotifications={initialNotifications} userId={user.id || ""} />
               <Link
-                href="/dashboard"
+                href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
                 title={user.email}
                 style={{
                   width: 36,
@@ -256,15 +256,15 @@ export default function NavbarClient({
           ))}
           {user && (
             <Link
-              href="/dashboard"
+              href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#d32f2f]/20"
               style={{ 
                 fontWeight: 700, 
                 textDecoration: "none", 
                 minHeight: "64px",
-                color: pathname === "/dashboard" ? "#d32f2f" : "#4a5568",
-                background: pathname === "/dashboard" ? "rgba(211, 47, 47, 0.08)" : "transparent",
+                color: (pathname === "/dashboard" || pathname === "/host") ? "#d32f2f" : "#4a5568",
+                background: (pathname === "/dashboard" || pathname === "/host") ? "rgba(211, 47, 47, 0.08)" : "transparent",
                 marginBottom: "0.4rem",
               }}
             >

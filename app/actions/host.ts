@@ -158,5 +158,32 @@ export async function addPayoutMethod(formData: FormData): Promise<void> {
   }
 
   revalidatePath("/dashboard");
+  revalidatePath("/host");
+}
+
+/* ── Become a Host ──────────────────────────────── */
+export async function becomeHost(_formData?: FormData): Promise<void> {
+  const supabase = await createClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    redirect("/login");
+  }
+
+  const { error: updateError } = await supabase
+    .from("users")
+    .update({ role: "host" })
+    .eq("id", user.id);
+
+  if (updateError) {
+    console.error("Error updating role to host:", updateError);
+    // You might want to redirect to an error page or similar
+    throw new Error("Failed to update account role");
+  }
+
+  revalidatePath("/dashboard");
+  revalidatePath("/host");
+  revalidatePath("/become-a-host");
+  redirect("/host");
 }
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getDictionary } from "@/lib/i18n";
+import { becomeHost } from "@/app/actions/host";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Become a Host | Restiqa",
@@ -9,6 +11,14 @@ export const metadata: Metadata = {
 
 export default async function BecomeAHostPage() {
   const dict = await getDictionary();
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let isHost = false;
+  if (user) {
+    const { data: profile } = await supabase.from("users").select("role").eq("id", user.id).single();
+    isHost = profile?.role === "host" || profile?.role === "admin";
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 lg:py-20 space-y-24">
@@ -20,13 +30,25 @@ export default async function BecomeAHostPage() {
         <p className="text-lg text-[#718096] mb-10 font-medium leading-relaxed">
           {dict.becomeHost.subtitle}
         </p>
-        <Link
-          href="/dashboard/add-listing"
-          className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
-          style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)", color: "#fff" }}
-        >
-          {dict.becomeHost.cta}
-        </Link>
+        {isHost ? (
+          <Link
+            href="/host"
+            className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
+            style={{ background: "linear-gradient(135deg, #43e97b, #38f9d7)", color: "#fff" }}
+          >
+            Go to Host Dashboard
+          </Link>
+        ) : (
+          <form action={becomeHost}>
+            <button
+              type="submit"
+              className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
+              style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)", color: "#fff" }}
+            >
+              {dict.becomeHost.cta}
+            </button>
+          </form>
+        )}
       </section>
 
       {/* ── Benefits Section ── */}
@@ -96,13 +118,25 @@ export default async function BecomeAHostPage() {
 
       {/* Bottom CTA */}
       <section className="text-center py-12">
-        <Link
-          href="/dashboard/add-listing"
-          className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
-          style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)", color: "#fff" }}
-        >
-          {dict.becomeHost.cta}
-        </Link>
+        {isHost ? (
+          <Link
+            href="/host"
+            className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
+            style={{ background: "linear-gradient(135deg, #43e97b, #38f9d7)", color: "#fff" }}
+          >
+            Go to Host Dashboard
+          </Link>
+        ) : (
+          <form action={becomeHost}>
+            <button
+              type="submit"
+              className="neo-btn neo-btn-primary px-10 py-5 rounded-2xl font-extrabold text-lg inline-block transition-transform hover:-translate-y-1 active:scale-95 shadow-[0_10px_25px_-5px_rgba(211, 47, 47,0.4)]"
+              style={{ background: "linear-gradient(135deg, #d32f2f, #8bc1c1)", color: "#fff" }}
+            >
+              {dict.becomeHost.cta}
+            </button>
+          </form>
+        )}
       </section>
     </div>
   );

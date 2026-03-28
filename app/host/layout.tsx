@@ -18,7 +18,7 @@ export default async function HostLayout({ children }: { children: ReactNode }) 
     .single();
 
   if (!profile || (profile.role !== 'host' && profile.role !== 'admin')) {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   const navItems = [

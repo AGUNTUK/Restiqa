@@ -30,6 +30,20 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
     redirect("/login");
   }
 
+  // Fetch user role
+  const { data: profile } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const isHost = profile?.role === "host" || profile?.role === "admin";
+
+  // Redirect if not host and trying to access host tab
+  if (tab === "host" && !isHost) {
+    redirect("/dashboard?tab=traveler");
+  }
+
   const displayName =
     user.user_metadata?.full_name ||
     user.email?.split("@")[0] ||
@@ -250,12 +264,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
         >
           Saved
         </Link>
-        <Link 
-          href="?tab=host" 
-           className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "host" ? "neo-card text-[#8bc1c1] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
-        >
-          Host
-        </Link>
+        {isHost && (
+          <Link 
+            href="?tab=host" 
+             className={`flex-1 text-center py-3 rounded-xl font-bold text-sm transition-all focus:outline-none ${tab === "host" ? "neo-card text-[#8bc1c1] shadow-[4px_4px_10px_#c4c9ce,-4px_-4px_10px_#ffffff]" : "text-[#718096] hover:bg-black/5"}`}
+          >
+            Host
+          </Link>
+        )}
       </div>
 
       {/* ========================================================================= */}

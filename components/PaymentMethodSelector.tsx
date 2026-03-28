@@ -9,13 +9,14 @@ interface PaymentMethodSelectorProps {
 }
 
 export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodSelectorProps) {
-  const [selected, setSelected] = useState("bkash");
+  const [selected, setSelected] = useState("zinipay");
 
   const methods = [
-    { id: "bkash", name: dict.payment.bkash || "bKash", icon: "💳", color: "#e2136e" },
-    { id: "nagad", name: dict.payment.nagad || "Nagad", icon: "💸", color: "#f7941d" },
-    { id: "upay", name: "Upay", icon: "📱", color: "#004B87" },
-    { id: "bank", name: "Bank Account", icon: "🏦", color: "#d32f2f" }
+    { id: "zinipay", name: "Automatic Payment (bKash/Nagad)", icon: "⚡", color: "#d32f2f" },
+    { id: "bkash", name: dict.payment.bkash || "bKash (Manual)", icon: "💳", color: "#e2136e" },
+    { id: "nagad", name: dict.payment.nagad || "Nagad (Manual)", icon: "💸", color: "#f7941d" },
+    { id: "upay", name: "Upay (Manual)", icon: "📱", color: "#004B87" },
+    { id: "bank", name: "Bank Account (Manual)", icon: "🏦", color: "#d32f2f" }
   ];
 
   const handleSelect = (id: string) => {
@@ -45,7 +46,7 @@ export default function PaymentMethodSelector({ dict, onSelect }: PaymentMethodS
                 className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shadow-sm"
                 style={{ background: `${method.color}20`, color: method.color }}
               >
-                {method.id === "bkash" ? "b" : method.id === "nagad" ? "n" : "c"}
+                {method.id === "zinipay" ? "⚡" : method.id === "bkash" ? "b" : method.id === "nagad" ? "n" : "c"}
               </div>
               <span className={`font-bold ${selected === method.id ? "text-[#1a202c]" : "text-[#718096]"}`}>
                 {method.name}

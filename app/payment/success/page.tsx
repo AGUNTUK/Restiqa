@@ -23,6 +23,7 @@ function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const transaction_id = searchParams.get("transaction_id") || searchParams.get("tran_id");
+  const invoiceId = searchParams.get("invoiceId");
   const bookingId = searchParams.get("bookingId");
 
   const [status, setStatus] = useState<"loading" | "verifying" | "success" | "error" | "failed">("loading");
@@ -97,6 +98,32 @@ function PaymentSuccessContent() {
       }
     };
 
+    const verifyZiniPayment = async () => {
+      if (!invoiceId || !bookingId) return;
+      
+      try {
+        const response = await fetch("/api/payment/zinipay/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ invoiceId, bookingId }),
+        });
+        
+        const data = await response.json();
+        if (!data.success) {
+          console.error("ZiniPay Verification Failed:", data.error);
+          setStatus("error");
+          setErrorMessage(data.error || "Payment verification failed.");
+        }
+        // If success, the regular polling (checkStatus) will pick up the 'paid' status
+      } catch (err) {
+        console.error("Error calling ZiniPay verify API:", err);
+      }
+    };
+
+    if (invoiceId && bookingId) {
+      verifyZiniPayment();
+    }
+
     // Immediate check
     checkStatus();
 
@@ -108,7 +135,7 @@ function PaymentSuccessContent() {
     return () => {
       if (pollInterval) clearInterval(pollInterval);
     };
-  }, [bookingId]);
+  }, [bookingId, invoiceId]);
 
   if (status === "loading" || status === "verifying") {
     return (
