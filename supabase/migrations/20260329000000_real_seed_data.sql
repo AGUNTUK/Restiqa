@@ -6,6 +6,12 @@
 -- Ensure 'tour' type exists in the enum
 ALTER TYPE public.listing_type ADD VALUE IF NOT EXISTS 'tour';
 
+-- Relax constraints to allow 0 beds/baths (relevant for tours)
+ALTER TABLE public.listings DROP CONSTRAINT IF EXISTS listings_beds_check;
+ALTER TABLE public.listings DROP CONSTRAINT IF EXISTS listings_baths_check;
+ALTER TABLE public.listings ADD CONSTRAINT listings_beds_check CHECK (beds >= 0);
+ALTER TABLE public.listings ADD CONSTRAINT listings_baths_check CHECK (baths >= 0);
+
 DO $$
 DECLARE
   v_host_id UUID;
