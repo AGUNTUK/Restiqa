@@ -56,7 +56,10 @@ export async function POST(request: Request) {
     const finalAmount = Number(baseAmount) + uniqueOffset;
 
     // 5. Build URLs for ZiniPay redirection
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const host = request.headers.get("host") || "localhost:3000";
+    const protocol = host.includes("localhost") ? "http" : "https";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+    
     const redirectUrl = `${siteUrl}/payment/success?bookingId=${bookingId}`;
     const cancelUrl = `${siteUrl}/payment/${bookingId}`;
     const webhookUrl = `${siteUrl}/api/payment/zinipay/webhook`;
