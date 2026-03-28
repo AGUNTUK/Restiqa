@@ -13,7 +13,7 @@ DO $$ BEGIN
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE TYPE listing_type AS ENUM ('apartment', 'villa', 'studio', 'penthouse', 'house', 'cabin', 'cottage');
+  CREATE TYPE listing_type AS ENUM ('apartment', 'villa', 'studio', 'penthouse', 'house', 'cabin', 'cottage', 'tour');
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN

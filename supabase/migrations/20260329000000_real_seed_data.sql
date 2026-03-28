@@ -3,6 +3,9 @@
 -- Includes high-quality Properties and Tours in Bangladesh
 -- ============================================================
 
+-- Ensure 'tour' type exists in the enum
+ALTER TYPE public.listing_type ADD VALUE IF NOT EXISTS 'tour';
+
 DO $$
 DECLARE
   v_host_id UUID;
