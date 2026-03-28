@@ -56,9 +56,12 @@ export async function POST(request: Request) {
     const finalAmount = Number(baseAmount) + uniqueOffset;
 
     // 5. Build URLs for ZiniPay redirection
-    const host = request.headers.get("host") || "localhost:3000";
-    const protocol = host.includes("localhost") ? "http" : "https";
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || "restiqa.com";
+    const protocol = request.headers.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+    
+    // Log for debugging (removable)
+    console.log("ZiniPay Redirect Base URL:", siteUrl);
     
     const redirectUrl = `${siteUrl}/payment/success?bookingId=${bookingId}`;
     const cancelUrl = `${siteUrl}/payment/${bookingId}`;
