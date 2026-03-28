@@ -122,11 +122,11 @@ export default function ClientCheckoutForm({ bookingId, amount, dict }: ClientCh
         <div className="bg-[#f0f3f8] p-6 rounded-[24px] mb-8 shadow-[inset_4px_4px_8px_#c4c9ce,inset_-4px_-4px_8px_#ffffff] space-y-6">
           <div>
             <h4 className="text-sm font-bold text-[#718096] uppercase tracking-wider mb-2">
-              {paymentDetails[method === "zinipay" ? "bkash" : method]?.label}
+              {paymentDetails[method === "zinipay" ? "bank" : method]?.label}
             </h4>
             <div className="flex items-center justify-between bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
               <span className="text-2xl font-extrabold text-[#1a202c] tracking-tight">
-                {paymentDetails[method === "zinipay" ? "bkash" : method]?.value}
+                {paymentDetails[method === "zinipay" ? "bank" : method]?.value}
               </span>
               <button 
                 type="button" 
