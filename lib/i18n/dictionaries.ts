@@ -57,7 +57,10 @@ export const dictionaries = {
       noSaved: "No saved stays yet",
       phone: "Phone Number",
       emergencyContact: "Emergency Contact",
-      manageProfile: "Manage Profile"
+      manageProfile: "Manage Profile",
+      totalIncome: "Total Income",
+      restiqaFee: "Restiqa Service Fee (10%)",
+      withdrawableAmount: "Withdrawable Amount"
     },
     common: {
       pricePerNight: "/ night",
@@ -247,7 +250,10 @@ export const dictionaries = {
       noSaved: "এখনও কোনও সেভ করা জায়গা নেই",
       phone: "ফোন নম্বর",
       emergencyContact: "জরুরী যোগাযোগ",
-      manageProfile: "প্রোফাইল আপডেট করুন"
+      manageProfile: "প্রোফাইল আপডেট করুন",
+      totalIncome: "মোট আয়",
+      restiqaFee: "রেস্টিকা সার্ভিস ফি (১০%)",
+      withdrawableAmount: "উত্তোলনযোগ্য ব্যালেন্স"
     },
     common: {
       pricePerNight: "/ রাত",

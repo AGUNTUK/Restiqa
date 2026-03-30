@@ -113,7 +113,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   let myProperties: any[] = [];
   let hostBookings: any[] = [];
   let myPayoutMethods: any[] = [];
-  let totalEarnings = 0;
+  let totalGrossIncome = 0;
+  let totalServiceFee = 0;
   let totalViews = 0;
   let monthlyEarnings = 0;
   let completedPayoutEarnings = 0;
@@ -184,10 +185,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
         const currentYear = new Date().getFullYear();
 
         hostBookings = bData.map((b) => {
-          const earnings = b.host_earnings || (b.total_price * 0.9);
+          const gross = b.total_price;
+          const fee = gross * 0.1;
+          const earnings = gross - fee;
 
           if (b.status === "confirmed") {
-            totalEarnings += earnings;
+            totalGrossIncome += gross;
+            totalServiceFee += fee;
             const checkinDate = new Date(b.checkin);
             if (checkinDate.getMonth() === currentMonth && checkinDate.getFullYear() === currentYear) {
               monthlyEarnings += earnings;
@@ -204,6 +208,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
 
           return {
             ...b,
+            gross_income: gross,
+            service_fee: fee,
+            net_earnings: earnings,
             listings: myProperties.find((l) => l.id === b.listing_id),
           };
         });
@@ -412,20 +419,20 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
           <h2 className="font-bold text-lg mb-4 text-[#1a202c]">Overview</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div className="neo-card p-6 rounded-[24px]">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Earned</p>
-              <p className="text-2xl font-extrabold text-[#d32f2f]">৳{totalEarnings.toLocaleString()}</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">{dict.dashboard.totalIncome}</p>
+              <p className="text-2xl font-extrabold text-[#2d3748]">{dict.common.currency}{totalGrossIncome.toLocaleString()}</p>
             </div>
             <div className="neo-card p-6 rounded-[24px]">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Views</p>
-              <p className="text-2xl font-extrabold text-[#38b2ac]">{totalViews.toLocaleString()}</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">{dict.dashboard.restiqaFee}</p>
+              <p className="text-2xl font-extrabold text-[#e53e3e] leading-none">-{dict.common.currency}{totalServiceFee.toLocaleString()}</p>
             </div>
-            <div className="neo-card p-6 rounded-[24px]">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Completed Payouts</p>
-              <p className="text-2xl font-extrabold text-[#43e97b]">৳{completedPayoutEarnings.toLocaleString()}</p>
+            <div className="neo-card p-6 rounded-[24px] border-2 border-[#8bc1c1]/30">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">{dict.dashboard.withdrawableAmount}</p>
+              <p className="text-2xl font-extrabold text-[#38b2ac]">{dict.common.currency}{(totalGrossIncome - totalServiceFee).toLocaleString()}</p>
             </div>
             <div className="neo-inset p-6 rounded-[24px]">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Pending</p>
-              <p className="text-2xl font-extrabold text-[#718096]">৳{pendingEarnings.toLocaleString()}</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#a0aec0] mb-2">Total Views</p>
+              <p className="text-2xl font-extrabold text-[#718096]">{totalViews.toLocaleString()}</p>
             </div>
           </div>
 
@@ -563,7 +570,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                     </p>
                   </div>
                   <div className="md:text-right shrink-0">
-                    <p className="text-sm font-extrabold text-[#d32f2f] mb-1">৳{Math.round(booking.host_earnings || (booking.total_price * 0.9))}</p>
+                    <div className="mb-1">
+                      <p className="text-sm font-extrabold text-[#1a202c]">
+                        {dict.common.currency}{Math.round(booking.gross_income)}
+                      </p>
+                      <p className="text-[10px] font-bold text-red-500">
+                        -{dict.common.currency}{Math.round(booking.service_fee)} {dict.dashboard.restiqaFee}
+                      </p>
+                      <p className="text-sm font-extrabold text-[#38b2ac] mt-0.5">
+                        {dict.common.currency}{Math.round(booking.net_earnings)}
+                      </p>
+                    </div>
                     <p className="text-xs font-bold text-[#a0aec0] mb-3">Guest ID: {booking.user_id?.substring(0, 6).toUpperCase()}</p>
                     {booking.status === "pending" && (
                       <div className="flex gap-2 justify-end">

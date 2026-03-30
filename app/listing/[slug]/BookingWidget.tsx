@@ -25,8 +25,7 @@ export default function BookingWidget({ listingId, price, maxGuests, dict }: Boo
     : 0;
   
   const subtotal = price * (nights > 0 ? nights : 0);
-  const serviceFee = Math.round(subtotal * 0.1);
-  const total = subtotal + serviceFee;
+  const total = subtotal;
 
   // No longer checking availability as all dates are available
   useEffect(() => {
@@ -132,14 +131,10 @@ export default function BookingWidget({ listingId, price, maxGuests, dict }: Boo
                 <span className="underline decoration-1 underline-offset-4 cursor-help">{dict.common.currency}{Math.round(price)} x {nights} nights</span>
                 <span>{dict.common.currency}{Math.round(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-[#4a5568] font-medium">
-                <span className="underline decoration-1 underline-offset-4 cursor-help">Restiqa service fee</span>
-                <span>{dict.common.currency}{Math.round(serviceFee)}</span>
-              </div>
             </div>
 
             <div className="flex justify-between pt-6 font-extrabold text-lg text-[#1a202c]">
-              <span>Total before taxes</span>
+              <span>{dict.booking.total}</span>
               <span>{dict.common.currency}{Math.round(total)}</span>
             </div>
           </>
