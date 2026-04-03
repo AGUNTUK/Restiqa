@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { verifyZiniPayment } from "@/lib/zinipay";
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
     
     // 1. Parse request body from ZiniPay
     const body = await request.json();

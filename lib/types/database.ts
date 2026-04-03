@@ -107,6 +107,7 @@ export interface Blog {
   title: string;
   excerpt: string;
   content: string;
+  category?: string;
   cover_image: string | null;
   author_id: string;
   created_at: string;

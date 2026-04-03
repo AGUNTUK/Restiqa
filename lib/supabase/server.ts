@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
 /** True when real credentials have been added to .env.local */
 export function isSupabaseConfigured(): boolean {
@@ -46,6 +47,25 @@ export async function createClient() {
           // handled by middleware.
         }
       },
+    },
+  });
+}
+
+/**
+ * Admin-level Supabase client using Service Role Key.
+ * BYPASSES Row Level Security (RLS). 
+ * ONLY use for background processes (webhooks, cron jobs, etc.) 
+ * where no authenticated user is present.
+ */
+export async function createAdminClient() {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error("SUPABASE_SERVICE_ROLE_KEY is not configured. Webhooks will fail.");
+  }
+
+  return createServerClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    cookies: {
+      getAll() { return []; },
+      setAll() { /* No-op */ },
     },
   });
 }

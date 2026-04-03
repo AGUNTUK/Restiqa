@@ -22,6 +22,10 @@ export async function GET(request: NextRequest) {
       if (profile?.role === "admin") {
         return NextResponse.redirect(`${origin}/admin`);
       }
+      
+      if (profile?.role === "host") {
+        return NextResponse.redirect(`${origin}/host`);
+      }
 
       return NextResponse.redirect(`${origin}${next}`);
     }
