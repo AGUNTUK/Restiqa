@@ -101,7 +101,7 @@ export default function NavbarClient({
           {user && (
             <li>
               <Link
-                href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
+                href={user.role === 'admin' ? "/admin" : user.role === 'host' ? "/host" : "/dashboard"}
                 style={{
                   display: "inline-block",
                   padding: "0.45rem 1.1rem",
@@ -109,15 +109,15 @@ export default function NavbarClient({
                   fontWeight: 600,
                   fontSize: "0.9rem",
                   textDecoration: "none",
-                  color: (pathname === "/dashboard" || pathname === "/host") ? "#d32f2f" : "#718096",
-                  boxShadow: (pathname === "/dashboard" || pathname === "/host")
+                  color: (pathname === "/dashboard" || pathname === "/host" || pathname.startsWith("/admin")) ? "#d32f2f" : "#718096",
+                  boxShadow: (pathname === "/dashboard" || pathname === "/host" || pathname.startsWith("/admin"))
                     ? "4px 4px 10px #c4c9ce, -4px -4px 10px #ffffff"
                     : "none",
-                  background: (pathname === "/dashboard" || pathname === "/host") ? "#e8edf2" : "transparent",
+                  background: (pathname === "/dashboard" || pathname === "/host" || pathname.startsWith("/admin")) ? "#e8edf2" : "transparent",
                   transition: "all 0.2s ease",
                 }}
               >
-                {dict.dashboard}
+                {user.role === 'admin' ? "Admin" : dict.dashboard}
               </Link>
             </li>
           )}
@@ -131,7 +131,7 @@ export default function NavbarClient({
             <>
               <NotificationBell initialNotifications={initialNotifications} userId={user.id || ""} />
               <Link
-                href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
+                href={user.role === 'admin' ? "/admin" : user.role === 'host' ? "/host" : "/dashboard"}
                 title={user.email}
                 style={{
                   width: 36,
@@ -256,20 +256,20 @@ export default function NavbarClient({
           ))}
           {user && (
             <Link
-              href={user.role === 'host' || user.role === 'admin' ? "/host" : "/dashboard"}
+              href={user.role === 'admin' ? "/admin" : user.role === 'host' ? "/host" : "/dashboard"}
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-4 px-5 py-5 rounded-2xl transition-all active:scale-95 border border-transparent active:border-[#d32f2f]/20"
               style={{ 
                 fontWeight: 700, 
                 textDecoration: "none", 
                 minHeight: "64px",
-                color: (pathname === "/dashboard" || pathname === "/host") ? "#d32f2f" : "#4a5568",
-                background: (pathname === "/dashboard" || pathname === "/host") ? "rgba(211, 47, 47, 0.08)" : "transparent",
+                color: (pathname === "/dashboard" || pathname === "/host" || pathname.startsWith("/admin")) ? "#d32f2f" : "#4a5568",
+                background: (pathname === "/dashboard" || pathname === "/host" || pathname.startsWith("/admin")) ? "rgba(211, 47, 47, 0.08)" : "transparent",
                 marginBottom: "0.4rem",
               }}
             >
-              <span className="text-2xl">📊</span>
-              <span className="text-[1.1rem]">{dict.dashboard}</span>
+              <span className="text-2xl">{user.role === 'admin' ? "🛡️" : "📊"}</span>
+              <span className="text-[1.1rem]">{user.role === 'admin' ? "Admin Panel" : dict.dashboard}</span>
             </Link>
           )}
           <div className="px-4 py-4 border-t border-b border-[#d1d9e0]/50 my-2">
